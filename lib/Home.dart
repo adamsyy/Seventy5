@@ -35,12 +35,16 @@ class _HomeState extends State<Home> {
       body: ListView.builder(
           itemCount: subject_details.length,
           itemBuilder: (context, index) {
-            if (widget.check == 1) {
+            if (widget.check == 2) {
               print(subject_details[0].total);
               return Text(subject_details[index].percentage);
-            } else {
-              return CupertinoActivityIndicator();
             }
+              else if(widget.check==0){
+                widget.check=1;
+                return CupertinoActivityIndicator();
+              }
+              return SizedBox(height: 1,);
+
           }),
       backgroundColor: Colors.pink,
       floatingActionButton: FloatingActionButton(
@@ -103,7 +107,7 @@ class _HomeState extends State<Home> {
    });
     }
     setState(() {
-      widget.check = 1;
+      widget.check = 2;
     });
     print(subject_details[0].total);
 
