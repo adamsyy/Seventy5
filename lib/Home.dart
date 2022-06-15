@@ -29,6 +29,7 @@ class _HomeState extends State<Home> {
   var subject_name = <String>[];
   var subject_details = <Subject>[];
   late Future<Subject> dataFuture2;
+  bool darkMode = false;
   var tempdata;
 int  check=0;
   @override
@@ -37,34 +38,55 @@ int  check=0;
       return Scaffold(body: Center(child: CupertinoActivityIndicator(),));
     }else{
       return Scaffold(
-        body: ListView.builder(
-            itemCount: subject_details.length,
-            itemBuilder: (context, index) {
-              return Card(
-                elevation: 8,
-                margin: EdgeInsets.all(6),
-                child: SizedBox(
-                    height: 200,
-                    width: 300,
-                    child: Column(
-                      children: [
-                        ListTile(
-                          title: Text(subject_details[index].name),
-                        ),
-                        Row(
-                          children: [Text("Attended: " + subject_details[index].present), Text("Total: " + subject_details[index].total)],
-                        )
-                      ],
-                    )
-                ),
-              );
-            }),
-        backgroundColor: Colors.white,
-        floatingActionButton: FloatingActionButton(
-          onPressed: () async {
+          backgroundColor: darkMode ? Colors.grey[850] : Colors.grey[300],
+        body: SingleChildScrollView(  physics: ScrollPhysics(),scrollDirection: Axis.vertical,
+          child: Column(
+            children: [
+              Container(height: MediaQuery.of(context).size.height/6,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("75"),
+              ),
 
-          },
+              ),
+              ListView.builder(shrinkWrap: true, physics: NeverScrollableScrollPhysics(),
+                  itemCount: subject_details.length,
+                  itemBuilder: (context, index) {
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                          child: Container(
+                            width: MediaQuery.of(context).size.height/1.5,
+                            height: MediaQuery.of(context).size.height/6,
+                            child: Center(child: Text("hehe")),
+                            decoration: BoxDecoration(
+                                color: darkMode ? Colors.grey[850] : Colors.grey[300],
+                                borderRadius: BorderRadius.all(Radius.circular(20)),
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: darkMode ? (Colors.black54)! :( Colors.grey[500])!,
+                                      offset: Offset(4.0, 4.0),
+                                      blurRadius: 15.0,
+                                      spreadRadius: 1.0),
+                                  BoxShadow(
+                                      color: darkMode ? (Colors.grey[800] )!: Colors.white,
+                                      offset: Offset(-4.0, -4.0),
+                                      blurRadius: 15.0,
+                                      spreadRadius: 1.0),
+                                ]),
+                          ),
+                        ),
+                     SizedBox(height: 40,)
+                      ],
+                    );
+                  }),
+            ],
+          ),
         ),
+
+
       );
     }
 
