@@ -6,7 +6,7 @@ import 'package:seventy5/subject.dart';
 
 class Home extends StatefulWidget {
   late String id_link;
-  var check=0;
+
   late List<dynamic> ids = [];
   @override
   State<Home> createState() => _HomeState();
@@ -30,39 +30,44 @@ class _HomeState extends State<Home> {
   var subject_details = <Subject>[];
   late Future<Subject> dataFuture2;
   var tempdata;
-
+int  check=0;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: ListView.builder(
-          itemCount: subject_details.length,
-          itemBuilder: (context, index) {
-            return Card(
-              elevation: 8,
-              margin: EdgeInsets.all(6),
-              child: SizedBox(
-                height: 200,
-                width: 300,
-                child: Column(
-                  children: [
-                    ListTile(
-                      title: Text(subject_details[index].name),
-                    ),
-                    Row(
-                      children: [Text("Attended: " + subject_details[index].present), Text("Total: " + subject_details[index].total)],
+    if(check==0){
+      return Scaffold(body: Center(child: CupertinoActivityIndicator(),));
+    }else{
+      return Scaffold(
+        body: ListView.builder(
+            itemCount: subject_details.length,
+            itemBuilder: (context, index) {
+              return Card(
+                elevation: 8,
+                margin: EdgeInsets.all(6),
+                child: SizedBox(
+                    height: 200,
+                    width: 300,
+                    child: Column(
+                      children: [
+                        ListTile(
+                          title: Text(subject_details[index].name),
+                        ),
+                        Row(
+                          children: [Text("Attended: " + subject_details[index].present), Text("Total: " + subject_details[index].total)],
+                        )
+                      ],
                     )
-                  ],
-                )
-              ),
-            );
-          }),
-      backgroundColor: Colors.white,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
+                ),
+              );
+            }),
+        backgroundColor: Colors.white,
+        floatingActionButton: FloatingActionButton(
+          onPressed: () async {
 
-        },
-      ),
-    );
+          },
+        ),
+      );
+    }
+
   }
 
   Future<List<dynamic>?> fetchclass() async {
@@ -114,10 +119,11 @@ class _HomeState extends State<Home> {
    setState(() {
 
      subject_details.add(temp);
+
    });
     }
     setState(() {
-      widget.check = 2;
+check=1;
     });
     print(subject_details[0].total);
 
@@ -136,10 +142,12 @@ class _HomeState extends State<Home> {
 
     setState(() {
       tempdata = json.decode(response.body);
+
     });
 // // print(data);
 
 //print(response.body);
+
     return tempdata;
   }
 
