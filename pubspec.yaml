@@ -35,6 +35,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   http: ^0.13.4
+  rive: ^0.9.0
 
 dev_dependencies:
   flutter_test:
@@ -53,11 +54,17 @@ dev_dependencies:
 # The following section is specific to Flutter.
 flutter:
   uses-material-design: true
+  assets:
+    - animation/2.riv
+    - animation/3.riv
+    - animation/4.riv
+
 
   fonts:
     - family: Urbanist
       fonts:
         - asset: Fonts/Urbanist-VariableFont_wght.ttf
+
 
 
   # For details regarding fonts from package dependencies,

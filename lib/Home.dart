@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:rive/rive.dart';
 import 'package:seventy5/subject.dart';
 
 class Home extends StatefulWidget {
@@ -35,7 +36,9 @@ int  check=0;
   @override
   Widget build(BuildContext context) {
     if(check==0){
-      return Scaffold(body: Center(child: CupertinoActivityIndicator(),));
+      return Scaffold(body: Center(child:  RiveAnimation.asset(
+       "animation/4.riv",
+      ),));
     }else{
       return Scaffold(
           backgroundColor: darkMode ? Colors.grey[850] : Colors.grey[300],
@@ -44,8 +47,8 @@ int  check=0;
             children: [
               Container(height: MediaQuery.of(context).size.height/6,
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text("75"),
+                padding:  EdgeInsets.all(MediaQuery.of(context).size.height/18,),
+                child: Text("75",style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),),
               ),
 
               ),
