@@ -21,6 +21,8 @@ class _HomeState extends State<Home> {
     onpass();
   }
 
+
+
   late List<dynamic> data = [];
   late Future<List<dynamic>?> dataFuture;
   var subject_id = <String>[];
@@ -35,18 +37,26 @@ class _HomeState extends State<Home> {
       body: ListView.builder(
           itemCount: subject_details.length,
           itemBuilder: (context, index) {
-            if (widget.check == 2) {
-              print(subject_details[0].total);
-              return Text(subject_details[index].percentage);
-            }
-              else if(widget.check==0){
-                widget.check=1;
-                return CupertinoActivityIndicator();
-              }
-              return SizedBox(height: 1,);
-
+            return Card(
+              elevation: 8,
+              margin: EdgeInsets.all(6),
+              child: SizedBox(
+                height: 200,
+                width: 300,
+                child: Column(
+                  children: [
+                    ListTile(
+                      title: Text(subject_details[index].name),
+                    ),
+                    Row(
+                      children: [Text("Attended: " + subject_details[index].present), Text("Total: " + subject_details[index].total)],
+                    )
+                  ],
+                )
+              ),
+            );
           }),
-      backgroundColor: Colors.pink,
+      backgroundColor: Colors.white,
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
 
@@ -96,7 +106,7 @@ class _HomeState extends State<Home> {
     // print(subject_name);
     for (int i = 0; i < subject_id.length; i++) {
       var tempdata = await fetch_attendance(subject_id[i].toString());
-      Subject temp = new Subject(
+      Subject temp = Subject(
           present: tempdata["present"].toString(),
           name: subject_name[i],
           percentage: tempdata["persantage"].toString(),
