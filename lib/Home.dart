@@ -57,8 +57,8 @@ class _HomeState extends State<Home> {
                ,children: [
                  Column(crossAxisAlignment: CrossAxisAlignment.start,
                    children: [
-                     Text("Adamsy",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
-                     Text("CS4A")
+                     Text("Adamsy",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 24),),
+                     Text("CS4A",style: TextStyle(fontWeight: FontWeight.w400),)
                    ],
                  ),
                  NeumorphicButton(
