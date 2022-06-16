@@ -75,7 +75,7 @@ class _HomeState extends State<Home> {
                        boxShape:
                        NeumorphicBoxShape.circle(),
                      ),
-                     padding:  EdgeInsets.fromLTRB(12, 12, 12, 12),
+                     padding:  const EdgeInsets.fromLTRB(12, 12, 12, 12),
                      child: Image.asset("animation/Asset1.png",height: 27,width: 27,)),
                ],),
              ),
@@ -90,48 +90,32 @@ class _HomeState extends State<Home> {
                       children: <Widget>[
                         Container(
                           margin: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                          padding: const EdgeInsets.all(15),
+                          padding: const EdgeInsets.all(18),
                           width: MediaQuery.of(context).size.height / 1.5,
-                          height: MediaQuery.of(context).size.height / 6,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                          height: MediaQuery.of(context).size.height / 6.5,
+                          child: Row(
                             children: [
-                              Text(subjectDetails[index].name,
-                                  style: const TextStyle(fontSize: 15)),
-                              const SizedBox(height: 10),
-                              Row(
-                                children: [
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  Expanded(
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text("Present: " +
-                                            subjectDetails[index].present),
-                                        const SizedBox(height: 5),
-                                        Text("Total: " +
-                                            subjectDetails[index].total),
-                                      ],
-                                    ),
-                                  ),
-                                  CircularPercentIndicator(
-                                    radius: 32.0,
-                                    lineWidth: 3.0,
-                                    percent: double.parse(
-                                            subjectDetails[index].percentage) /
-                                        100,
-                                    center: Text(
-                                      subjectDetails[index].percentage + "%",
-                                      style: const TextStyle(fontSize: 12),
-                                    ),
-                                    progressColor: Colors.black,
-                                  )
-                                ],
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Expanded(child: Text(subjectDetails[index].name.toUpperCase(),style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w500))),
+                                    const SizedBox(height: 10),
+                                    Text(subjectDetails[index].present+"/"+subjectDetails[index].total),
+                                    const SizedBox(height: 5),
+                                    Text("Can cut x classes"),
+                                  ],
+                                ),
+                              ),
+                              CircularPercentIndicator(
+                                radius: 45.0,
+                                lineWidth: 3.0,
+                                percent: double.parse(subjectDetails[index].percentage)/100,
+                                center: Text(
+                                  double.parse(subjectDetails[index].percentage).toStringAsFixed(1) + "%",
+                                  style: const TextStyle(fontSize: 16),
+                                ),
+                                progressColor: Colors.black,
                               )
                             ],
                           ),
@@ -140,7 +124,7 @@ class _HomeState extends State<Home> {
                                   ? Colors.grey[850]
                                   : Colors.grey[300],
                               borderRadius:
-                                  const BorderRadius.all(Radius.circular(20)),
+                                  const BorderRadius.all(Radius.circular(34)),
                               boxShadow: [
                                 BoxShadow(
                                     color: darkMode
