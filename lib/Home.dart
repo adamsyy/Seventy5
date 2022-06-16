@@ -4,9 +4,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
 import 'package:seventy5/subject.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 
 class Home extends StatefulWidget {
-  late String id_link;
+  late String idLink;
 
   late List<dynamic> ids = [];
   @override
@@ -18,70 +19,95 @@ class _HomeState extends State<Home> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    dataFuture = fetchclass();
-    onpass();
+    dataFuture = fetchClass();
+    onPass();
   }
 
 
 
   late List<dynamic> data = [];
   late Future<List<dynamic>?> dataFuture;
-  var subject_id = <String>[];
-  var subject_name = <String>[];
-  var subject_details = <Subject>[];
+  var subjectId = <String>[];
+  var subjectName = <String>[];
+  var subjectDetails = <Subject>[];
   late Future<Subject> dataFuture2;
   bool darkMode = false;
-  var tempdata;
-int  check=0;
+  var tempData;
+  int  check=0;
   @override
   Widget build(BuildContext context) {
     if(check==0){
-      return Scaffold(body: Center(child:  RiveAnimation.asset(
+      return const Scaffold(body: Center(child:  RiveAnimation.asset(
        "animation/4.riv",
       ),));
     }else{
       return Scaffold(
-          backgroundColor: darkMode ? Colors.grey[850] : Colors.grey[300],
-        body: SingleChildScrollView(  physics: ScrollPhysics(),scrollDirection: Axis.vertical,
+        backgroundColor: darkMode ? Colors.grey[850] : Colors.grey[300],
+        body: SingleChildScrollView(  physics: const ScrollPhysics(),scrollDirection: Axis.vertical,
           child: Column(
             children: [
               Container(height: MediaQuery.of(context).size.height/6,
-              child: Padding(
+                child: const Text("75",style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),),
                 padding:  EdgeInsets.all(MediaQuery.of(context).size.height/18,),
-                child: Text("75",style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),),
               ),
-
-              ),
-              ListView.builder(shrinkWrap: true, physics: NeverScrollableScrollPhysics(),
-                  itemCount: subject_details.length,
+              ListView.builder(shrinkWrap: true, physics: const NeverScrollableScrollPhysics(),
+                  itemCount: subjectDetails.length,
                   itemBuilder: (context, index) {
                     return Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                          child: Container(
+                          Container(
+                            margin: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                            padding: const EdgeInsets.all(15),
                             width: MediaQuery.of(context).size.height/1.5,
                             height: MediaQuery.of(context).size.height/6,
-                            child: Center(child: Text("hehe")),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(subjectDetails[index].name, style: const TextStyle(fontSize: 15) ),
+                                const SizedBox(height: 10),
+                                Row(
+
+                                  children: [
+                                    const SizedBox(width: 10,),
+                                    Expanded(child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text("Present: " + subjectDetails[index].present),
+                                          const SizedBox(height: 5),
+                                          Text("Total: " + subjectDetails[index].total),
+                                        ],
+                                      ),
+                                    ),
+                                    CircularPercentIndicator(
+                                      radius: 32.0,
+                                      lineWidth: 3.0,
+                                      percent: double.parse(subjectDetails[index].percentage)/100,
+                                      center: Text(subjectDetails[index].percentage+"%", style: const TextStyle(fontSize: 12),),
+                                      progressColor: Colors.black,
+                                    )
+                                  ],
+                                )
+                              ],
+                            ),
                             decoration: BoxDecoration(
                                 color: darkMode ? Colors.grey[850] : Colors.grey[300],
-                                borderRadius: BorderRadius.all(Radius.circular(20)),
+                                borderRadius: const BorderRadius.all(Radius.circular(20)),
                                 boxShadow: [
                                   BoxShadow(
-                                      color: darkMode ? (Colors.black54)! :( Colors.grey[500])!,
-                                      offset: Offset(4.0, 4.0),
+                                      color: darkMode ? (Colors.black54) :( Colors.grey[500])!,
+                                      offset: const Offset(4.0, 4.0),
                                       blurRadius: 15.0,
                                       spreadRadius: 1.0),
                                   BoxShadow(
                                       color: darkMode ? (Colors.grey[800] )!: Colors.white,
-                                      offset: Offset(-4.0, -4.0),
+                                      offset: const Offset(-4.0, -4.0),
                                       blurRadius: 15.0,
                                       spreadRadius: 1.0),
                                 ]),
                           ),
-                        ),
-                     SizedBox(height: 40,)
+                     const SizedBox(height: 40,)
                       ],
                     );
                   }),
@@ -95,12 +121,12 @@ int  check=0;
 
   }
 
-  Future<List<dynamic>?> fetchclass() async {
+  Future<List<dynamic>?> fetchClass() async {
     final url =
         Uri.parse("https://production.api.ezygo.app/api/v1/usersubgroups");
 
     final response = await http.get(url, headers: {
-      'Authorization': 'Bearer ml3j24Sf2LdIoOewSbQmhuvVYtCxeb6FbXlMIODQ',
+      'Authorization': 'Bearer 46873|2KfEp7GIt9PUs5SHpAeOX3wVxKFfECOjAqFrOZrG',
       'Accept': 'application/json, text/plain, */*',
     });
     // print(response.body);
@@ -112,12 +138,12 @@ int  check=0;
     return data;
   }
 
-  Future<List<dynamic>?> fetchlists() async {
+  Future<List<dynamic>?> fetchLists() async {
     final url = Uri.parse(
         "https://production.api.ezygo.app/api/v1/institutionuser/courses/withusers");
 
     final response = await http.get(url, headers: {
-      'Authorization': 'Bearer ml3j24Sf2LdIoOewSbQmhuvVYtCxeb6FbXlMIODQ',
+      'Authorization': 'Bearer 46873|2KfEp7GIt9PUs5SHpAeOX3wVxKFfECOjAqFrOZrG',
       'Accept': 'application/json, text/plain, */*',
     });
     // print(response.body);
@@ -127,66 +153,64 @@ int  check=0;
     });
 // print(data);
     for (int i = 0; i < data.length; i++) {
-      if (data[i]["usersubgroup"]["id"] == int.parse(widget.id_link)) {
-        subject_id.add(data[i]["id"].toString());
-        subject_name.add(data[i]["name"]);
+      if (data[i]["usersubgroup"]["id"] == int.parse(widget.idLink)) {
+        subjectId.add(data[i]["id"].toString());
+        subjectName.add(data[i]["name"]);
       }
     }
     // print(subject_id);
     // print(subject_name);
-    for (int i = 0; i < subject_id.length; i++) {
-      var tempdata = await fetch_attendance(subject_id[i].toString());
+    for (int i = 0; i < subjectId.length; i++) {
+      var tempdata = await fetchAttendance(subjectId[i].toString());
       Subject temp = Subject(
           present: tempdata["present"].toString(),
-          name: subject_name[i],
+          name: subjectName[i],
           percentage: tempdata["persantage"].toString(),
           total: tempdata["totel"].toString());
    setState(() {
 
-     subject_details.add(temp);
+     subjectDetails.add(temp);
 
    });
     }
     setState(() {
-check=1;
+      check=1;
     });
-    print(subject_details[0].total);
+    print(subjectDetails[0].total);
 
     return data;
   }
 
-  Future<Map<String, dynamic>> fetch_attendance(String id) async {
+  Future<Map<String, dynamic>> fetchAttendance(String id) async {
     final url = Uri.parse(
-        "https://production.api.ezygo.app/api/v1/attendancereports/institutionuser/courses/+${id}+/summery");
+        "https://production.api.ezygo.app/api/v1/attendancereports/institutionuser/courses/+$id+/summery");
 
     final response = await http.get(url, headers: {
-      'Authorization': 'Bearer ml3j24Sf2LdIoOewSbQmhuvVYtCxeb6FbXlMIODQ',
+      'Authorization': 'Bearer 46873|2KfEp7GIt9PUs5SHpAeOX3wVxKFfECOjAqFrOZrG',
       'Accept': 'application/json, text/plain, */*',
     });
     // print(response.body);
 
     setState(() {
-      tempdata = json.decode(response.body);
+      tempData = json.decode(response.body);
 
     });
 // // print(data);
 
 //print(response.body);
 
-    return tempdata;
+    return tempData;
   }
 
- void onpass()async{
-   if (data.length != 0) {
-     widget.id_link = (data[1]["id"].toString());
+ void onPass()async{
+   if (data.isNotEmpty) {
+     widget.idLink = (data[1]["id"].toString());
    } else {
-     await fetchclass();
-     widget.id_link = (data[data.length - 1]["id"].toString());
+     await fetchClass();
+     widget.idLink = (data[data.length - 1]["id"].toString());
    }
 
-//https://production.api.ezygo.app/api/v1/institutionuser/courses/withusers
-   await fetchlists();
-
+   await fetchLists();
  }
 
 }
