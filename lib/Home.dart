@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -23,8 +25,6 @@ class _HomeState extends State<Home> {
     onPass();
   }
 
-
-
   late List<dynamic> data = [];
   late Future<List<dynamic>?> dataFuture;
   var subjectId = <String>[];
@@ -33,92 +33,142 @@ class _HomeState extends State<Home> {
   late Future<Subject> dataFuture2;
   bool darkMode = false;
   var tempData;
-  int  check=0;
+  int check = 0;
   @override
   Widget build(BuildContext context) {
-    if(check==0){
-      return const Scaffold(body: Center(child:  RiveAnimation.asset(
-       "animation/4.riv",
-      ),));
-    }else{
+    if (check == 0) {
+      return const Scaffold(
+          body: Center(
+        child: RiveAnimation.asset(
+          "animation/4.riv",
+        ),
+      ));
+    } else {
       return Scaffold(
         backgroundColor: darkMode ? Colors.grey[850] : Colors.grey[300],
-        body: SingleChildScrollView(  physics: const ScrollPhysics(),scrollDirection: Axis.vertical,
+        body: SingleChildScrollView(
+          physics: const ScrollPhysics(),
+          scrollDirection: Axis.vertical,
           child: Column(
             children: [
-              Container(height: MediaQuery.of(context).size.height/6,
-                child: const Text("75",style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),),
-                padding:  EdgeInsets.all(MediaQuery.of(context).size.height/18,),
-              ),
-              ListView.builder(shrinkWrap: true, physics: const NeverScrollableScrollPhysics(),
+             Container( margin: const EdgeInsets.fromLTRB(20, 70, 20, 0),
+               child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween
+
+               ,children: [
+                 Column(crossAxisAlignment: CrossAxisAlignment.start,
+                   children: [
+                     Text("Adamsy",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
+                     Text("CS4A")
+                   ],
+                 ),
+                 NeumorphicButton(
+                     margin: EdgeInsets.only(top: 12),
+                     onPressed: () {
+                       NeumorphicTheme.of(context)?.themeMode =
+                       NeumorphicTheme.isUsingDark(context)
+                           ? ThemeMode.light
+                           : ThemeMode.dark;
+                     },
+                     style: NeumorphicStyle(
+                       color: darkMode ? Colors.grey[850] : Colors.grey[300],
+                       shape: NeumorphicShape.concave,
+                       boxShape:
+                       NeumorphicBoxShape.circle(),
+                     ),
+                     padding:  EdgeInsets.fromLTRB(12, 12, 12, 12),
+                     child: Image.asset("animation/Asset1.png",height: 27,width: 27,)),
+               ],),
+             ),
+
+              ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
                   itemCount: subjectDetails.length,
                   itemBuilder: (context, index) {
                     return Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                          Container(
-                            margin: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                            padding: const EdgeInsets.all(15),
-                            width: MediaQuery.of(context).size.height/1.5,
-                            height: MediaQuery.of(context).size.height/6,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(subjectDetails[index].name, style: const TextStyle(fontSize: 15) ),
-                                const SizedBox(height: 10),
-                                Row(
-
-                                  children: [
-                                    const SizedBox(width: 10,),
-                                    Expanded(child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text("Present: " + subjectDetails[index].present),
-                                          const SizedBox(height: 5),
-                                          Text("Total: " + subjectDetails[index].total),
-                                        ],
-                                      ),
+                        Container(
+                          margin: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                          padding: const EdgeInsets.all(15),
+                          width: MediaQuery.of(context).size.height / 1.5,
+                          height: MediaQuery.of(context).size.height / 6,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(subjectDetails[index].name,
+                                  style: const TextStyle(fontSize: 15)),
+                              const SizedBox(height: 10),
+                              Row(
+                                children: [
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  Expanded(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text("Present: " +
+                                            subjectDetails[index].present),
+                                        const SizedBox(height: 5),
+                                        Text("Total: " +
+                                            subjectDetails[index].total),
+                                      ],
                                     ),
-                                    CircularPercentIndicator(
-                                      radius: 32.0,
-                                      lineWidth: 3.0,
-                                      percent: double.parse(subjectDetails[index].percentage)/100,
-                                      center: Text(subjectDetails[index].percentage+"%", style: const TextStyle(fontSize: 12),),
-                                      progressColor: Colors.black,
-                                    )
-                                  ],
-                                )
-                              ],
-                            ),
-                            decoration: BoxDecoration(
-                                color: darkMode ? Colors.grey[850] : Colors.grey[300],
-                                borderRadius: const BorderRadius.all(Radius.circular(20)),
-                                boxShadow: [
-                                  BoxShadow(
-                                      color: darkMode ? (Colors.black54) :( Colors.grey[500])!,
-                                      offset: const Offset(4.0, 4.0),
-                                      blurRadius: 15.0,
-                                      spreadRadius: 1.0),
-                                  BoxShadow(
-                                      color: darkMode ? (Colors.grey[800] )!: Colors.white,
-                                      offset: const Offset(-4.0, -4.0),
-                                      blurRadius: 15.0,
-                                      spreadRadius: 1.0),
-                                ]),
+                                  ),
+                                  CircularPercentIndicator(
+                                    radius: 32.0,
+                                    lineWidth: 3.0,
+                                    percent: double.parse(
+                                            subjectDetails[index].percentage) /
+                                        100,
+                                    center: Text(
+                                      subjectDetails[index].percentage + "%",
+                                      style: const TextStyle(fontSize: 12),
+                                    ),
+                                    progressColor: Colors.black,
+                                  )
+                                ],
+                              )
+                            ],
                           ),
-                     const SizedBox(height: 40,)
+                          decoration: BoxDecoration(
+                              color: darkMode
+                                  ? Colors.grey[850]
+                                  : Colors.grey[300],
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(20)),
+                              boxShadow: [
+                                BoxShadow(
+                                    color: darkMode
+                                        ? (Colors.black54)
+                                        : (Colors.grey[500])!,
+                                    offset: const Offset(4.0, 4.0),
+                                    blurRadius: 15.0,
+                                    spreadRadius: 1.0),
+                                BoxShadow(
+                                    color: darkMode
+                                        ? (Colors.grey[800])!
+                                        : Colors.white,
+                                    offset: const Offset(-4.0, -4.0),
+                                    blurRadius: 15.0,
+                                    spreadRadius: 1.0),
+                              ]),
+                        ),
+                        const SizedBox(
+                          height: 40,
+                        )
                       ],
                     );
                   }),
             ],
           ),
         ),
-
-
       );
     }
-
   }
 
   Future<List<dynamic>?> fetchClass() async {
@@ -167,14 +217,12 @@ class _HomeState extends State<Home> {
           name: subjectName[i],
           percentage: tempdata["persantage"].toString(),
           total: tempdata["totel"].toString());
-   setState(() {
-
-     subjectDetails.add(temp);
-
-   });
+      setState(() {
+        subjectDetails.add(temp);
+      });
     }
     setState(() {
-      check=1;
+      check = 1;
     });
     print(subjectDetails[0].total);
 
@@ -193,7 +241,6 @@ class _HomeState extends State<Home> {
 
     setState(() {
       tempData = json.decode(response.body);
-
     });
 // // print(data);
 
@@ -202,15 +249,14 @@ class _HomeState extends State<Home> {
     return tempData;
   }
 
- void onPass()async{
-   if (data.isNotEmpty) {
-     widget.idLink = (data[1]["id"].toString());
-   } else {
-     await fetchClass();
-     widget.idLink = (data[data.length - 1]["id"].toString());
-   }
+  void onPass() async {
+    if (data.isNotEmpty) {
+      widget.idLink = (data[1]["id"].toString());
+    } else {
+      await fetchClass();
+      widget.idLink = (data[data.length - 1]["id"].toString());
+    }
 
-   await fetchLists();
- }
-
+    await fetchLists();
+  }
 }
