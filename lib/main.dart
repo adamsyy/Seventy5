@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:seventy5/Home.dart';
+import 'package:seventy5/username.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,7 +12,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: Home(),);
+    return MaterialApp(home: Username(),);
   }
 }
 
