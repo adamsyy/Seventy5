@@ -65,7 +65,7 @@ class _HomeState extends State<Home> {
                      margin: EdgeInsets.only(top: 12),
                      onPressed: () {
                        NeumorphicTheme.of(context)?.themeMode =
-                       NeumorphicTheme.isUsingDark(context)
+                       darkMode
                            ? ThemeMode.light
                            : ThemeMode.dark;
                      },

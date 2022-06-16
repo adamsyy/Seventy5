@@ -1,11 +1,10 @@
 import 'dart:convert';
-
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class Username extends StatefulWidget {
-
   @override
   State<Username> createState() => _UsernameState();
 }
@@ -13,54 +12,61 @@ class Username extends StatefulWidget {
 class _UsernameState extends State<Username> {
   late String username;
   late String password;
+  late String name;
+  late String token;
+  bool darkMode = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:Column(
-
-        children: [  SizedBox(height: 100,),
-
-          TextField(
-            onChanged: (value){
-              username=value;
-            },
-            obscureText: false,
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: 'username',
-            ),
+        backgroundColor: darkMode ? Colors.grey[850] : Colors.grey[300],
+        body: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Column(
+            children: [
+              SizedBox(
+                height: 100,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Neumorphic(
+                  style: NeumorphicStyle(
+                    lightSource: LightSource.topLeft,
+                    depth: -3,
+                    color: Colors.grey[300],
+                  ),
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width / 1.3,
+                    child: TextFormField(
+                      keyboardType: TextInputType.number,
+                      style: const TextStyle(fontSize: 16.0),
+                      textAlign: TextAlign.center,
+                      decoration: InputDecoration(
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                              borderSide:
+                                  const BorderSide(color: Color(0xffd9d9d9))),
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                              borderSide: BorderSide.none)),
+                      onChanged: (value) {
+                        print(value);
+                      },
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
-          SizedBox(height: 200,),
-          TextField(
-            obscureText: false,
-            onChanged: (value){
-              password=value;
-            },
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: 'Password',
-            ),
-          ),
-      GestureDetector(onTap: ()async{
-        await lookup_login();
-      },
-        child: Container(color: Colors.pink,height: 100,width: 100,
-          child: Text("sett"),
-        ),
-      )
-        ],
-      ) ,
-    );
+        ));
   }
 
-
   Future lookup_login() async {
-
     Map newUpdate = {
       "password": password,
-      "username":username,
+      "username": username,
     };
-    final url = Uri.parse("https://production.api.ezygo.app/api/v1/login/lookup?username=+${username}");
+    final url = Uri.parse(
+        "https://production.api.ezygo.app/api/v1/login/lookup?username=+${username}");
 
     final response = await http.post(
       url,
@@ -72,12 +78,11 @@ class _UsernameState extends State<Username> {
     );
     print(json.decode(response.body)["users"].toString());
 
-String name=json.decode(response.body)["users"][0].toString();
-
+    name = json.decode(response.body)["users"][0].toString();
 
     Map newUpdate2 = {
       "password": password,
-      "username":name,
+      "username": name,
     };
     final url2 = Uri.parse("https://production.api.ezygo.app/api/v1/login");
 
@@ -91,16 +96,12 @@ String name=json.decode(response.body)["users"][0].toString();
     );
     print("res 2");
     print(response2.body);
-
-
-
-
   }
 
-  Future username_login()async{
+  Future username_login() async {
     Map newUpdate2 = {
       "password": password,
-      "username":username,
+      "username": username,
     };
     final url2 = Uri.parse("https://production.api.ezygo.app/api/v1/login");
 
@@ -114,10 +115,5 @@ String name=json.decode(response.body)["users"][0].toString();
     );
     print("res 2");
     print(response2.body);
-
-
-
-
   }
-
 }
