@@ -122,7 +122,11 @@ class _HomeState extends State<Home> {
                                       const SizedBox(height: 10),
                                       Text(subjectDetails[index].present+"/"+subjectDetails[index].total),
                                       const SizedBox(height: 5),
-                                      Text("Can cut x classes"),
+                                      Text(
+                                          double.parse(subjectDetails[index].percentage)>=75 ?
+                                          "Can cut " + ((int.parse(subjectDetails[index].present)/0.75).floor()-int.parse(subjectDetails[index].total)).toString() + " classes" :
+                                          "Need to attend " + (3 * int.parse(subjectDetails[index].total) - 4 * int.parse(subjectDetails[index].present)).toString() + " classes"
+                                      ),
                                     ],
                                   ),
                                 ),
