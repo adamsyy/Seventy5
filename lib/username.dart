@@ -41,7 +41,9 @@ class _UsernameState extends State<Username> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(height: MediaQuery.of(context).size.height / 2),
+                SizedBox(height: MediaQuery.of(context).size.height /15),
+Image.asset("animation/pic.png",height: 275,width: 275,),
+                SizedBox(height: MediaQuery.of(context).size.height /10),
                 Neumorphic(
                     style: NeumorphicStyle(
                         shape: NeumorphicShape.concave,
