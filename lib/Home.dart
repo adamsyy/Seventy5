@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
+import 'package:seventy5/Profile.dart';
 import 'package:seventy5/subject.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:seventy5/username.dart';
@@ -51,12 +52,14 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     if (check == 0) {
       return  WillPopScope( onWillPop: () async => false,
-        child: Scaffold(
-            body: Center(
-          child: RiveAnimation.asset(
-            "animation/4.riv",
-          ),
-        )),
+        child: GestureDetector(
+          child: Scaffold(
+              body: Center(
+            child: RiveAnimation.asset(
+              "animation/4.riv",
+            ),
+          )),
+        ),
       );
     } else {
       return WillPopScope( onWillPop: () async {SystemNavigator.pop();
@@ -83,8 +86,11 @@ class _HomeState extends State<Home> {
                        margin: EdgeInsets.only(top: 12),
 
                        onPressed: () {
-                       showAlertDialog(context);
 
+                         Navigator.push(
+                           context,
+                           MaterialPageRoute(builder: (context) =>  Profile()),
+                         );
 
 
 
@@ -277,43 +283,7 @@ class _HomeState extends State<Home> {
   }
 
 
-  showAlertDialog(BuildContext context) {
-    // set up the buttons
-    Widget cancelButton = FlatButton(
-      child: Text("Cancel"),
-      onPressed:  () {
-        Navigator.of(context).pop();
-      },
-    );
-    Widget continueButton = FlatButton(
-      child: Text("Sign out"),
-      onPressed:  ()async {
-        // Try reading data from the 'counter' key. If it doesn't exist, returns null.
-        // Obtain shared preferences.
 
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) =>  Username()),
-        );
-      },
-    );
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-
-      content: Text("Are you sure you want to sign out?"),
-      actions: [
-        cancelButton,
-        continueButton,
-      ],
-    );
-    // show the dialog
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
-  }
 
 
 
