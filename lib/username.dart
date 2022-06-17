@@ -283,10 +283,10 @@ if(username![i]!='@'){
 
       }
       // Obtain shared preferences.
-      // final prefs = await SharedPreferences.getInstance();
-      // await prefs.setString('username',username!);
-      // await prefs.setString('password',password!);
-      // await prefs.setString('token',token!);
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('username',username!);
+      await prefs.setString('password',password!);
+      await prefs.setString('token',token!);
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) =>  Home(name: newusername.toString(),token: token,)),
@@ -349,10 +349,10 @@ if(username![i]!='@'){
       token=json.decode(response2.body)["access_token"];
       print("logging in");
 
-      // final prefs = await SharedPreferences.getInstance();
-      // await prefs.setString('username',username!);
-      // await prefs.setString('password',password!);
-      // await prefs.setString('token',token!);
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('username',username!);
+      await prefs.setString('password',password!);
+      await prefs.setString('token',token!);
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) =>  Home(name: username.toString(),token: token,)),

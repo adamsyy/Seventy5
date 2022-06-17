@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:seventy5/Home.dart';
 import 'package:seventy5/username.dart';
@@ -18,21 +19,32 @@ class _MyAppState extends State<MyApp> {
   late String username;
   late String password;
   late String token;
+  int check=0;
   // This widget is the root of your application.
   @override
   void initState() {
     // TODO: implement initState
 get_token();
-getcred();
+ getcred();
+
+
   }
   @override
   Widget build(BuildContext context) {
-
-if(token!=null){
-  return MaterialApp(home: Home(token: token, name: username,),);
-}else {
-  return MaterialApp(home: Username(),);
+if(check!=1){
+  return MaterialApp(home: Username());
+}else{
+  if(token!=null){
+    return MaterialApp(home: Home(token: token, name: username,),);
+  }else {
+    return MaterialApp(home: Username(),);
+  }
 }
+
+
+
+
+
 
   }
 getcred()async{
@@ -41,7 +53,7 @@ getcred()async{
   setState(() {
     username = prefs.getString('username')!;
     password = prefs.getString('password')!;
-
+check=1;
   });
 
 }
@@ -51,7 +63,7 @@ getcred()async{
     setState(() {
       token = prefs.getString('token')!;
 
-
+print(token);
     });
 
   }
