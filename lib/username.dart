@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:seventy5/Home.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Username extends StatefulWidget {
@@ -281,6 +282,11 @@ if(username![i]!='@'){
 }
 
       }
+      // Obtain shared preferences.
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('username',username!);
+      await prefs.setString('password',password!);
+      await prefs.setString('token',token!);
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) =>  Home(name: newusername.toString(),token: token,)),
@@ -343,7 +349,10 @@ if(username![i]!='@'){
       token=json.decode(response2.body)["access_token"];
       print("logging in");
 
-
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('username',username!);
+      await prefs.setString('password',password!);
+      await prefs.setString('token',token!);
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) =>  Home(name: username.toString(),token: token,)),
