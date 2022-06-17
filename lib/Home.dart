@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
 import 'package:seventy5/subject.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:seventy5/username.dart';
 
 class Home extends StatefulWidget {
   Home({required this.name,required this.token});
@@ -75,7 +76,13 @@ class _HomeState extends State<Home> {
                    ),
                    NeumorphicButton(
                        margin: EdgeInsets.only(top: 12),
+
                        onPressed: () {
+                         showAlertDialog(context);
+
+
+
+
                          NeumorphicTheme.of(context)?.themeMode =
                          darkMode
                              ? ThemeMode.light
@@ -256,4 +263,43 @@ class _HomeState extends State<Home> {
 
     await fetchLists();
   }
+
+
+  showAlertDialog(BuildContext context) {
+    // set up the buttons
+    Widget cancelButton = FlatButton(
+      child: Text("Cancel"),
+      onPressed:  () {
+        Navigator.of(context).pop();
+      },
+    );
+    Widget continueButton = FlatButton(
+      child: Text("Sign out"),
+      onPressed:  () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) =>  Username()),
+        );
+      },
+    );
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+
+      content: Text("Are you sure you want to sign out?"),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+
+
 }

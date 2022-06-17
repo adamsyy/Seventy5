@@ -22,7 +22,13 @@ class _UsernameState extends State<Username> {
 
   final fieldText_username = TextEditingController();
   final fieldText_password = TextEditingController();
+@override
+  void initState() {
+    // TODO: implement initState
 
+  fieldText_password.clear();
+  fieldText_username.clear();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
