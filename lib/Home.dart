@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:rive/rive.dart';
 import 'package:seventy5/Profile.dart';
 import 'package:seventy5/subject.dart';
@@ -52,137 +53,134 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     if (check == 0) {
       return  WillPopScope( onWillPop: () async => false,
-        child: GestureDetector(
-          child: Scaffold(
-              body: Center(
-            child: RiveAnimation.asset(
-              "animation/4.riv",
-            ),
-          )),
-        ),
+        child: Scaffold(
+            body: Center(
+          child: RiveAnimation.asset(
+            "animation/4.riv",
+          ),
+        )),
       );
     } else {
       return WillPopScope( onWillPop: () async {SystemNavigator.pop();
       return false;
       },
-        child: Scaffold(
-          backgroundColor: darkMode ? Colors.grey[850] : Colors.grey[300],
-          body: SingleChildScrollView(
-            physics: const ScrollPhysics(),
-            scrollDirection: Axis.vertical,
-            child: Column(
-              children: [
-               Container( margin: const EdgeInsets.fromLTRB(20, 70, 20, 0),
-                 child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween
+        child: GestureDetector( onHorizontalDragEnd: (DragEndDetails details) => _onHorizontalDrag(details),
+          child: Scaffold(
+            backgroundColor: darkMode ? Colors.grey[850] : Colors.grey[300],
+            body: SingleChildScrollView(
+              physics: const ScrollPhysics(),
+              scrollDirection: Axis.vertical,
+              child: Column(
+                children: [
+                 Container( margin: const EdgeInsets.fromLTRB(20, 70, 20, 0),
+                   child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween
 
-                 ,children: [
-                   Column(crossAxisAlignment: CrossAxisAlignment.start,
-                     children: [
-                       Text(widget.name,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 24),),
-                       Text( class_name,style: TextStyle(fontWeight: FontWeight.w400),)
-                     ],
-                   ),
-                   NeumorphicButton(
-                       margin: EdgeInsets.only(top: 12),
+                   ,children: [
+                     Column(crossAxisAlignment: CrossAxisAlignment.start,
+                       children: [
+                         Text(widget.name,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 24),),
+                         Text( class_name,style: TextStyle(fontWeight: FontWeight.w400),)
+                       ],
+                     ),
+                     NeumorphicButton(
+                         margin: EdgeInsets.only(top: 12),
 
-                       onPressed: () {
+                         onPressed: () {
 
-                         Navigator.push(
-                           context,
-                           MaterialPageRoute(builder: (context) =>  Profile()),
-                         );
+                           Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft, child: Profile()));
 
 
 
-                         NeumorphicTheme.of(context)?.themeMode =
-                         darkMode
-                             ? ThemeMode.light
-                             : ThemeMode.dark;
-                       },
-                       style: NeumorphicStyle(
-                         color: darkMode ? Colors.grey[850] : Colors.grey[300],
-                         shape: NeumorphicShape.concave,
-                         boxShape:
-                         NeumorphicBoxShape.circle(),
-                       ),
-                       padding:  const EdgeInsets.fromLTRB(12, 12, 12, 12),
-                       child: Icon(FontAwesomeIcons.person,size: 27,),)
-                 ],),
-               ),
+                           NeumorphicTheme.of(context)?.themeMode =
+                           darkMode
+                               ? ThemeMode.light
+                               : ThemeMode.dark;
+                         },
+                         style: NeumorphicStyle(
+                           color: darkMode ? Colors.grey[850] : Colors.grey[300],
+                           shape: NeumorphicShape.concave,
+                           boxShape:
+                           NeumorphicBoxShape.circle(),
+                         ),
+                         padding:  const EdgeInsets.fromLTRB(12, 12, 12, 12),
+                         child: Icon(FontAwesomeIcons.person,size: 27,),)
+                   ],),
+                 ),
 
-                ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: subjectDetails.length,
-                    itemBuilder: (context, index) {
-                      return Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Container(
-                            margin: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                            padding: const EdgeInsets.all(18),
-                            width: MediaQuery.of(context).size.height / 1.5,
-                            height: MediaQuery.of(context).size.height / 6.5,
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Expanded(child: Text(subjectDetails[index].name.toUpperCase(),style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w500))),
-                                      const SizedBox(height: 10),
-                                      Text(subjectDetails[index].present+"/"+subjectDetails[index].total),
-                                      const SizedBox(height: 5),
-                                      Text(
-                                          double.parse(subjectDetails[index].percentage)>=75 ?
-                                          "Can cut " + ((int.parse(subjectDetails[index].present)/0.75).floor()-int.parse(subjectDetails[index].total)).toString() + " classes" :
-                                          "Need to attend " + (3 * int.parse(subjectDetails[index].total) - 4 * int.parse(subjectDetails[index].present)).toString() + " classes"
-                                      ),
-                                    ],
+                  ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: subjectDetails.length,
+                      itemBuilder: (context, index) {
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Container(
+                              margin: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                              padding: const EdgeInsets.all(18),
+                              width: MediaQuery.of(context).size.height / 1.5,
+                              height: MediaQuery.of(context).size.height / 6.5,
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Expanded(child: Text(subjectDetails[index].name.toUpperCase(),style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w500))),
+                                        const SizedBox(height: 10),
+                                        Text(subjectDetails[index].present+"/"+subjectDetails[index].total),
+                                        const SizedBox(height: 5),
+                                        Text(
+                                            double.parse(subjectDetails[index].percentage)>=75 ?
+                                            "Can cut " + ((int.parse(subjectDetails[index].present)/0.75).floor()-int.parse(subjectDetails[index].total)).toString() + " classes" :
+                                            "Need to attend " + (3 * int.parse(subjectDetails[index].total) - 4 * int.parse(subjectDetails[index].present)).toString() + " classes"
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                                CircularPercentIndicator(
-                                  radius: 45.0,
-                                  lineWidth: 3.0,
-                                  percent: double.parse(subjectDetails[index].percentage)/100,
-                                  center: Text(
-                                    double.parse(subjectDetails[index].percentage).toStringAsFixed(1) + "%",
-                                    style: const TextStyle(fontSize: 16),
-                                  ),
-                                  progressColor: Colors.black,
-                                )
-                              ],
+                                  CircularPercentIndicator(
+                                    radius: 45.0,
+                                    lineWidth: 3.0,
+                                    percent: double.parse(subjectDetails[index].percentage)/100,
+                                    center: Text(
+                                      double.parse(subjectDetails[index].percentage).toStringAsFixed(1) + "%",
+                                      style: const TextStyle(fontSize: 16),
+                                    ),
+                                    progressColor: Colors.black,
+                                  )
+                                ],
+                              ),
+                              decoration: BoxDecoration(
+                                  color: darkMode
+                                      ? Colors.grey[850]
+                                      : Colors.grey[300],
+                                  borderRadius:
+                                      const BorderRadius.all(Radius.circular(34)),
+                                  boxShadow: [
+                                    BoxShadow(
+                                        color: darkMode
+                                            ? (Colors.black54)
+                                            : (Colors.grey[500])!,
+                                        offset: const Offset(4.0, 4.0),
+                                        blurRadius: 15.0,
+                                        spreadRadius: 1.0),
+                                    BoxShadow(
+                                        color: darkMode
+                                            ? (Colors.grey[800])!
+                                            : Colors.white,
+                                        offset: const Offset(-4.0, -4.0),
+                                        blurRadius: 15.0,
+                                        spreadRadius: 1.0),
+                                  ]),
                             ),
-                            decoration: BoxDecoration(
-                                color: darkMode
-                                    ? Colors.grey[850]
-                                    : Colors.grey[300],
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(34)),
-                                boxShadow: [
-                                  BoxShadow(
-                                      color: darkMode
-                                          ? (Colors.black54)
-                                          : (Colors.grey[500])!,
-                                      offset: const Offset(4.0, 4.0),
-                                      blurRadius: 15.0,
-                                      spreadRadius: 1.0),
-                                  BoxShadow(
-                                      color: darkMode
-                                          ? (Colors.grey[800])!
-                                          : Colors.white,
-                                      offset: const Offset(-4.0, -4.0),
-                                      blurRadius: 15.0,
-                                      spreadRadius: 1.0),
-                                ]),
-                          ),
-                          const SizedBox(
-                            height: 40,
-                          )
-                        ],
-                      );
-                    }),
-              ],
+                            const SizedBox(
+                              height: 40,
+                            )
+                          ],
+                        );
+                      }),
+                ],
+              ),
             ),
           ),
         ),
@@ -284,7 +282,16 @@ class _HomeState extends State<Home> {
 
 
 
+  void _onHorizontalDrag(DragEndDetails details) {
+    if(details.primaryVelocity == 0) return; // user have just tapped on screen (no dragging)
 
+    if (details.primaryVelocity?.compareTo(0) == -1)
+      {
+        Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft, child: Profile()));
+      }
+    else
+      print('dragged from right');
+  }
 
 
 }
