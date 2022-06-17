@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:seventy5/username.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -17,59 +16,59 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  late Razorpay razorpay;
-
-  @override
-  void initState() {
-
-    super.initState();
-    razorpay=Razorpay();
-    razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, handlerPaymentSuccess);
-    razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, handlerPaymentError);
-    razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, handlerExternalWallet);
-  }
-  @override
-  void dispose() {
-
-    super.dispose();
-    razorpay.clear();
-  }
-  void openCheckout(){
-    var options={
-      "key":"rzp_test_KRIbh5kOB96e8q",
-      "amount":"100",
-      "name":"The Hanger",
-      "description":"Fastest Payment Method",
-      "prefill":{
-        "contact":"7559076475",
-        "email": "adamrubiks@gmail.com",
-      },
-      "external":{
-        "wallets":["paytm"],
-
-      }
-    };
-    try{
-      razorpay.open(options);
-    }
-    catch(e){
-      print(e.toString());
-    }
-
-  }
-
-
-  void handlerPaymentSuccess(){
-    print('success aayye');
-  }
-
-  void handlerPaymentError(){
-    print('error aai');
-  }
-
-  void handlerExternalWallet(){
-    print('external aaye');
-  }
+  // late Razorpay razorpay;
+  //
+  // @override
+  // void initState() {
+  //
+  //   super.initState();
+  //   razorpay=Razorpay();
+  //   razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, handlerPaymentSuccess);
+  //   razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, handlerPaymentError);
+  //   razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, handlerExternalWallet);
+  // }
+  // @override
+  // void dispose() {
+  //
+  //   super.dispose();
+  //   razorpay.clear();
+  // }
+  // void openCheckout(){
+  //   var options={
+  //     "key":"rzp_test_KRIbh5kOB96e8q",
+  //     "amount":"100",
+  //     "name":"The Hanger",
+  //     "description":"Fastest Payment Method",
+  //     "prefill":{
+  //       "contact":"7559076475",
+  //       "email": "adamrubiks@gmail.com",
+  //     },
+  //     "external":{
+  //       "wallets":["paytm"],
+  //
+  //     }
+  //   };
+  //   try{
+  //     razorpay.open(options);
+  //   }
+  //   catch(e){
+  //     print(e.toString());
+  //   }
+  //
+  // }
+  //
+  //
+  // void handlerPaymentSuccess(){
+  //   print('success aayye');
+  // }
+  //
+  // void handlerPaymentError(){
+  //   print('error aai');
+  // }
+  //
+  // void handlerExternalWallet(){
+  //   print('external aaye');
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -201,7 +200,7 @@ SizedBox(width: 20,),
                       onPressed: () {
 
 
-                        openCheckout();
+                     //.   openCheckout();
 
                         NeumorphicTheme.of(context)?.themeMode =
 
