@@ -9,13 +9,16 @@ import 'package:rive/rive.dart';
 import 'package:seventy5/subject.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:seventy5/username.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Home extends StatefulWidget {
   Home({required this.name,required this.token});
   late String idLink;
+
   String name;
   String token;
   late String section;
+
 
   late List<dynamic> ids = [];
   @override
@@ -38,7 +41,9 @@ class _HomeState extends State<Home> {
   var subjectName = <String>[];
   var subjectDetails = <Subject>[];
   late Future<Subject> dataFuture2;
+  late String class_name;
   bool darkMode = false;
+
   var tempData;
   int check = 0;
 
@@ -71,14 +76,14 @@ class _HomeState extends State<Home> {
                    Column(crossAxisAlignment: CrossAxisAlignment.start,
                      children: [
                        Text(widget.name,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 24),),
-                       Text("CS4A",style: TextStyle(fontWeight: FontWeight.w400),)
+                       Text( class_name,style: TextStyle(fontWeight: FontWeight.w400),)
                      ],
                    ),
                    NeumorphicButton(
                        margin: EdgeInsets.only(top: 12),
 
                        onPressed: () {
-                         showAlertDialog(context);
+                       showAlertDialog(context);
 
 
 
@@ -95,7 +100,7 @@ class _HomeState extends State<Home> {
                          NeumorphicBoxShape.circle(),
                        ),
                        padding:  const EdgeInsets.fromLTRB(12, 12, 12, 12),
-                       child: Image.asset("animation/Asset1.png",height: 27,width: 27,)),
+                       child: Icon(FontAwesomeIcons.person,size: 27,),)
                  ],),
                ),
 
@@ -191,6 +196,7 @@ class _HomeState extends State<Home> {
 
     setState(() {
       data = json.decode(response.body);
+
     });
 
     return data;
@@ -260,9 +266,11 @@ class _HomeState extends State<Home> {
   void onPass() async {
     if (data.isNotEmpty) {
       widget.idLink = (data[1]["id"].toString());
+      class_name= (data[1]["name"].toString());
     } else {
       await fetchClass();
       widget.idLink = (data[data.length - 1]["id"].toString());
+      class_name= (data[1]["name"].toString());
     }
 
     await fetchLists();
@@ -279,7 +287,10 @@ class _HomeState extends State<Home> {
     );
     Widget continueButton = FlatButton(
       child: Text("Sign out"),
-      onPressed:  () {
+      onPressed:  ()async {
+        // Try reading data from the 'counter' key. If it doesn't exist, returns null.
+        // Obtain shared preferences.
+
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) =>  Username()),

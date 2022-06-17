@@ -284,12 +284,12 @@ if(username![i]!='@'){
       }
       // Obtain shared preferences.
       final prefs = await SharedPreferences.getInstance();
-      await prefs.setString('username',username!);
+      await prefs.setString('username',name!);
       await prefs.setString('password',password!);
       await prefs.setString('token',token!);
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) =>  Home(name: newusername.toString(),token: token,)),
+        MaterialPageRoute(builder: (context) =>  Home(name: name.toString(),token: token,)),
       );
     }
   }

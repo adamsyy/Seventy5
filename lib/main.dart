@@ -4,6 +4,8 @@ import 'package:seventy5/Home.dart';
 import 'package:seventy5/username.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'Splash_screen.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -24,22 +26,15 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     // TODO: implement initState
-get_token();
- getcred();
-
+// get_token();
+//  getcred();
 
   }
   @override
   Widget build(BuildContext context) {
-if(check!=1){
-  return MaterialApp(home: Username());
-}else{
-  if(token!=null){
-    return MaterialApp(home: Home(token: token, name: username,),);
-  }else {
-    return MaterialApp(home: Username(),);
-  }
-}
+
+  return MaterialApp(home: SplashScreen());
+
 
 
 
@@ -47,26 +42,53 @@ if(check!=1){
 
 
   }
-getcred()async{
-
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  setState(() {
-    username = prefs.getString('username')!;
-    password = prefs.getString('password')!;
-check=1;
-  });
-
-}
-  get_token()async{
-
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      token = prefs.getString('token')!;
-
-print(token);
-    });
-
-  }
+// getcred()async{
+//
+//   SharedPreferences prefs = await SharedPreferences.getInstance();
+//   setState(() {
+//     username = prefs.getString('username')!;
+//     password = prefs.getString('password')!;
+//
+// if(username==null){
+//   check=3;
+// }
+//   });
+//
+// }
+//   get_token()async{
+//
+//     SharedPreferences prefs = await SharedPreferences.getInstance();
+//     setState(() {
+//       try {
+//         token = prefs.getString('token')!;
+//
+//       }  catch (e) {
+//        check=2;
+//
+//       }
+//
+// print(token);
+//     });
+//
+//   }
+//   void checkLogin() async {
+//     // Here we check if user already logged in or not
+//     SharedPreferences pref = await SharedPreferences.getInstance();
+//     String? token = await pref.getString("token");
+//     if (token != null) {
+//       Navigator.push(
+//         context,
+//         MaterialPageRoute(builder: (context) =>  Home(name: "adam",token: token,)),
+//       );
+//     } else {
+//       Navigator.pushAndRemoveUntil(
+//           context,
+//           MaterialPageRoute(
+//             builder: (context) => Username(),
+//           ),
+//               (route) => false);
+//     }
+//   }
 
 }
 
