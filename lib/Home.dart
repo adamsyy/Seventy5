@@ -87,7 +87,7 @@ class _HomeState extends State<Home> {
 
                          onPressed: () {
 
-                           Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft, child: Profile()));
+                           Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft, child: Profile(token: widget.token,username: widget.name,class_name: class_name)));
 
 
 
@@ -287,7 +287,7 @@ class _HomeState extends State<Home> {
 
     if (details.primaryVelocity?.compareTo(0) == -1)
       {
-        Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft, child: Profile()));
+        Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft, child: Profile(token: widget.token,username: widget.name,class_name: widget.section)));
       }
     else
       print('dragged from right');
