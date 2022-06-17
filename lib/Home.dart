@@ -9,7 +9,11 @@ import 'package:seventy5/subject.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
 class Home extends StatefulWidget {
+  Home({required this.name,required this.token});
   late String idLink;
+  String name;
+  String token;
+  late String section;
 
   late List<dynamic> ids = [];
   @override
@@ -17,6 +21,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+
   @override
   void initState() {
     // TODO: implement initState
@@ -34,6 +39,7 @@ class _HomeState extends State<Home> {
   bool darkMode = false;
   var tempData;
   int check = 0;
+
   @override
   Widget build(BuildContext context) {
     if (check == 0) {
@@ -57,7 +63,7 @@ class _HomeState extends State<Home> {
                ,children: [
                  Column(crossAxisAlignment: CrossAxisAlignment.start,
                    children: [
-                     Text("Adamsy",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 24),),
+                     Text(widget.name,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 24),),
                      Text("CS4A",style: TextStyle(fontWeight: FontWeight.w400),)
                    ],
                  ),
@@ -160,7 +166,7 @@ class _HomeState extends State<Home> {
         Uri.parse("https://production.api.ezygo.app/api/v1/usersubgroups");
 
     final response = await http.get(url, headers: {
-      'Authorization': 'Bearer 46873|2KfEp7GIt9PUs5SHpAeOX3wVxKFfECOjAqFrOZrG',
+      'Authorization': 'Bearer ${widget.token}',
       'Accept': 'application/json, text/plain, */*',
     });
     // print(response.body);
@@ -177,7 +183,7 @@ class _HomeState extends State<Home> {
         "https://production.api.ezygo.app/api/v1/institutionuser/courses/withusers");
 
     final response = await http.get(url, headers: {
-      'Authorization': 'Bearer 46873|2KfEp7GIt9PUs5SHpAeOX3wVxKFfECOjAqFrOZrG',
+      'Authorization': 'Bearer ${widget.token}',
       'Accept': 'application/json, text/plain, */*',
     });
     // print(response.body);
@@ -218,7 +224,7 @@ class _HomeState extends State<Home> {
         "https://production.api.ezygo.app/api/v1/attendancereports/institutionuser/courses/+$id+/summery");
 
     final response = await http.get(url, headers: {
-      'Authorization': 'Bearer 46873|2KfEp7GIt9PUs5SHpAeOX3wVxKFfECOjAqFrOZrG',
+      'Authorization': 'Bearer ${widget.token}',
       'Accept': 'application/json, text/plain, */*',
     });
     // print(response.body);
