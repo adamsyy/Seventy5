@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/services.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
@@ -43,118 +44,124 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     if (check == 0) {
-      return const Scaffold(
-          body: Center(
-        child: RiveAnimation.asset(
-          "animation/4.riv",
-        ),
-      ));
+      return  WillPopScope( onWillPop: () async => false,
+        child: Scaffold(
+            body: Center(
+          child: RiveAnimation.asset(
+            "animation/4.riv",
+          ),
+        )),
+      );
     } else {
-      return Scaffold(
-        backgroundColor: darkMode ? Colors.grey[850] : Colors.grey[300],
-        body: SingleChildScrollView(
-          physics: const ScrollPhysics(),
-          scrollDirection: Axis.vertical,
-          child: Column(
-            children: [
-             Container( margin: const EdgeInsets.fromLTRB(20, 70, 20, 0),
-               child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween
+      return WillPopScope( onWillPop: () async {SystemNavigator.pop();
+      return false;
+      },
+        child: Scaffold(
+          backgroundColor: darkMode ? Colors.grey[850] : Colors.grey[300],
+          body: SingleChildScrollView(
+            physics: const ScrollPhysics(),
+            scrollDirection: Axis.vertical,
+            child: Column(
+              children: [
+               Container( margin: const EdgeInsets.fromLTRB(20, 70, 20, 0),
+                 child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween
 
-               ,children: [
-                 Column(crossAxisAlignment: CrossAxisAlignment.start,
-                   children: [
-                     Text(widget.name,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 24),),
-                     Text("CS4A",style: TextStyle(fontWeight: FontWeight.w400),)
-                   ],
-                 ),
-                 NeumorphicButton(
-                     margin: EdgeInsets.only(top: 12),
-                     onPressed: () {
-                       NeumorphicTheme.of(context)?.themeMode =
-                       darkMode
-                           ? ThemeMode.light
-                           : ThemeMode.dark;
-                     },
-                     style: NeumorphicStyle(
-                       color: darkMode ? Colors.grey[850] : Colors.grey[300],
-                       shape: NeumorphicShape.concave,
-                       boxShape:
-                       NeumorphicBoxShape.circle(),
-                     ),
-                     padding:  const EdgeInsets.fromLTRB(12, 12, 12, 12),
-                     child: Image.asset("animation/Asset1.png",height: 27,width: 27,)),
-               ],),
-             ),
+                 ,children: [
+                   Column(crossAxisAlignment: CrossAxisAlignment.start,
+                     children: [
+                       Text(widget.name,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 24),),
+                       Text("CS4A",style: TextStyle(fontWeight: FontWeight.w400),)
+                     ],
+                   ),
+                   NeumorphicButton(
+                       margin: EdgeInsets.only(top: 12),
+                       onPressed: () {
+                         NeumorphicTheme.of(context)?.themeMode =
+                         darkMode
+                             ? ThemeMode.light
+                             : ThemeMode.dark;
+                       },
+                       style: NeumorphicStyle(
+                         color: darkMode ? Colors.grey[850] : Colors.grey[300],
+                         shape: NeumorphicShape.concave,
+                         boxShape:
+                         NeumorphicBoxShape.circle(),
+                       ),
+                       padding:  const EdgeInsets.fromLTRB(12, 12, 12, 12),
+                       child: Image.asset("animation/Asset1.png",height: 27,width: 27,)),
+                 ],),
+               ),
 
-              ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: subjectDetails.length,
-                  itemBuilder: (context, index) {
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Container(
-                          margin: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                          padding: const EdgeInsets.all(18),
-                          width: MediaQuery.of(context).size.height / 1.5,
-                          height: MediaQuery.of(context).size.height / 6.5,
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Expanded(child: Text(subjectDetails[index].name.toUpperCase(),style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w500))),
-                                    const SizedBox(height: 10),
-                                    Text(subjectDetails[index].present+"/"+subjectDetails[index].total),
-                                    const SizedBox(height: 5),
-                                    Text("Can cut x classes"),
-                                  ],
+                ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: subjectDetails.length,
+                    itemBuilder: (context, index) {
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Container(
+                            margin: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                            padding: const EdgeInsets.all(18),
+                            width: MediaQuery.of(context).size.height / 1.5,
+                            height: MediaQuery.of(context).size.height / 6.5,
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Expanded(child: Text(subjectDetails[index].name.toUpperCase(),style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w500))),
+                                      const SizedBox(height: 10),
+                                      Text(subjectDetails[index].present+"/"+subjectDetails[index].total),
+                                      const SizedBox(height: 5),
+                                      Text("Can cut x classes"),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              CircularPercentIndicator(
-                                radius: 45.0,
-                                lineWidth: 3.0,
-                                percent: double.parse(subjectDetails[index].percentage)/100,
-                                center: Text(
-                                  double.parse(subjectDetails[index].percentage).toStringAsFixed(1) + "%",
-                                  style: const TextStyle(fontSize: 16),
-                                ),
-                                progressColor: Colors.black,
-                              )
-                            ],
+                                CircularPercentIndicator(
+                                  radius: 45.0,
+                                  lineWidth: 3.0,
+                                  percent: double.parse(subjectDetails[index].percentage)/100,
+                                  center: Text(
+                                    double.parse(subjectDetails[index].percentage).toStringAsFixed(1) + "%",
+                                    style: const TextStyle(fontSize: 16),
+                                  ),
+                                  progressColor: Colors.black,
+                                )
+                              ],
+                            ),
+                            decoration: BoxDecoration(
+                                color: darkMode
+                                    ? Colors.grey[850]
+                                    : Colors.grey[300],
+                                borderRadius:
+                                    const BorderRadius.all(Radius.circular(34)),
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: darkMode
+                                          ? (Colors.black54)
+                                          : (Colors.grey[500])!,
+                                      offset: const Offset(4.0, 4.0),
+                                      blurRadius: 15.0,
+                                      spreadRadius: 1.0),
+                                  BoxShadow(
+                                      color: darkMode
+                                          ? (Colors.grey[800])!
+                                          : Colors.white,
+                                      offset: const Offset(-4.0, -4.0),
+                                      blurRadius: 15.0,
+                                      spreadRadius: 1.0),
+                                ]),
                           ),
-                          decoration: BoxDecoration(
-                              color: darkMode
-                                  ? Colors.grey[850]
-                                  : Colors.grey[300],
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(34)),
-                              boxShadow: [
-                                BoxShadow(
-                                    color: darkMode
-                                        ? (Colors.black54)
-                                        : (Colors.grey[500])!,
-                                    offset: const Offset(4.0, 4.0),
-                                    blurRadius: 15.0,
-                                    spreadRadius: 1.0),
-                                BoxShadow(
-                                    color: darkMode
-                                        ? (Colors.grey[800])!
-                                        : Colors.white,
-                                    offset: const Offset(-4.0, -4.0),
-                                    blurRadius: 15.0,
-                                    spreadRadius: 1.0),
-                              ]),
-                        ),
-                        const SizedBox(
-                          height: 40,
-                        )
-                      ],
-                    );
-                  }),
-            ],
+                          const SizedBox(
+                            height: 40,
+                          )
+                        ],
+                      );
+                    }),
+              ],
+            ),
           ),
         ),
       );
