@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:seventy5/username.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:http/http.dart' as http;
 
 class Profile extends StatefulWidget {
   Profile({required this.username,required this.token,required this.class_name});
@@ -197,9 +198,9 @@ SizedBox(width: 20,),
                     NeumorphicButton(
                       margin: EdgeInsets.only(top: 15),
 
-                      onPressed: () {
+                      onPressed: () async{
 
-
+                        showAlertDialog3(context);
                      //.   openCheckout();
 
                         NeumorphicTheme.of(context)?.themeMode =
@@ -395,6 +396,93 @@ SizedBox(width: 20,),
     );
   }
 
+
+
+  Future Pay_using_upi() async {
+
+
+    final url = Uri.parse("https://upi-openkerala.herokuapp.com/adamrubiks@okaxis/"+(50).toString());
+    print(url);
+    final response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ' + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOTRmMjE3N2Y2ODkxMjkzMWVhNzRjOSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjU1MTI3MDg0LCJleHAiOjE2NTU5OTEwODR9.o-hznIYVpeoVd7qbg5U__e8ys-qOSqbj-mBJv4-wUUs",
+      },
+
+    );
+    print(response.body);
+
+
+  }
+
+
+
+  showAlertDialog3(BuildContext context) {
+
+    // set up the buttons
+    Widget cancelButton = NeumorphicButton(
+
+      style: NeumorphicStyle(depth: 2,
+        boxShape: NeumorphicBoxShape.roundRect(
+            BorderRadius.circular(8)),
+        color:  Colors.grey[300],
+        shape: NeumorphicShape.flat,
+
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(4),
+        child: Text("cancel"),
+      ),
+      onPressed:  ()async {
+        // Try reading data from the 'counter' key. If it doesn't exist, returns null.
+        // Obtain shared preferences.
+
+        Navigator.pop(context);
+      },
+    );;
+    Widget continueButton = NeumorphicButton(
+
+      style: NeumorphicStyle(depth: 2,
+        boxShape: NeumorphicBoxShape.roundRect(
+            BorderRadius.circular(8)),
+        color:  Colors.grey[300],
+        shape: NeumorphicShape.flat,
+
+      ),
+      child: Padding(
+        padding:EdgeInsets.fromLTRB(4, 4, 4, 4),
+        child: Text("Donate"),
+      ),
+      onPressed:  ()async {
+        // Try reading data from the 'counter' key. If it doesn't exist, returns null.
+        // Obtain shared preferences.
+
+        final url = Uri.parse("https://paytm.business/link/1655497265229/LL_511324784");
+        await launchUrl(url);
+      },
+    );
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      backgroundColor: Colors.grey[300],
+      content: Text(" A huge amount of time and resources goes into building these projects, supporting us will help us to develop further versions of the application with even more features along with suporrt for IOS."),
+      actions: [
+        SizedBox(width: 10,),
+        cancelButton,
+        SizedBox(width:  MediaQuery.of(context).size.width / 7,),
+        continueButton,
+        SizedBox(width: 10,),
+      ],
+    );
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
 
 
 
