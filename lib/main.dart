@@ -28,8 +28,12 @@ getcred();
   @override
   Widget build(BuildContext context) {
 
+if(token!=null){
+  return MaterialApp(home: Home(token: token, name: username,),);
+}else {
+  return MaterialApp(home: Username(),);
+}
 
-    return MaterialApp(home: Username(),);
   }
 getcred()async{
 
