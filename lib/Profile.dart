@@ -83,7 +83,7 @@ class _ProfileState extends State<Profile> {
                       onPressed: () {
                         print("onClick");
                       },
-                      style: NeumorphicStyle(
+                      style: NeumorphicStyle(color: Colors.transparent,
                           shape: NeumorphicShape.flat,
                           boxShape: NeumorphicBoxShape.roundRect(
                               BorderRadius.circular(8))),
@@ -117,15 +117,41 @@ class _ProfileState extends State<Profile> {
   }
 
   showAlertDialog(BuildContext context) {
+
     // set up the buttons
-    Widget cancelButton = FlatButton(
-      child: Text("Cancel"),
-      onPressed:  () {
-        Navigator.of(context).pop();
+    Widget cancelButton = NeumorphicButton(
+
+      style: NeumorphicStyle(depth: 2,
+        boxShape: NeumorphicBoxShape.roundRect(
+            BorderRadius.circular(8)),
+        color:  Colors.grey[300],
+        shape: NeumorphicShape.flat,
+
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(4),
+        child: Text("no"),
+      ),
+      onPressed:  ()async {
+        // Try reading data from the 'counter' key. If it doesn't exist, returns null.
+        // Obtain shared preferences.
+
+        Navigator.pop(context);
       },
-    );
-    Widget continueButton = FlatButton(
-      child: Text("Sign out"),
+    );;
+    Widget continueButton = NeumorphicButton(
+
+      style: NeumorphicStyle(depth: 2,
+        boxShape: NeumorphicBoxShape.roundRect(
+            BorderRadius.circular(8)),
+        color:  Colors.grey[300],
+        shape: NeumorphicShape.flat,
+
+      ),
+      child: Padding(
+        padding:EdgeInsets.fromLTRB(4, 4, 4, 4),
+        child: Text("yes"),
+      ),
       onPressed:  ()async {
         // Try reading data from the 'counter' key. If it doesn't exist, returns null.
         // Obtain shared preferences.
@@ -138,11 +164,14 @@ class _ProfileState extends State<Profile> {
     );
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
-
-      content: Text("Are you sure you want to sign out?"),
+      backgroundColor: Colors.grey[300],
+      content: Text("  Are you sure you want to sign out?"),
       actions: [
+        SizedBox(width: 10,),
         cancelButton,
+        SizedBox(width:  MediaQuery.of(context).size.width / 7,),
         continueButton,
+        SizedBox(width: 10,),
       ],
     );
     // show the dialog
