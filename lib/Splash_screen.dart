@@ -86,9 +86,9 @@ class _SplashScreenState extends State<SplashScreen> {
       print("logging in");
 
       final prefs = await SharedPreferences.getInstance();
-      await prefs.setString('username',username!);
-      await prefs.setString('password',password!);
-      await prefs.setString('token',token!);
+      await prefs.setString('username',username);
+      await prefs.setString('password',password);
+      await prefs.setString('token',token);
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) =>  Home(name: username.toString(),token: token,)),

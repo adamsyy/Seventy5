@@ -53,7 +53,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     if (check == 0) {
       return  WillPopScope( onWillPop: () async => false,
-        child: Scaffold(
+        child: const Scaffold(
             body: Center(
           child: RiveAnimation.asset(
             "animation/4.riv",
@@ -118,8 +118,8 @@ class _HomeState extends State<Home> {
                             Container(
                               margin: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                               padding: const EdgeInsets.all(18),
-                              width: MediaQuery.of(context).size.height / 1.5,
-                              height: MediaQuery.of(context).size.height / 6.5,
+                              width: MediaQuery.of(context).size.width / 1,
+                              height: MediaQuery.of(context).size.height / 5.9,
                               child: Row(
                                 children: [
                                   Expanded(
@@ -139,7 +139,7 @@ class _HomeState extends State<Home> {
                                     ),
                                   ),
                                   CircularPercentIndicator(
-                                    radius: 45.0,
+                                    radius: MediaQuery.of(context).size.width / 9,
                                     lineWidth: 3.0,
                                     percent: double.parse(subjectDetails[index].percentage)/100,
                                     center: Text(
