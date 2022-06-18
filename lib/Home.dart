@@ -177,6 +177,15 @@ class _HomeState extends State<Home> {
       'Authorization': 'Bearer ${widget.token}',
       'Accept': 'application/json, text/plain, */*',
     });
+
+    if(response.statusCode!=200){
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (context) => Username(),
+          ),
+              (route) => false);
+    }
     // print(response.body);
 
     setState(() {

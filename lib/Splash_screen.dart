@@ -22,6 +22,8 @@ class _SplashScreenState extends State<SplashScreen> {
     String? val = await pref.getString("token");
     String? username = await pref.getString("username");
 
+
+
     if (val != null) {
       Navigator.pushAndRemoveUntil(
           context,
