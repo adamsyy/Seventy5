@@ -85,7 +85,7 @@ class _HomeState extends State<Home> {
                        NeumorphicButton(
                            margin: EdgeInsets.only(top: 12),
                            onPressed: () {
-                             Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft, child: Profile(token: widget.token,username: widget.name,class_name: class_name)));
+                             Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft, child: Profile(idlink: widget.idLink,token: widget.token,username: widget.name,class_name: class_name)));
                            },
                            style: NeumorphicStyle(
                              shape: NeumorphicShape.concave,
@@ -267,8 +267,9 @@ class _HomeState extends State<Home> {
     if(details.primaryVelocity == 0) return; // user have just tapped on screen (no dragging)
 
     if (details.primaryVelocity?.compareTo(0) == -1)
-      {
-        Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft, child: Profile(token: widget.token,username: widget.name,class_name: widget.section)));
+      { print('dragged from left');
+      Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft, child: Profile(idlink: widget.idLink,token: widget.token,username: widget.name,class_name: class_name)));
+
       }
     else
       print('dragged from right');

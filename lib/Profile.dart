@@ -2,16 +2,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:seventy5/Ttimetable.dart';
 import 'package:seventy5/username.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:http/http.dart' as http;
 
 class Profile extends StatefulWidget {
-  Profile({required this.username,required this.token,required this.class_name});
+  Profile({required this.username,required this.token,required this.class_name,required this.idlink});
   late String username;
   late String token;
   late String class_name;
-
+String idlink;
   @override
   State<Profile> createState() => _ProfileState();
 }
@@ -159,8 +160,9 @@ class _ProfileState extends State<Profile> {
                       SizedBox(width: MediaQuery.of(context).size.width / 20,),
                       NeumorphicButton(
                         onPressed: () {
-                          showAlertDialog(context);
-                        },
+    Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft, child: Timetable(section: widget.idlink,token: widget.token)));
+    },
+
                         style: const NeumorphicStyle(
                           depth: -3,
                           shape: NeumorphicShape.flat,
