@@ -84,13 +84,8 @@ class _HomeState extends State<Home> {
                      ),
                      NeumorphicButton(
                          margin: EdgeInsets.only(top: 12),
-
                          onPressed: () {
-
                            Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft, child: Profile(token: widget.token,username: widget.name,class_name: class_name)));
-
-
-
                            NeumorphicTheme.of(context)?.themeMode =
                            darkMode
                                ? ThemeMode.light
@@ -114,71 +109,61 @@ class _HomeState extends State<Home> {
                       itemBuilder: (context, index) {
                         return Column(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
+                          children: [
                             Container(
                               margin: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                              padding: const EdgeInsets.all(18),
-                              width: MediaQuery.of(context).size.width / 1,
-                              height: MediaQuery.of(context).size.height / 5.9,
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Expanded(child: Text(subjectDetails[index].name.toUpperCase(),style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w500))),
-                                        const SizedBox(height: 10),
-                                        Text(subjectDetails[index].present+"/"+subjectDetails[index].total),
-                                        const SizedBox(height: 5),
-                                        Text(
-                                            double.parse(subjectDetails[index].percentage)>=75 ?
-                                            "Can cut " + ((int.parse(subjectDetails[index].present)/0.75).floor()-int.parse(subjectDetails[index].total)).toString() + " classes" :
-                                            "Need to attend " + (3 * int.parse(subjectDetails[index].total) - 4 * int.parse(subjectDetails[index].present)).toString() + " classes"
+                              child: Neumorphic(
+                                style: NeumorphicStyle(
+                                    shape: NeumorphicShape.concave,
+                                    boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(34)),
+                                    depth: 8,
+                                    lightSource: LightSource.topLeft,
+                                    color: Colors.grey[300]
+                                ),
+                                child: Container(
+                                  padding: const EdgeInsets.all(18),
+                                  width: MediaQuery.of(context).size.width / 1,
+                                  height: MediaQuery.of(context).size.height / 5.9,
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Expanded(child: Text(subjectDetails[index].name.toUpperCase(),style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w500))),
+                                            const SizedBox(height: 10),
+                                            Text(subjectDetails[index].present+"/"+subjectDetails[index].total),
+                                            const SizedBox(height: 5),
+                                            Text(
+                                                double.parse(subjectDetails[index].percentage)>=75 ?
+                                                "Can cut " + ((int.parse(subjectDetails[index].present)/0.75).floor()-int.parse(subjectDetails[index].total)).toString() + " classes" :
+                                                "Need to attend " + (3 * int.parse(subjectDetails[index].total) - 4 * int.parse(subjectDetails[index].present)).toString() + " classes"
+                                            ),
+                                          ],
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                      CircularPercentIndicator(
+                                        radius: MediaQuery.of(context).size.width / 9,
+                                        lineWidth: 3.0,
+                                        percent: double.parse(subjectDetails[index].percentage)/100,
+                                        center: Text(
+                                          double.parse(subjectDetails[index].percentage).toStringAsFixed(1) + "%",
+                                          style: const TextStyle(fontSize: 16),
+                                        ),
+                                        progressColor: Colors.black,
+                                      )
+                                    ],
                                   ),
-                                  CircularPercentIndicator(
-                                    radius: MediaQuery.of(context).size.width / 9,
-                                    lineWidth: 3.0,
-                                    percent: double.parse(subjectDetails[index].percentage)/100,
-                                    center: Text(
-                                      double.parse(subjectDetails[index].percentage).toStringAsFixed(1) + "%",
-                                      style: const TextStyle(fontSize: 16),
-                                    ),
-                                    progressColor: Colors.black,
-                                  )
-                                ],
+                                ),
                               ),
-                              decoration: BoxDecoration(
-                                  color: darkMode
-                                      ? Colors.grey[850]
-                                      : Colors.grey[300],
-                                  borderRadius:
-                                      const BorderRadius.all(Radius.circular(34)),
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color: darkMode
-                                            ? (Colors.black54)
-                                            : (Colors.grey[500])!,
-                                        offset: const Offset(4.0, 4.0),
-                                        blurRadius: 15.0,
-                                        spreadRadius: 1.0),
-                                    BoxShadow(
-                                        color: darkMode
-                                            ? (Colors.grey[800])!
-                                            : Colors.white,
-                                        offset: const Offset(-4.0, -4.0),
-                                        blurRadius: 15.0,
-                                        spreadRadius: 1.0),
-                                  ]),
                             ),
                             const SizedBox(
                               height: 40,
                             )
                           ],
                         );
-                      }),
+                      },
+                  ),
                 ],
               ),
             ),
