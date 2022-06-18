@@ -9,7 +9,7 @@ import 'package:http/http.dart' as http;
 class Profile extends StatefulWidget {
   Profile({required this.username,required this.token,required this.class_name});
   late String username;
- late String token;
+  late String token;
   late String class_name;
 
   @override
@@ -75,168 +75,105 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     return GestureDetector(onHorizontalDragEnd: (DragEndDetails details) => _onHorizontalDrag(details),
       child: Scaffold(
-          backgroundColor: Colors.grey[300],
-          body: SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            child: Column(
+          body: SafeArea(
+            child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.fromLTRB(20, 15, 20, 50),
+                    child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          NeumorphicButton(
+                            margin: EdgeInsets.only(top: 12),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            style: const NeumorphicStyle(
+                              shape: NeumorphicShape.concave,
+                              boxShape: NeumorphicBoxShape.circle(),
+                            ),
+                            padding:  const EdgeInsets.all(12),
+                            child: Icon(FontAwesomeIcons.arrowLeftLong,size: 27,color: Theme.of(context).primaryColor,),),
+                          NeumorphicButton(
+                            margin: EdgeInsets.only(top: 12),
+                            onPressed: () {
+                              showAlertDialog(context);
+                            },
+                            style: const NeumorphicStyle(
+                              shape: NeumorphicShape.concave,
+                              boxShape:
+                              NeumorphicBoxShape.circle(),
+                            ),
+                            padding:  const EdgeInsets.all(12),
+                            child: Icon(FontAwesomeIcons.doorOpen,size: 27, color: Theme.of(context).primaryColor,),),
+                        ],
+                      ),
+                  ),
+                  SizedBox(height: MediaQuery.of(context).size.height / 9,),
+                  NeumorphicButton(
+                        onPressed: () {
+                          print("onClick");
+                        },
+                        style: NeumorphicStyle(//color: Colors.transparent,
+                            shape: NeumorphicShape.flat,
+                            boxShape: NeumorphicBoxShape.roundRect(
+                                BorderRadius.circular(8))),
+                        padding:
+                            EdgeInsets.all(MediaQuery.of(context).size.width / 4.5),
+                        child: const Icon(Icons.favorite_border,)),
 
-              children: [
-                Padding(
-                  padding:EdgeInsets.fromLTRB(
-                      MediaQuery.of(context).size.width / 16,
-                      MediaQuery.of(context).size.height / 16,
-                      MediaQuery.of(context).size.width / 16,
-                      0),
-                  child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  SizedBox(height: MediaQuery.of(context).size.height / 20,),
+                  Text(widget.username.toUpperCase(),style: TextStyle(fontWeight: FontWeight.bold),),
+                  Text(widget.class_name),
+                  SizedBox(height: MediaQuery.of(context).size.height / 30,),
+                  Row(mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       NeumorphicButton(
-                        margin: EdgeInsets.only(top: 12),
-
                         onPressed: () {
-
-                          Navigator.pop(context);
-
-                          NeumorphicTheme.of(context)?.themeMode =
-
-                              ThemeMode.dark;
+                          showAlertDialog2(context);
                         },
                         style: NeumorphicStyle(
-                          color:Colors.grey[300],
-                          shape: NeumorphicShape.concave,
+                          depth: -3,
+                          shape: NeumorphicShape.flat,
                           boxShape:
                           NeumorphicBoxShape.circle(),
                         ),
-                        padding:  const EdgeInsets.fromLTRB(12, 12, 12, 12),
-                        child: Icon(FontAwesomeIcons.arrowLeftLong,size: 27,),),
-
-
+                        padding:  const EdgeInsets.all(12),
+                        child: Icon(FontAwesomeIcons.peopleGroup,size: 24,color: Theme.of(context).primaryColor,),),
+                      SizedBox(width: MediaQuery.of(context).size.width / 20,),
                       NeumorphicButton(
-                        margin: EdgeInsets.only(top: 12),
+                        onPressed: () async{
+                          showAlertDialog3(context);
+                       //.   openCheckout();
+                        },
+                        style: const NeumorphicStyle(
+                          depth: -3,
+                          shape: NeumorphicShape.flat,
+                          boxShape:
+                          NeumorphicBoxShape.circle(),
+                        ),
+                        padding:  const EdgeInsets.all(12),
+                        child: Icon(FontAwesomeIcons.mugSaucer,size: 24,color : Theme.of(context).primaryColor,),),
+                      SizedBox(width: MediaQuery.of(context).size.width / 20,),
+                      NeumorphicButton(
                         onPressed: () {
                           showAlertDialog(context);
-                          NeumorphicTheme.of(context)?.themeMode =
-                               ThemeMode.dark;
                         },
-                        style: NeumorphicStyle(
-                          color:Colors.grey[300],
-                          shape: NeumorphicShape.concave,
+                        style: const NeumorphicStyle(
+                          depth: -3,
+                          shape: NeumorphicShape.flat,
                           boxShape:
                           NeumorphicBoxShape.circle(),
                         ),
-                        padding:  const EdgeInsets.fromLTRB(12, 12, 12, 12),
-                        child: Icon(FontAwesomeIcons.doorOpen,size: 27,),),
+                        padding:  const EdgeInsets.all(12),
+                        child: Icon(FontAwesomeIcons.calendar,size: 24, color: Theme.of(context).primaryColor,),),
                     ],
-                  ),
-                ),
 
-                Padding(
-                  padding: EdgeInsets.fromLTRB(
-                      MediaQuery.of(context).size.width / 3000,
-                      MediaQuery.of(context).size.height / 6,
-                      0,
-                      0),
-                  child: NeumorphicButton(
-                      onPressed: () {
-                        print("onClick");
-                      },
-                      style: NeumorphicStyle(color: Colors.transparent,
-                          shape: NeumorphicShape.flat,
-                          boxShape: NeumorphicBoxShape.roundRect(
-                              BorderRadius.circular(8))),
-                      padding:
-                          EdgeInsets.all(MediaQuery.of(context).size.width / 4.5),
-                      child: Icon(
-                        Icons.favorite_border,
-                      )),
-                ),
-                SizedBox(height: 60,),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(
-                      MediaQuery.of(context).size.width / 16,
-                  0,
-                      0,
-                      0),
-                  child: Text(widget.username.toUpperCase(),style: TextStyle(fontWeight: FontWeight.bold),),
-                ),
-                Padding(
-                  padding:EdgeInsets.fromLTRB(
-                      MediaQuery.of(context).size.width / 16,
-                     5,
-                      0,
-                      0),
-                  child: Text(widget.class_name),
-                ),
-                Row(mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    NeumorphicButton(
-                      margin: EdgeInsets.only(top: 15),
-
-                      onPressed: () {
-
-                        showAlertDialog2(context);
-
-
-                        NeumorphicTheme.of(context)?.themeMode =
-
-                            ThemeMode.dark;
-                      },
-                      style: NeumorphicStyle(
-                        depth: -3,
-                        color:Colors.grey[300],
-                        shape: NeumorphicShape.concave,
-                        boxShape:
-                        NeumorphicBoxShape.circle(),
-                      ),
-                      padding:  const EdgeInsets.fromLTRB(14, 12, 12, 12),
-                      child: Icon(FontAwesomeIcons.peopleGroup,size: 24,),),
-SizedBox(width: 20,),
-                    NeumorphicButton(
-                      margin: EdgeInsets.only(top: 15),
-
-                      onPressed: () async{
-
-                        showAlertDialog3(context);
-                     //.   openCheckout();
-
-                        NeumorphicTheme.of(context)?.themeMode =
-
-                            ThemeMode.dark;
-                      },
-                      style: NeumorphicStyle(
-                        depth: -3,
-                        color:Colors.grey[300],
-                        shape: NeumorphicShape.concave,
-                        boxShape:
-                        NeumorphicBoxShape.circle(),
-                      ),
-                      padding:  const EdgeInsets.fromLTRB(12, 12, 12, 12),
-                      child: Icon(FontAwesomeIcons.coffee,size: 24,),),
-                    SizedBox(width: 20,),
-                    NeumorphicButton(
-                      margin: EdgeInsets.only(top: 15),
-
-                      onPressed: () {
-
-                        showAlertDialog(context);
-
-
-                        NeumorphicTheme.of(context)?.themeMode =
-
-                            ThemeMode.dark;
-                      },
-                      style: NeumorphicStyle(
-                        depth: -3,
-                        color:Colors.grey[300],
-                        shape: NeumorphicShape.concave,
-                        boxShape:
-                        NeumorphicBoxShape.circle(),
-                      ),
-                      padding:  const EdgeInsets.fromLTRB(12, 12, 12, 12),
-                      child: Icon(FontAwesomeIcons.calendar,size: 24,),),
-                  ],
-
-                )
-              ],
+                  )
+                ],
+              ),
             ),
           )),
     );
@@ -248,7 +185,6 @@ SizedBox(width: 20,),
       style: NeumorphicStyle(depth: -5,
         boxShape: NeumorphicBoxShape.roundRect(
             BorderRadius.circular(34)),
-        color:  Colors.grey[300],
         shape: NeumorphicShape.flat,
       ),
       child: Container(
@@ -264,7 +200,6 @@ SizedBox(width: 20,),
       style: NeumorphicStyle(depth: 4,
         boxShape: NeumorphicBoxShape.roundRect(
             BorderRadius.circular(34)),
-        color:  Colors.grey[300],
         shape: NeumorphicShape.flat,
       ),
       child: Container(
@@ -286,7 +221,6 @@ SizedBox(width: 20,),
       elevation: 2,
       actionsAlignment: MainAxisAlignment.center,
       //contentPadding: EdgeInsets.fromLTRB(100, 10, 100, 10),
-      backgroundColor: Colors.grey[300],
       content: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: const [
@@ -329,7 +263,6 @@ SizedBox(width: 20,),
       style: NeumorphicStyle(depth: 2,
         boxShape: NeumorphicBoxShape.roundRect(
             BorderRadius.circular(15)),
-        color:  Colors.grey[300],
         shape: NeumorphicShape.flat,
       ),
       child: Padding(
@@ -347,7 +280,6 @@ SizedBox(width: 20,),
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       title: Center(child: Text("Meet our team",style: TextStyle(fontWeight: FontWeight.bold),)),
-      backgroundColor: Colors.grey[300],
       content: Container(height: MediaQuery.of(context).size.height / 5.5,
         child: Column(
           children: [
@@ -377,7 +309,6 @@ SizedBox(width: 20,),
       builder: (BuildContext context) {
         return Neumorphic(child: alert,
           style: NeumorphicStyle(
-            color:Colors.grey[300],
             shape: NeumorphicShape.concave,
               boxShape: NeumorphicBoxShape.roundRect(
                   BorderRadius.circular(30))
@@ -418,7 +349,7 @@ SizedBox(width: 20,),
       style: NeumorphicStyle(depth: 2,
         boxShape: NeumorphicBoxShape.roundRect(
             BorderRadius.circular(8)),
-        color:  Colors.grey[300],
+        //color:  Colors.grey[300],
         shape: NeumorphicShape.flat,
 
       ),
@@ -438,7 +369,6 @@ SizedBox(width: 20,),
       style: NeumorphicStyle(depth: 2,
         boxShape: NeumorphicBoxShape.roundRect(
             BorderRadius.circular(8)),
-        color:  Colors.grey[300],
         shape: NeumorphicShape.flat,
 
       ),
@@ -456,7 +386,6 @@ SizedBox(width: 20,),
     );
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
-      backgroundColor: Colors.grey[300],
       content: Text(" A huge amount of time and resources goes into building these projects, supporting us will help us to develop further versions of the application with even more features along with suporrt for IOS."),
       actions: [
         SizedBox(width: 10,),
@@ -474,7 +403,4 @@ SizedBox(width: 20,),
       },
     );
   }
-
-
-
 }
