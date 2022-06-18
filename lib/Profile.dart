@@ -112,14 +112,9 @@ class _ProfileState extends State<Profile> {
 
                       NeumorphicButton(
                         margin: EdgeInsets.only(top: 12),
-
                         onPressed: () {
-
                           showAlertDialog(context);
-
-
                           NeumorphicTheme.of(context)?.themeMode =
-
                                ThemeMode.dark;
                         },
                         style: NeumorphicStyle(
@@ -248,45 +243,37 @@ SizedBox(width: 20,),
   }
 
   showAlertDialog(BuildContext context) {
-
-    // set up the buttons
+    // No Button
     Widget cancelButton = NeumorphicButton(
-
-      style: NeumorphicStyle(depth: 2,
+      style: NeumorphicStyle(depth: -5,
         boxShape: NeumorphicBoxShape.roundRect(
-            BorderRadius.circular(8)),
+            BorderRadius.circular(34)),
         color:  Colors.grey[300],
         shape: NeumorphicShape.flat,
-
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(4),
-        child: Text("cancel"),
+      child: Container(
+        child: Text("No", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
+        padding: EdgeInsets.fromLTRB(25, 4, 25, 4),
       ),
       onPressed:  ()async {
-        // Try reading data from the 'counter' key. If it doesn't exist, returns null.
-        // Obtain shared preferences.
-
         Navigator.pop(context);
       },
-    );;
+    );
+    // Yes Button
     Widget continueButton = NeumorphicButton(
-
-      style: NeumorphicStyle(depth: 2,
+      style: NeumorphicStyle(depth: 4,
         boxShape: NeumorphicBoxShape.roundRect(
-            BorderRadius.circular(8)),
+            BorderRadius.circular(34)),
         color:  Colors.grey[300],
         shape: NeumorphicShape.flat,
-
       ),
-      child: Padding(
-        padding:EdgeInsets.fromLTRB(4, 4, 4, 4),
-        child: Text("sign out"),
+      child: Container(
+        child: Text("Yes", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
+          padding: EdgeInsets.fromLTRB(25, 4, 25, 4),
       ),
       onPressed:  ()async {
         // Try reading data from the 'counter' key. If it doesn't exist, returns null.
         // Obtain shared preferences.
-
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) =>  Username()),
@@ -295,14 +282,21 @@ SizedBox(width: 20,),
     );
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      elevation: 2,
+      actionsAlignment: MainAxisAlignment.center,
+      //contentPadding: EdgeInsets.fromLTRB(100, 10, 100, 10),
       backgroundColor: Colors.grey[300],
-      content: Text("  Are you sure you want to sign out?"),
+      content: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: const [
+          Text("Confirm logout", style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
+        ],
+      ),
       actions: [
-        SizedBox(width: 10,),
         cancelButton,
-        SizedBox(width:  MediaQuery.of(context).size.width / 7,),
+        //SizedBox(width:  MediaQuery.of(context).size.width / 7,),
         continueButton,
-        SizedBox(width: 10,),
       ],
     );
     // show the dialog
@@ -330,20 +324,17 @@ SizedBox(width: 20,),
 
 
   showAlertDialog2(BuildContext context) {
-
     // set up the buttons
     Widget cancelButton = NeumorphicButton(
-
       style: NeumorphicStyle(depth: 2,
         boxShape: NeumorphicBoxShape.roundRect(
             BorderRadius.circular(15)),
         color:  Colors.grey[300],
         shape: NeumorphicShape.flat,
-
       ),
       child: Padding(
         padding: const EdgeInsets.all(4),
-        child: Text("cancel",style: TextStyle(fontWeight: FontWeight.bold),),
+        child: Text("Close",style: TextStyle(fontWeight: FontWeight.bold),),
       ),
       onPressed:  ()async {
         // Try reading data from the 'counter' key. If it doesn't exist, returns null.
