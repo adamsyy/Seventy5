@@ -1,6 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:seventy5/Home.dart';
 import 'package:seventy5/username.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -34,7 +35,23 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
 
-  return MaterialApp(home: SplashScreen());
+  return NeumorphicApp(
+      themeMode: ThemeMode.system,
+      title: 'Neumorphic App',
+      theme: const NeumorphicThemeData(
+        accentColor: Color(0xFF303030),
+        baseColor: Color(0xFFE0E0E0),
+        lightSource: LightSource.topLeft,
+        depth: 10,
+      ),
+      darkTheme: const NeumorphicThemeData(
+        accentColor: Color(0xFFE0E0E0),
+        baseColor: Color(0xFF303030),
+        lightSource: LightSource.topLeft,
+        depth: 6,
+      ),
+      home: SplashScreen()
+  );
 
 
 

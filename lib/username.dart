@@ -33,7 +33,6 @@ class _UsernameState extends State<Username> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: darkMode ? Colors.grey[850] : Colors.grey[300],
         body: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: Container(
@@ -42,51 +41,45 @@ class _UsernameState extends State<Username> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(height: MediaQuery.of(context).size.height /15),
-Image.asset("animation/pic.png",height: 275,width: 275,),
+                Image.asset("animation/pic.png",height: 275,width: 275,),
                 SizedBox(height: MediaQuery.of(context).size.height /10),
                 Neumorphic(
+                    padding: EdgeInsets.all(5),
                     style: NeumorphicStyle(
                         shape: NeumorphicShape.concave,
                         boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(30)),
                         depth: -5,
                         lightSource: LightSource.topLeft,
-                        color: Colors.grey[300]
                     ),
                     child: TextFormField(
-                      cursorColor: Colors.grey[800],
+                      cursorColor: Theme.of(context).primaryColor,
                       controller: fieldText_username,
                       keyboardType: TextInputType.name,
                       style: const TextStyle(fontSize: 16.0),
                       textAlign: TextAlign.center,
                       onSaved: (String? value) {},
                       textInputAction: TextInputAction.next,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                           hintText: 'username or email',
-                          hintStyle: const TextStyle(fontWeight: FontWeight.w300),
-                          enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                              borderSide:
-                              const BorderSide(color: Color(0xffd9d9d9))),
-                          focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                              borderSide: BorderSide.none)),
+                          hintStyle: TextStyle(fontWeight: FontWeight.w300),
+                          border: InputBorder.none,),
                       onChanged: (value) {
                         username = value;
                         // print(username);
                       },
                     ),
                 ),
-                SizedBox(height: 25,),
+                SizedBox(height: 25),
                 Neumorphic(
+                  padding: EdgeInsets.all(5),
                   style: NeumorphicStyle(
                       shape: NeumorphicShape.concave,
                       boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(30)),
                       depth: -5,
                       lightSource: LightSource.topLeft,
-                      color: Colors.grey[300]
                   ),
                   child: TextFormField(
-                    cursorColor: Colors.grey[800],
+                    cursorColor: Theme.of(context).primaryColor,
                     controller: fieldText_password,
                     onSaved: (value) {
                       password = value;
@@ -95,16 +88,10 @@ Image.asset("animation/pic.png",height: 275,width: 275,),
                     obscureText: true,
                     style: const TextStyle(fontSize: 16.0),
                     textAlign: TextAlign.center,
-                    decoration: InputDecoration(
-                        hintText: 'password',
-                        hintStyle: const TextStyle(fontWeight: FontWeight.w300),
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                            borderSide:
-                            const BorderSide(color: Color(0xffd9d9d9))),
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                            borderSide: BorderSide.none)),
+                    decoration: const InputDecoration(
+                      hintText: 'password',
+                      hintStyle: TextStyle(fontWeight: FontWeight.w300),
+                      border: InputBorder.none,),
                     onChanged: (value) {
                       //    print(value);
                       password=value;

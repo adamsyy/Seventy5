@@ -66,40 +66,35 @@ class _HomeState extends State<Home> {
       },
         child: GestureDetector( onHorizontalDragEnd: (DragEndDetails details) => _onHorizontalDrag(details),
           child: Scaffold(
-            backgroundColor: darkMode ? Colors.grey[850] : Colors.grey[300],
-            body: SingleChildScrollView(
+            body: SafeArea(child :SingleChildScrollView(
               physics: const ScrollPhysics(),
               scrollDirection: Axis.vertical,
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                 Container( margin: const EdgeInsets.fromLTRB(20, 70, 20, 0),
-                   child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween
-
-                   ,children: [
-                     Column(crossAxisAlignment: CrossAxisAlignment.start,
-                       children: [
-                         Text(widget.name,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 24),),
-                         Text( class_name,style: TextStyle(fontWeight: FontWeight.w400),)
-                       ],
-                     ),
-                     NeumorphicButton(
-                         margin: EdgeInsets.only(top: 12),
-                         onPressed: () {
-                           Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft, child: Profile(token: widget.token,username: widget.name,class_name: class_name)));
-                           NeumorphicTheme.of(context)?.themeMode =
-                           darkMode
-                               ? ThemeMode.light
-                               : ThemeMode.dark;
-                         },
-                         style: NeumorphicStyle(
-                           color: darkMode ? Colors.grey[850] : Colors.grey[300],
-                           shape: NeumorphicShape.concave,
-                           boxShape:
-                           NeumorphicBoxShape.circle(),
-                         ),
-                         padding:  const EdgeInsets.fromLTRB(12, 12, 12, 12),
-                         child: Icon(FontAwesomeIcons.person,size: 27,),)
-                   ],),
+                 Container(
+                   margin: const EdgeInsets.fromLTRB(20, 15, 20, 50),
+                   child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                     children: [
+                       Column(crossAxisAlignment: CrossAxisAlignment.start,
+                         children: [
+                           Text(widget.name,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 24),),
+                           Text( class_name,style: TextStyle(fontWeight: FontWeight.w400),)
+                         ],
+                       ),
+                       NeumorphicButton(
+                           margin: EdgeInsets.only(top: 12),
+                           onPressed: () {
+                             Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft, child: Profile(token: widget.token,username: widget.name,class_name: class_name)));
+                           },
+                           style: NeumorphicStyle(
+                             shape: NeumorphicShape.concave,
+                             boxShape: NeumorphicBoxShape.circle(),
+                           ),
+                           padding:  const EdgeInsets.all(12),
+                           child: Icon(FontAwesomeIcons.person,size: 27, color: Theme.of(context ).primaryColor,),)
+                     ],
+                   ),
                  ),
 
                   ListView.builder(
@@ -114,11 +109,10 @@ class _HomeState extends State<Home> {
                               margin: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                               child: Neumorphic(
                                 style: NeumorphicStyle(
-                                    shape: NeumorphicShape.concave,
+                                    shape: NeumorphicShape.flat,
                                     boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(34)),
                                     depth: 8,
                                     lightSource: LightSource.topLeft,
-                                    color: Colors.grey[300]
                                 ),
                                 child: Container(
                                   padding: const EdgeInsets.all(18),
@@ -144,13 +138,14 @@ class _HomeState extends State<Home> {
                                       ),
                                       CircularPercentIndicator(
                                         radius: MediaQuery.of(context).size.width / 9,
+                                        backgroundColor: Colors.grey[500]!,
                                         lineWidth: 3.0,
                                         percent: double.parse(subjectDetails[index].percentage)/100,
                                         center: Text(
                                           double.parse(subjectDetails[index].percentage).toStringAsFixed(1) + "%",
                                           style: const TextStyle(fontSize: 16),
                                         ),
-                                        progressColor: Colors.black,
+                                        progressColor: Theme.of(context).primaryColor,
                                       )
                                     ],
                                   ),
@@ -167,6 +162,7 @@ class _HomeState extends State<Home> {
                 ],
               ),
             ),
+            )
           ),
         ),
       );

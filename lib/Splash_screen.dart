@@ -60,8 +60,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:Colors.white,
-
+      //backgroundColor:Colors.white,
     );
   }
   Future username_login(String username,String password) async {
