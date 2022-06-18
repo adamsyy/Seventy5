@@ -210,12 +210,6 @@ class _ProfileState extends State<Profile> {
           padding: EdgeInsets.fromLTRB(25, 4, 25, 4),
       ),
       onPressed:  ()async {
-
-        final prefs = await SharedPreferences.getInstance();
-        final success1 = await prefs.remove('username');
-        final success2 = await prefs.remove('password');
-
-        final success3 = await prefs.remove('token');
         // Try reading data from the 'counter' key. If it doesn't exist, returns null.
         // Obtain shared preferences.
 
