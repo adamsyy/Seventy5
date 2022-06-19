@@ -155,7 +155,7 @@ class _ProfileState extends State<Profile> {
       ),
       child: Container(
         child: Text("Yes", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
-        padding: EdgeInsets.fromLTRB(25, 4, 25, 4),
+        padding: const EdgeInsets.fromLTRB(25, 4, 25, 4),
       ),
       onPressed:  ()async {
         final prefs = await SharedPreferences.getInstance();
