@@ -48,11 +48,9 @@ class _TimetableState extends State<Timetable> {
   @override
   Widget build(BuildContext context) {
     if (check == 0) {
-      return Scaffold(
+      return const Scaffold(
           body: Center(
-        child: Scaffold(
-          backgroundColor: Colors.grey[300],
-        ),
+        child: Text(""),
       ));
     } else {
 
@@ -232,71 +230,6 @@ class _TimetableState extends State<Timetable> {
                           }
                         },
                       ),
-
-                      // Row(mainAxisAlignment: MainAxisAlignment.start,
-                      //   children: [
-                      //     SizedBox(width: 10,),
-                      //     Text("1",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
-                      //     SizedBox(width: 20,),
-                      //     Neumorphic(
-                      //
-                      //         style: NeumorphicStyle(//color: Colors.transparent,
-                      //             depth: 3,
-                      //
-                      //             shape: NeumorphicShape.flat,
-                      //             boxShape: NeumorphicBoxShape.roundRect(
-                      //                 BorderRadius.circular(8))),
-                      //         padding:
-                      //         EdgeInsets.all(MediaQuery.of(context).size.width / 32),
-                      //         child: day1[0].length>38?Text(day1[0].substring(0,38),style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),):  Text(day1[0],style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),)),
-                      //   ],
-                      // ),
-
-                      // Row(mainAxisAlignment: MainAxisAlignment.center,
-                      //   children: [
-                      //     NeumorphicButton(
-                      //       onPressed: () {
-                      //        // showAlertDialog2(context);
-                      //       },
-                      //       style: NeumorphicStyle(
-                      //         depth: -3,
-                      //         shape: NeumorphicShape.flat,
-                      //         boxShape:
-                      //         NeumorphicBoxShape.circle(),
-                      //       ),
-                      //       padding:  const EdgeInsets.all(12),
-                      //       child: Icon(FontAwesomeIcons.peopleGroup,size: 24,color: Theme.of(context).primaryColor,),),
-                      //     SizedBox(width: MediaQuery.of(context).size.width / 20,),
-                      // NeumorphicButton(
-                      //   onPressed: () async{
-                      //   //  showAlertDialog3(context);
-                      //     //.   openCheckout();
-                      //   },
-                      //   style: const NeumorphicStyle(
-                      //     depth: -3,
-                      //     shape: NeumorphicShape.flat,
-                      //     boxShape:
-                      //     NeumorphicBoxShape.circle(),
-                      //   ),
-                      //   padding:  const EdgeInsets.all(12),
-                      //   child: Icon(FontAwesomeIcons.mugSaucer,size: 24,color : Theme.of(context).primaryColor,),),
-                      // SizedBox(width: MediaQuery.of(context).size.width / 20,),
-                      // NeumorphicButton(
-                      //   onPressed: () {
-                      //    // Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft, child: Timetable(token: widget.token)));
-                      //   },
-                      //
-                      //   style: const NeumorphicStyle(
-                      //     depth: -3,
-                      //     shape: NeumorphicShape.flat,
-                      //     boxShape:
-                      //     NeumorphicBoxShape.circle(),
-                      //   ),
-                      //   padding:  const EdgeInsets.all(12),
-                      //   child: Icon(FontAwesomeIcons.calendar,size: 24, color: Theme.of(context).primaryColor,),),
-                      //   ],
-                      //
-                      // )
                     ],
                   ),
                 ),
@@ -483,71 +416,6 @@ class _TimetableState extends State<Timetable> {
                           }
                         },
                       ),
-
-                      // Row(mainAxisAlignment: MainAxisAlignment.start,
-                      //   children: [
-                      //     SizedBox(width: 10,),
-                      //     Text("1",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
-                      //     SizedBox(width: 20,),
-                      //     Neumorphic(
-                      //
-                      //         style: NeumorphicStyle(//color: Colors.transparent,
-                      //             depth: 3,
-                      //
-                      //             shape: NeumorphicShape.flat,
-                      //             boxShape: NeumorphicBoxShape.roundRect(
-                      //                 BorderRadius.circular(8))),
-                      //         padding:
-                      //         EdgeInsets.all(MediaQuery.of(context).size.width / 32),
-                      //         child: day1[0].length>38?Text(day1[0].substring(0,38),style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),):  Text(day1[0],style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),)),
-                      //   ],
-                      // ),
-
-                      // Row(mainAxisAlignment: MainAxisAlignment.center,
-                      //   children: [
-                      //     NeumorphicButton(
-                      //       onPressed: () {
-                      //        // showAlertDialog2(context);
-                      //       },
-                      //       style: NeumorphicStyle(
-                      //         depth: -3,
-                      //         shape: NeumorphicShape.flat,
-                      //         boxShape:
-                      //         NeumorphicBoxShape.circle(),
-                      //       ),
-                      //       padding:  const EdgeInsets.all(12),
-                      //       child: Icon(FontAwesomeIcons.peopleGroup,size: 24,color: Theme.of(context).primaryColor,),),
-                      //     SizedBox(width: MediaQuery.of(context).size.width / 20,),
-                      // NeumorphicButton(
-                      //   onPressed: () async{
-                      //   //  showAlertDialog3(context);
-                      //     //.   openCheckout();
-                      //   },
-                      //   style: const NeumorphicStyle(
-                      //     depth: -3,
-                      //     shape: NeumorphicShape.flat,
-                      //     boxShape:
-                      //     NeumorphicBoxShape.circle(),
-                      //   ),
-                      //   padding:  const EdgeInsets.all(12),
-                      //   child: Icon(FontAwesomeIcons.mugSaucer,size: 24,color : Theme.of(context).primaryColor,),),
-                      // SizedBox(width: MediaQuery.of(context).size.width / 20,),
-                      // NeumorphicButton(
-                      //   onPressed: () {
-                      //    // Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft, child: Timetable(token: widget.token)));
-                      //   },
-                      //
-                      //   style: const NeumorphicStyle(
-                      //     depth: -3,
-                      //     shape: NeumorphicShape.flat,
-                      //     boxShape:
-                      //     NeumorphicBoxShape.circle(),
-                      //   ),
-                      //   padding:  const EdgeInsets.all(12),
-                      //   child: Icon(FontAwesomeIcons.calendar,size: 24, color: Theme.of(context).primaryColor,),),
-                      //   ],
-                      //
-                      // )
                     ],
                   ),
                 ),
@@ -558,7 +426,6 @@ class _TimetableState extends State<Timetable> {
       }
 
       else{
-
         return GestureDetector(onHorizontalDragEnd: (DragEndDetails details) => _onHorizontalDrag(details),
           child: Scaffold(
               body: SafeArea(
@@ -732,86 +599,13 @@ class _TimetableState extends State<Timetable> {
                           }
                         },
                       ),
-
-                      // Row(mainAxisAlignment: MainAxisAlignment.start,
-                      //   children: [
-                      //     SizedBox(width: 10,),
-                      //     Text("1",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
-                      //     SizedBox(width: 20,),
-                      //     Neumorphic(
-                      //
-                      //         style: NeumorphicStyle(//color: Colors.transparent,
-                      //             depth: 3,
-                      //
-                      //             shape: NeumorphicShape.flat,
-                      //             boxShape: NeumorphicBoxShape.roundRect(
-                      //                 BorderRadius.circular(8))),
-                      //         padding:
-                      //         EdgeInsets.all(MediaQuery.of(context).size.width / 32),
-                      //         child: day1[0].length>38?Text(day1[0].substring(0,38),style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),):  Text(day1[0],style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),)),
-                      //   ],
-                      // ),
-
-                      // Row(mainAxisAlignment: MainAxisAlignment.center,
-                      //   children: [
-                      //     NeumorphicButton(
-                      //       onPressed: () {
-                      //        // showAlertDialog2(context);
-                      //       },
-                      //       style: NeumorphicStyle(
-                      //         depth: -3,
-                      //         shape: NeumorphicShape.flat,
-                      //         boxShape:
-                      //         NeumorphicBoxShape.circle(),
-                      //       ),
-                      //       padding:  const EdgeInsets.all(12),
-                      //       child: Icon(FontAwesomeIcons.peopleGroup,size: 24,color: Theme.of(context).primaryColor,),),
-                      //     SizedBox(width: MediaQuery.of(context).size.width / 20,),
-                      // NeumorphicButton(
-                      //   onPressed: () async{
-                      //   //  showAlertDialog3(context);
-                      //     //.   openCheckout();
-                      //   },
-                      //   style: const NeumorphicStyle(
-                      //     depth: -3,
-                      //     shape: NeumorphicShape.flat,
-                      //     boxShape:
-                      //     NeumorphicBoxShape.circle(),
-                      //   ),
-                      //   padding:  const EdgeInsets.all(12),
-                      //   child: Icon(FontAwesomeIcons.mugSaucer,size: 24,color : Theme.of(context).primaryColor,),),
-                      // SizedBox(width: MediaQuery.of(context).size.width / 20,),
-                      // NeumorphicButton(
-                      //   onPressed: () {
-                      //    // Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft, child: Timetable(token: widget.token)));
-                      //   },
-                      //
-                      //   style: const NeumorphicStyle(
-                      //     depth: -3,
-                      //     shape: NeumorphicShape.flat,
-                      //     boxShape:
-                      //     NeumorphicBoxShape.circle(),
-                      //   ),
-                      //   padding:  const EdgeInsets.all(12),
-                      //   child: Icon(FontAwesomeIcons.calendar,size: 24, color: Theme.of(context).primaryColor,),),
-                      //   ],
-                      //
-                      // )
                     ],
                   ),
                 ),
               )),
         );
-
-
       }
-
     }
-
-    return Scaffold(
-        body: Center(
-      child: Text(day1[0]),
-    ));
   }
 
   Future<List<dynamic>?> fetchTimeTable() async {
