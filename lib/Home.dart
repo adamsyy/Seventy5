@@ -102,7 +102,7 @@ late String image;
                          SizedBox(width: MediaQuery.of(context).size.width / 22,),
                          NeumorphicButton(
                            onPressed: () {
-                             Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft, child: Profile(badge:"hi",idlink: widget.idLink,token: widget.token,username: widget.name,class_name: class_name)));
+                             Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft, child: Profile(badge:image,idlink: widget.idLink,token: widget.token,username: widget.name,class_name: class_name)));
                              //Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft, child: Timetable(section: widget.idlink,token: widget.token)));
                            },
                            style: const NeumorphicStyle(
@@ -266,8 +266,14 @@ if(subject_percentage[0]==100){
 else if(subject_percentage[0]>=90){
   image=">90";
 }
-else if(subject_percentage[0]>=75){
+else if(subject_percentage[0]>=75&&subject_percentage[subject_percentage.length-1]<=85)
+{
   image=">75-85";
+}
+
+else if(subject_percentage[0]>=75)
+{
+  image=">75";
 }
 else if(subject_percentage[0]>=50){
   image=">50";
@@ -329,7 +335,7 @@ print(image);
 
     if (details.primaryVelocity?.compareTo(0) == -1)
       { print('dragged from left');
-      Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft, child: Profile(badge:"hi",idlink: widget.idLink,token: widget.token,username: widget.name,class_name: class_name)));
+      Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft, child: Profile(badge:image,idlink: widget.idLink,token: widget.token,username: widget.name,class_name: class_name)));
 
       }
     else
