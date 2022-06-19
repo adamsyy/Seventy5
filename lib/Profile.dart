@@ -9,11 +9,12 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:http/http.dart' as http;
 
 class Profile extends StatefulWidget {
-  Profile({required this.username,required this.token,required this.class_name,required this.idlink});
+  Profile({required this.username,required this.token,required this.class_name,required this.idlink,required this.badge});
   late String username;
   late String token;
   late String class_name;
   late String idlink;
+  String badge;
   @override
   State<Profile> createState() => _ProfileState();
 }

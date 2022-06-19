@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 import 'package:flutter/services.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -46,7 +47,7 @@ class _HomeState extends State<Home> {
   late Future<Subject> dataFuture2;
   late String class_name;
   bool darkMode = false;
-
+late String image;
   var tempData;
   int check = 0;
 
@@ -66,120 +67,124 @@ class _HomeState extends State<Home> {
       return false;
       },
         child: GestureDetector( onHorizontalDragEnd: (DragEndDetails details) => _onHorizontalDrag(details),
-          child: Scaffold(
-            body: SafeArea(child :SingleChildScrollView(
-              physics: const ScrollPhysics(),
-              scrollDirection: Axis.vertical,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                 Container(
-                   margin: const EdgeInsets.fromLTRB(20, 15, 20, 50),
-                   child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                     children: [
-                       Expanded(
-                         child: Column(crossAxisAlignment: CrossAxisAlignment.start,
-                           children: [
-                             Text(widget.name,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 24),),
-                             Text( class_name,style: TextStyle(fontWeight: FontWeight.w400),)
-                           ],
+          child: AnnotatedRegion<SystemUiOverlayStyle>( value: SystemUiOverlayStyle(
+            statusBarColor: Colors.grey[300],
+          ),
+            child: Scaffold(
+              body: SafeArea(child :SingleChildScrollView(
+                physics: const ScrollPhysics(),
+                scrollDirection: Axis.vertical,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                   Container(
+                     margin: const EdgeInsets.fromLTRB(20, 15, 20, 50),
+                     child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                       children: [
+                         Expanded(
+                           child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+                             children: [
+                               Text(widget.name,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 24),),
+                               Text( class_name,style: TextStyle(fontWeight: FontWeight.w400),)
+                             ],
+                           ),
                          ),
-                       ),
-                       NeumorphicButton(
-                         onPressed: () {
-                           Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft, child: Timetable(section: widget.idLink,token: widget.token)));
-                         },
-                         style: const NeumorphicStyle(
-                           shape: NeumorphicShape.flat,
-                           boxShape: NeumorphicBoxShape.circle(),
-                         ),
-                         padding:  const EdgeInsets.all(12),
-                         child: Icon(FontAwesomeIcons.calendar,size: 27, color: Theme.of(context).primaryColor,),),
-                       SizedBox(width: MediaQuery.of(context).size.width / 22,),
-                       NeumorphicButton(
-                         onPressed: () {
-                           Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft, child: Profile(idlink: widget.idLink,token: widget.token,username: widget.name,class_name: class_name)));
-                           //Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft, child: Timetable(section: widget.idlink,token: widget.token)));
-                         },
-                         style: const NeumorphicStyle(
-                           shape: NeumorphicShape.flat,
-                           boxShape: NeumorphicBoxShape.circle(),
-                         ),
-                         padding:  const EdgeInsets.all(12),
-                         child: Icon(FontAwesomeIcons.person,size: 27, color: Theme.of(context).primaryColor,),),
-                     ],
+                         NeumorphicButton(
+                           onPressed: () {
+                             Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft, child: Timetable(section: widget.idLink,token: widget.token)));
+                           },
+                           style: const NeumorphicStyle(
+                             shape: NeumorphicShape.flat,
+                             boxShape: NeumorphicBoxShape.circle(),
+                           ),
+                           padding:  const EdgeInsets.all(12),
+                           child: Icon(FontAwesomeIcons.calendar,size: 27, color: Theme.of(context).primaryColor,),),
+                         SizedBox(width: MediaQuery.of(context).size.width / 22,),
+                         NeumorphicButton(
+                           onPressed: () {
+                             Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft, child: Profile(badge:"hi",idlink: widget.idLink,token: widget.token,username: widget.name,class_name: class_name)));
+                             //Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft, child: Timetable(section: widget.idlink,token: widget.token)));
+                           },
+                           style: const NeumorphicStyle(
+                             shape: NeumorphicShape.flat,
+                             boxShape: NeumorphicBoxShape.circle(),
+                           ),
+                           padding:  const EdgeInsets.all(12),
+                           child: Icon(FontAwesomeIcons.person,size: 27, color: Theme.of(context).primaryColor,),),
+                       ],
+                     ),
                    ),
-                 ),
 
-                  ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: subjectDetails.length,
-                      itemBuilder: (context, index) {
-                        return Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              margin: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                              child: Neumorphic(
-                                style: NeumorphicStyle(
-                                    shape: NeumorphicShape.flat,
-                                    boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(34)),
-                                    depth: 8,
-                                    lightSource: LightSource.topLeft,
-                                ),
-                                child: Container(
-                                  padding: const EdgeInsets.all(18),
-                                  width: MediaQuery.of(context).size.width / 1,
-                                  height: MediaQuery.of(context).size.height / 5.9,
-                                  child: Row(
-                                    children: [
-                                      Expanded(
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Expanded(child: Text(subjectDetails[index].name.toUpperCase().length>30?subjectDetails[index].name.toUpperCase().substring(0,30):subjectDetails[index].name.toUpperCase()
+                    ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: subjectDetails.length,
+                        itemBuilder: (context, index) {
+                          return Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                margin: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                                child: Neumorphic(
+                                  style: NeumorphicStyle(
+                                      shape: NeumorphicShape.flat,
+                                      boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(34)),
+                                      depth: 8,
+                                      lightSource: LightSource.topLeft,
+                                  ),
+                                  child: Container(
+                                    padding: const EdgeInsets.all(18),
+                                    width: MediaQuery.of(context).size.width / 1,
+                                    height: MediaQuery.of(context).size.height / 5.9,
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Expanded(child: Text(subjectDetails[index].name.toUpperCase().length>30?subjectDetails[index].name.toUpperCase().substring(0,30):subjectDetails[index].name.toUpperCase()
 
 
-                                                ,style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w500))),
-                                            const SizedBox(height: 10),
-                                            Text(subjectDetails[index].present+"/"+subjectDetails[index].total),
-                                            const SizedBox(height: 5),
-                                            Text(
-                                                double.parse(subjectDetails[index].percentage)>=75 ?
-                                                "Can cut " + ((int.parse(subjectDetails[index].present)/0.75).floor()-int.parse(subjectDetails[index].total)).toString() + " classes" :
-                                                "Need to attend " + (3 * int.parse(subjectDetails[index].total) - 4 * int.parse(subjectDetails[index].present)).toString() + " classes"
-                                            ),
-                                          ],
+                                                  ,style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w500))),
+                                              const SizedBox(height: 10),
+                                              Text(subjectDetails[index].present+"/"+subjectDetails[index].total),
+                                              const SizedBox(height: 5),
+                                              Text(
+                                                  double.parse(subjectDetails[index].percentage)>=75 ?
+                                                  "Can cut " + ((int.parse(subjectDetails[index].present)/0.75).floor()-int.parse(subjectDetails[index].total)).toString() + " classes" :
+                                                  "Need to attend " + (3 * int.parse(subjectDetails[index].total) - 4 * int.parse(subjectDetails[index].present)).toString() + " classes"
+                                              ),
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                      CircularPercentIndicator(
-                                        radius: MediaQuery.of(context).size.width / 9,
-                                        backgroundColor: Colors.grey[500]!,
-                                        lineWidth: 3.0,
-                                        percent: double.parse(subjectDetails[index].percentage)/100,
-                                        center: Text(
-                                          double.parse(subjectDetails[index].percentage).toStringAsFixed(1) + "%",
-                                          style: const TextStyle(fontSize: 16),
-                                        ),
-                                        progressColor: Theme.of(context).primaryColor,
-                                      )
-                                    ],
+                                        CircularPercentIndicator(
+                                          radius: MediaQuery.of(context).size.width / 9,
+                                          backgroundColor: Colors.grey[500]!,
+                                          lineWidth: 3.0,
+                                          percent: double.parse(subjectDetails[index].percentage)/100,
+                                          center: Text(
+                                            double.parse(subjectDetails[index].percentage).toStringAsFixed(1) + "%",
+                                            style: const TextStyle(fontSize: 16),
+                                          ),
+                                          progressColor: Theme.of(context).primaryColor,
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                            const SizedBox(
-                              height: 40,
-                            )
-                          ],
-                        );
-                      },
-                  ),
-                ],
+                              const SizedBox(
+                                height: 40,
+                              )
+                            ],
+                          );
+                        },
+                    ),
+                  ],
+                ),
               ),
+              )
             ),
-            )
           ),
         ),
       );
@@ -246,10 +251,37 @@ class _HomeState extends State<Home> {
         subjectDetails.add(temp);
       });
     }
+    var subject_percentage = <double>[];
+    for (int i = 0; i < subjectDetails.length; i++) {
+
+      subject_percentage.add(double.parse(subjectDetails[i].percentage));
+    }
+  subject_percentage.sort();
+if(subject_percentage[0]==100){
+  image=">100";
+}
+else if(subject_percentage[0]>=90){
+  image=">90";
+}
+else if(subject_percentage[0]>=75){
+  image=">75-85";
+}
+else if(subject_percentage[0]>=50){
+  image=">50";
+}
+else if(subject_percentage[0]<50){
+  image="<50";
+}else{
+  image="else condition";
+}
+print(image);
+
+
+
     setState(() {
       check = 1;
     });
-    print(subjectDetails[0].total);
+   // print(subjectDetails[0].total);
 
     return data;
   }
@@ -294,7 +326,7 @@ class _HomeState extends State<Home> {
 
     if (details.primaryVelocity?.compareTo(0) == -1)
       { print('dragged from left');
-      Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft, child: Profile(idlink: widget.idLink,token: widget.token,username: widget.name,class_name: class_name)));
+      Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft, child: Profile(badge:"hi",idlink: widget.idLink,token: widget.token,username: widget.name,class_name: class_name)));
 
       }
     else
