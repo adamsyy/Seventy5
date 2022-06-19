@@ -50,7 +50,7 @@ class _TimetableState extends State<Timetable> {
     if (check == 0) {
       return const Scaffold(
           body: Center(
-        child: Text("No Entries"),
+        child: Text(""),
       ));
     } else {
 

@@ -77,49 +77,36 @@ class _HomeState extends State<Home> {
                    margin: const EdgeInsets.fromLTRB(20, 15, 20, 50),
                    child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
                      children: [
-                       Column(crossAxisAlignment: CrossAxisAlignment.start,
-                         children: [
-                           Text(widget.name,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 24),),
-                           Text( class_name,style: TextStyle(fontWeight: FontWeight.w400),)
-                         ],
+                       Expanded(
+                         child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+                           children: [
+                             Text(widget.name,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 24),),
+                             Text( class_name,style: TextStyle(fontWeight: FontWeight.w400),)
+                           ],
+                         ),
                        ),
-                       SizedBox(width: MediaQuery.of(context).size.width / 9,),
                        NeumorphicButton(
-
                          onPressed: () {
                            Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft, child: Timetable(section: widget.idLink,token: widget.token)));
                          },
-
                          style: const NeumorphicStyle(
-                           depth: -2,
-                           shape: NeumorphicShape.concave,
+                           shape: NeumorphicShape.flat,
                            boxShape: NeumorphicBoxShape.circle(),
                          ),
                          padding:  const EdgeInsets.all(12),
-                         child: Icon(FontAwesomeIcons.calendar,size: 32, color: Theme.of(context).primaryColor,),),
+                         child: Icon(FontAwesomeIcons.calendar,size: 27, color: Theme.of(context).primaryColor,),),
+                       SizedBox(width: MediaQuery.of(context).size.width / 22,),
                        NeumorphicButton(
                          onPressed: () {
                            Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft, child: Profile(idlink: widget.idLink,token: widget.token,username: widget.name,class_name: class_name)));
                            //Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft, child: Timetable(section: widget.idlink,token: widget.token)));
                          },
-
                          style: const NeumorphicStyle(
-                           shape: NeumorphicShape.concave,
+                           shape: NeumorphicShape.flat,
                            boxShape: NeumorphicBoxShape.circle(),
                          ),
                          padding:  const EdgeInsets.all(12),
                          child: Icon(FontAwesomeIcons.person,size: 27, color: Theme.of(context).primaryColor,),),
-                       // NeumorphicButton(
-                       //     margin: EdgeInsets.only(top: 12),
-                       //     onPressed: () {
-                       //       Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft, child: Profile(idlink: widget.idLink,token: widget.token,username: widget.name,class_name: class_name)));
-                       //     },
-                       //     style: NeumorphicStyle(
-                       //       shape: NeumorphicShape.concave,
-                       //       boxShape: NeumorphicBoxShape.circle(),
-                       //     ),
-                       //     padding:  const EdgeInsets.all(12),
-                       //     child: Icon(FontAwesomeIcons.person,size: 27, color: Theme.of(context ).primaryColor,),)
                      ],
                    ),
                  ),
