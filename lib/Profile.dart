@@ -109,7 +109,7 @@ class _ProfileState extends State<Profile> {
                       SizedBox(width: MediaQuery.of(context).size.width / 25,),
                       NeumorphicButton(
                         onPressed: () {
-    Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft, child: Timetable(section: widget.idlink,token: widget.token)));
+  //  Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft, child: Timetable(section: widget.idlink,token: widget.token)));
     },
 
                         style: const NeumorphicStyle(
@@ -119,7 +119,7 @@ class _ProfileState extends State<Profile> {
                           NeumorphicBoxShape.circle(),
                         ),
                         padding:  const EdgeInsets.all(12),
-                        child: Icon(FontAwesomeIcons.calendar,size: 24, color: Theme.of(context).primaryColor,),),
+                        child: Icon(FontAwesomeIcons.cloudMoon,size: 24, color: Theme.of(context).primaryColor,),),
                     ],
 
                   )

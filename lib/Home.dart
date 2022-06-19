@@ -85,6 +85,7 @@ class _HomeState extends State<Home> {
                        ),
                        SizedBox(width: MediaQuery.of(context).size.width / 9,),
                        NeumorphicButton(
+
                          onPressed: () {
                            Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft, child: Timetable(section: widget.idLink,token: widget.token)));
                          },
