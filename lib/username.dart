@@ -41,7 +41,7 @@ class _UsernameState extends State<Username> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(height: MediaQuery.of(context).size.height /15),
-                Image.asset("animation/pic.png",height: 275,width: 275,),
+                Image.asset("animation/pic2.png",height: 275,width: 275,),
                 SizedBox(height: MediaQuery.of(context).size.height /10),
                 Neumorphic(
                     padding: EdgeInsets.all(5),

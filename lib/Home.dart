@@ -123,7 +123,10 @@ class _HomeState extends State<Home> {
                                         child: Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            Expanded(child: Text(subjectDetails[index].name.toUpperCase(),style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w500))),
+                                            Expanded(child: Text(subjectDetails[index].name.toUpperCase().length>30?subjectDetails[index].name.toUpperCase().substring(0,30):subjectDetails[index].name.toUpperCase()
+
+
+                                                ,style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w500))),
                                             const SizedBox(height: 10),
                                             Text(subjectDetails[index].present+"/"+subjectDetails[index].total),
                                             const SizedBox(height: 5),
