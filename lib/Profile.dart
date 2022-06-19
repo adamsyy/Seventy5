@@ -78,6 +78,7 @@ class _ProfileState extends State<Profile> {
                   Text(widget.class_name),
                   SizedBox(height: MediaQuery.of(context).size.height / 30,),
                   Row(mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       NeumorphicButton(
                         onPressed: () {
@@ -85,7 +86,7 @@ class _ProfileState extends State<Profile> {
                         },
                         style: const NeumorphicStyle(
                           depth: -3,
-                          shape: NeumorphicShape.flat,
+                          shape: NeumorphicShape.concave,
                           boxShape:
                           NeumorphicBoxShape.circle(),
                         ),
@@ -181,7 +182,7 @@ class _ProfileState extends State<Profile> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       actions: [
         cancelButton,
-        SizedBox(width:  MediaQuery.of(context).size.width / 20,),
+        SizedBox(width:  MediaQuery.of(context).size.width / 30,),
         continueButton,
       ],
     );
@@ -218,15 +219,15 @@ class _ProfileState extends State<Profile> {
 
   showAlertDialog2(BuildContext context) {
     // set up the buttons
-    Widget cancelButton = NeumorphicButton(
-      style: NeumorphicStyle(depth: 2,
+    Widget closeButton = NeumorphicButton(
+      style: NeumorphicStyle(
         boxShape: NeumorphicBoxShape.roundRect(
-            BorderRadius.circular(15)),
+            BorderRadius.circular(34)),
         shape: NeumorphicShape.flat,
       ),
-      child: const Padding(
-        padding: EdgeInsets.all(4),
-        child: Text("Close",style: TextStyle(fontWeight: FontWeight.bold),),
+      child: Container(
+        child: Text("Close", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
+        padding: EdgeInsets.fromLTRB(25, 4, 25, 4),
       ),
       onPressed:  ()async {
         // Try reading data from the 'counter' key. If it doesn't exist, returns null.
@@ -244,11 +245,11 @@ class _ProfileState extends State<Profile> {
       content: Container(height: MediaQuery.of(context).size.height / 5.5,
         child: Column(
           children: [
-            const Text("  Adamsy",style: TextStyle(fontWeight: FontWeight.w400),),
+            const Text("Adamsy",style: TextStyle(fontWeight: FontWeight.w400),),
             const SizedBox(height: 20,),
-            const Text("  AthulReji",style: TextStyle(fontWeight: FontWeight.w400),),
+            const Text("AthulReji",style: TextStyle(fontWeight: FontWeight.w400),),
             const SizedBox(height: 20,),
-            const Text("  JeZwin",style: TextStyle(fontWeight: FontWeight.w400),),
+            const Text("JeZwin",style: TextStyle(fontWeight: FontWeight.w400),),
             const SizedBox(height: 20,),
             GestureDetector(onTap: ()async{
               final Uri _url = Uri.parse("https://github.com/adamsyy/Seventy5");
@@ -259,7 +260,7 @@ class _ProfileState extends State<Profile> {
       ),
       actions: [
 
-        Center(child: cancelButton),
+        Center(child: closeButton),
         SizedBox(height: 20,)
 
       ],
@@ -280,44 +281,18 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-
-
-  Future Pay_using_upi() async {
-
-
-    final url = Uri.parse("https://upi-openkerala.herokuapp.com/adamrubiks@okaxis/"+(50).toString());
-    print(url);
-    final response = await http.post(
-      url,
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': 'Bearer ' + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOTRmMjE3N2Y2ODkxMjkzMWVhNzRjOSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjU1MTI3MDg0LCJleHAiOjE2NTU5OTEwODR9.o-hznIYVpeoVd7qbg5U__e8ys-qOSqbj-mBJv4-wUUs",
-      },
-
-    );
-    print(response.body);
-
-
-  }
-
-
-
   showAlertDialog3(BuildContext context) {
 
     // set up the buttons
-    Widget cancelButton = NeumorphicButton(
-
-      style: NeumorphicStyle(
+    Widget closeButton = NeumorphicButton(
+      style: NeumorphicStyle(depth: -5,
         boxShape: NeumorphicBoxShape.roundRect(
-            BorderRadius.circular(8)),
-        //color:  Colors.grey[300],
+            BorderRadius.circular(34)),
         shape: NeumorphicShape.flat,
-
       ),
-      child: const Padding(
-        padding: EdgeInsets.all(4),
-        child: Text("cancel"),
+      child: Container(
+        child: Text("Close", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
+        padding: EdgeInsets.fromLTRB(15, 4, 15, 4),
       ),
       onPressed:  ()async {
         // Try reading data from the 'counter' key. If it doesn't exist, returns null.
@@ -326,17 +301,15 @@ class _ProfileState extends State<Profile> {
         Navigator.pop(context);
       },
     );;
-    Widget continueButton = NeumorphicButton(
-
-      style: NeumorphicStyle(depth: 2,
+    Widget DonateButton = NeumorphicButton(
+      style: NeumorphicStyle(
         boxShape: NeumorphicBoxShape.roundRect(
-            BorderRadius.circular(8)),
-        shape: NeumorphicShape.convex,
-
+            BorderRadius.circular(34)),
+        shape: NeumorphicShape.flat,
       ),
-      child: const Padding(
-        padding:EdgeInsets.fromLTRB(4, 4, 4, 4),
-        child: Text("Donate"),
+      child: Container(
+        child: Text("Donate", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
+        padding: EdgeInsets.fromLTRB(15, 4, 15, 4),
       ),
       onPressed:  ()async {
         // Try reading data from the 'counter' key. If it doesn't exist, returns null.
@@ -348,15 +321,15 @@ class _ProfileState extends State<Profile> {
     );
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
+      actionsAlignment: MainAxisAlignment.center,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      title: const Center(child: Text("Buy us coffee :)",style: TextStyle(fontWeight: FontWeight.bold),)),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       content: const Text(" A huge amount of time and resources goes into building these projects, supporting us will help us to develop further versions of the application with even more features along with suporrt for IOS."),
       actions: [
-        const SizedBox(width: 10,),
-        cancelButton,
-        SizedBox(width:  MediaQuery.of(context).size.width / 7,),
-        continueButton,
-        const SizedBox(width: 10,),
+        closeButton,
+        SizedBox(width:  MediaQuery.of(context).size.width / 18,),
+        DonateButton,
       ],
     );
     // show the dialog
@@ -374,4 +347,20 @@ class _ProfileState extends State<Profile> {
       },
     );
   }
+
+  Future Pay_using_upi() async {
+    final url = Uri.parse("https://upi-openkerala.herokuapp.com/adamrubiks@okaxis/"+(50).toString());
+    print(url);
+    final response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ' + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOTRmMjE3N2Y2ODkxMjkzMWVhNzRjOSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjU1MTI3MDg0LCJleHAiOjE2NTU5OTEwODR9.o-hznIYVpeoVd7qbg5U__e8ys-qOSqbj-mBJv4-wUUs",
+      },
+
+    );
+    print(response.body);
+  }
+
 }

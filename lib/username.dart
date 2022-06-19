@@ -128,14 +128,10 @@ class _UsernameState extends State<Username> {
                   children: [
                     NeumorphicButton(
                       onPressed: () async {
-
                         if(username?.length==0||password?.length==0)
                         {
                           showAlertDialog(context);
                         }
-
-
-
                         setState(() {
                          arrow=false;
                         });
@@ -175,11 +171,6 @@ class _UsernameState extends State<Username> {
   }
 
   Future lookup_login() async {
-
-
-
-
-
 
     Map newUpdate = {
       "password": password,
@@ -221,33 +212,7 @@ class _UsernameState extends State<Username> {
 
 
    if(json.decode(response2.body)["message"].toString().length==27){
-      print("wrong creds");
-
-      showDialog<void>(
-        context: context,
-        barrierDismissible: false, // user must tap button!
-        builder: (BuildContext context) {
-          return AlertDialog(
-
-            content: SingleChildScrollView(
-              child: ListBody(
-                children: const <Widget>[
-                  Text('oops you entered the wrong credentials'),
-
-                ],
-              ),
-            ),
-            actions: <Widget>[
-              TextButton(
-                child:  Text('Try again',style: TextStyle(color: Colors.black.withOpacity(0.5),fontWeight: FontWeight.w400),),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        },
-      );
+      showAlertDialog(context);
 
       fieldText_password.clear();
       setState(() {
@@ -258,16 +223,12 @@ class _UsernameState extends State<Username> {
       print("logging in");
       token=json.decode(response2.body)["access_token"];
       String newusername="";
-      for (int? i = 0;
-      i! < (username?.length)!;
-      i++) {
-
-if(username![i]!='@'){
-  newusername+=username![i];
-}else{
-  break;
-}
-
+      for (int? i = 0;i! < (username?.length)!;i++) {
+        if(username![i]!='@'){
+          newusername+=username![i];
+        }else{
+          break;
+        }
       }
       // Obtain shared preferences.
       final prefs = await SharedPreferences.getInstance();
@@ -283,11 +244,7 @@ if(username![i]!='@'){
 
   Future username_login() async {
 
-
-
-
-
-    Map newUpdate2 = {
+  Map newUpdate2 = {
       "password": password,
       "username": username,
     };
@@ -313,10 +270,10 @@ if(username![i]!='@'){
 
       fieldText_password.clear();
       setState(() {
-      arrow=true;
+        arrow=true;
       });
 
-    }  else{
+    } else{
       token=json.decode(response2.body)["access_token"];
       print("logging in");
 
