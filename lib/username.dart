@@ -128,6 +128,14 @@ class _UsernameState extends State<Username> {
                   children: [
                     NeumorphicButton(
                       onPressed: () async {
+
+                        if(username?.length==0||password?.length==0)
+                        {
+                          showAlertDialog(context);
+                        }
+
+
+
                         setState(() {
                          arrow=false;
                         });
@@ -167,6 +175,12 @@ class _UsernameState extends State<Username> {
   }
 
   Future lookup_login() async {
+
+
+
+
+
+
     Map newUpdate = {
       "password": password,
       "username": username,
@@ -203,7 +217,10 @@ class _UsernameState extends State<Username> {
     // print("res 2");
     // print(response2.body);
    // message":"The given data was invalid.
-    if(json.decode(response2.body)["message"].toString().length==27){
+
+
+
+   if(json.decode(response2.body)["message"].toString().length==27){
       print("wrong creds");
 
       showDialog<void>(
@@ -265,6 +282,11 @@ if(username![i]!='@'){
   }
 
   Future username_login() async {
+
+
+
+
+
     Map newUpdate2 = {
       "password": password,
       "username": username,
@@ -281,6 +303,9 @@ if(username![i]!='@'){
     );
     // print("res 2");
     // print(response2.body);
+
+
+
     if(json.decode(response2.body)["message"].toString().length==27){
       print("wrong creds");
 
@@ -315,7 +340,7 @@ if(username![i]!='@'){
         shape: NeumorphicShape.flat,
       ),
       child: Container(
-        child: const Text("No", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
+        child: const Text("Retry", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
         padding: const EdgeInsets.fromLTRB(25, 4, 25, 4),
       ),
       onPressed:  ()async {
