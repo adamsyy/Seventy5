@@ -284,31 +284,7 @@ if(username![i]!='@'){
     if(json.decode(response2.body)["message"].toString().length==27){
       print("wrong creds");
 
-      showDialog<void>(
-        context: context,
-        barrierDismissible: false, // user must tap button!
-        builder: (BuildContext context) {
-          return AlertDialog(
-
-            content: SingleChildScrollView(
-              child: ListBody(
-                children: const <Widget>[
-                  Text('oops you entered the wrong credentials'),
-
-                ],
-              ),
-            ),
-            actions: <Widget>[
-              TextButton(
-                child:  Text('Try again',style: TextStyle(color: Colors.black.withOpacity(0.5),fontWeight: FontWeight.w400),),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        },
-      );
+      showAlertDialog(context);
 
       fieldText_password.clear();
       setState(() {
@@ -328,5 +304,57 @@ if(username![i]!='@'){
         MaterialPageRoute(builder: (context) =>  Home(name: username.toString(),token: token,)),
       );
     }
+  }
+
+  showAlertDialog(BuildContext context) {
+    // set up the buttons
+    Widget retryButton = NeumorphicButton(
+      style: NeumorphicStyle(
+        boxShape: NeumorphicBoxShape.roundRect(
+            BorderRadius.circular(34)),
+        shape: NeumorphicShape.flat,
+      ),
+      child: Container(
+        child: const Text("No", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
+        padding: const EdgeInsets.fromLTRB(25, 4, 25, 4),
+      ),
+      onPressed:  ()async {
+        // Try reading data from the 'counter' key. If it doesn't exist, returns null.
+        // Obtain shared preferences.
+
+        Navigator.pop(context);
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      actionsAlignment: MainAxisAlignment.center,
+      //contentPadding: EdgeInsets.fromLTRB(100, 10, 100, 10),
+      content: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: const [
+          Text("Invalid credentials", style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
+        ],
+      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      actions: [
+        retryButton,
+      ],
+    );
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Neumorphic(child: alert,
+          style: NeumorphicStyle(
+              depth: 0,
+              shape: NeumorphicShape.flat,
+              boxShape: NeumorphicBoxShape.roundRect(
+                  BorderRadius.circular(0))
+          ),
+        );
+      },
+    );
   }
 }

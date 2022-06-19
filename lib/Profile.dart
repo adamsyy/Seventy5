@@ -4,7 +4,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:seventy5/Ttimetable.dart';
 import 'package:seventy5/username.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:http/http.dart' as http;
 
@@ -13,65 +12,12 @@ class Profile extends StatefulWidget {
   late String username;
   late String token;
   late String class_name;
-String idlink;
+  late String idlink;
   @override
   State<Profile> createState() => _ProfileState();
 }
 
 class _ProfileState extends State<Profile> {
-  // late Razorpay razorpay;
-  //
-  // @override
-  // void initState() {
-  //
-  //   super.initState();
-  //   razorpay=Razorpay();
-  //   razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, handlerPaymentSuccess);
-  //   razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, handlerPaymentError);
-  //   razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, handlerExternalWallet);
-  // }
-  // @override
-  // void dispose() {
-  //
-  //   super.dispose();
-  //   razorpay.clear();
-  // }
-  // void openCheckout(){
-  //   var options={
-  //     "key":"rzp_test_KRIbh5kOB96e8q",
-  //     "amount":"100",
-  //     "name":"The Hanger",
-  //     "description":"Fastest Payment Method",
-  //     "prefill":{
-  //       "contact":"7559076475",
-  //       "email": "adamrubiks@gmail.com",
-  //     },
-  //     "external":{
-  //       "wallets":["paytm"],
-  //
-  //     }
-  //   };
-  //   try{
-  //     razorpay.open(options);
-  //   }
-  //   catch(e){
-  //     print(e.toString());
-  //   }
-  //
-  // }
-  //
-  //
-  // void handlerPaymentSuccess(){
-  //   print('success aayye');
-  // }
-  //
-  // void handlerPaymentError(){
-  //   print('error aai');
-  // }
-  //
-  // void handlerExternalWallet(){
-  //   print('external aaye');
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -136,7 +82,7 @@ class _ProfileState extends State<Profile> {
                         onPressed: () {
                           showAlertDialog2(context);
                         },
-                        style: NeumorphicStyle(
+                        style: const NeumorphicStyle(
                           depth: -3,
                           shape: NeumorphicShape.flat,
                           boxShape:
@@ -200,24 +146,18 @@ class _ProfileState extends State<Profile> {
     );
     // Yes Button
     Widget continueButton = NeumorphicButton(
-
-      style: NeumorphicStyle(depth: 2,color: Colors.grey[300],
+      style: NeumorphicStyle(depth: 4,
         boxShape: NeumorphicBoxShape.roundRect(
-            BorderRadius.circular(20)),
+            BorderRadius.circular(34)),
         shape: NeumorphicShape.flat,
       ),
       child: Container(
         child: Text("Yes", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
-          padding: EdgeInsets.fromLTRB(25, 4, 25, 4),
+        padding: EdgeInsets.fromLTRB(25, 4, 25, 4),
       ),
       onPressed:  ()async {
         // Try reading data from the 'counter' key. If it doesn't exist, returns null.
         // Obtain shared preferences.
-
-        final prefs = await SharedPreferences.getInstance();
-        final success1 = await prefs.remove('username');
-        final success2 = await prefs.remove('password');
-        final success3 = await prefs.remove('token');
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) =>  Username()),
@@ -226,8 +166,7 @@ class _ProfileState extends State<Profile> {
     );
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      elevation: 2,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       actionsAlignment: MainAxisAlignment.center,
       //contentPadding: EdgeInsets.fromLTRB(100, 10, 100, 10),
       content: Row(
@@ -236,9 +175,10 @@ class _ProfileState extends State<Profile> {
           Text("Confirm logout", style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
         ],
       ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       actions: [
         cancelButton,
-        //SizedBox(width:  MediaQuery.of(context).size.width / 7,),
+        SizedBox(width:  MediaQuery.of(context).size.width / 20,),
         continueButton,
       ],
     );
@@ -246,7 +186,14 @@ class _ProfileState extends State<Profile> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return alert;
+        return Neumorphic(child: alert,
+          style: NeumorphicStyle(
+              depth: 0,
+              shape: NeumorphicShape.flat,
+              boxShape: NeumorphicBoxShape.roundRect(
+                  BorderRadius.circular(0))
+          ),
+        );
       },
     );
   }
@@ -274,8 +221,8 @@ class _ProfileState extends State<Profile> {
             BorderRadius.circular(15)),
         shape: NeumorphicShape.flat,
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(4),
+      child: const Padding(
+        padding: EdgeInsets.all(4),
         child: Text("Close",style: TextStyle(fontWeight: FontWeight.bold),),
       ),
       onPressed:  ()async {
@@ -288,20 +235,22 @@ class _ProfileState extends State<Profile> {
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       title: Center(child: Text("Meet our team",style: TextStyle(fontWeight: FontWeight.bold),)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       content: Container(height: MediaQuery.of(context).size.height / 5.5,
         child: Column(
           children: [
-            Text("  Adamsy",style: TextStyle(fontWeight: FontWeight.w400),),
-            SizedBox(height: 20,),
-            Text("  AthulReji",style: TextStyle(fontWeight: FontWeight.w400),),
-            SizedBox(height: 20,),
-            Text("  JeZwin",style: TextStyle(fontWeight: FontWeight.w400),),
-            SizedBox(height: 20,),
+            const Text("  Adamsy",style: TextStyle(fontWeight: FontWeight.w400),),
+            const SizedBox(height: 20,),
+            const Text("  AthulReji",style: TextStyle(fontWeight: FontWeight.w400),),
+            const SizedBox(height: 20,),
+            const Text("  JeZwin",style: TextStyle(fontWeight: FontWeight.w400),),
+            const SizedBox(height: 20,),
             GestureDetector(onTap: ()async{
               final Uri _url = Uri.parse("https://github.com/adamsyy/Seventy5");
               await launchUrl(_url);
-            },child: Text("'★' Our repository",style: TextStyle(fontWeight: FontWeight.w400),)),
+            },child: const Text("'★' Our repository",style: TextStyle(fontWeight: FontWeight.w400),)),
           ],
         ),
       ),
@@ -318,9 +267,10 @@ class _ProfileState extends State<Profile> {
       builder: (BuildContext context) {
         return Neumorphic(child: alert,
           style: NeumorphicStyle(
-            shape: NeumorphicShape.concave,
+              depth: 0,
+              shape: NeumorphicShape.flat,
               boxShape: NeumorphicBoxShape.roundRect(
-                  BorderRadius.circular(30))
+                  BorderRadius.circular(0))
           ),
         );
       },
@@ -355,15 +305,15 @@ class _ProfileState extends State<Profile> {
     // set up the buttons
     Widget cancelButton = NeumorphicButton(
 
-      style: NeumorphicStyle(depth: 2,
+      style: NeumorphicStyle(
         boxShape: NeumorphicBoxShape.roundRect(
             BorderRadius.circular(8)),
         //color:  Colors.grey[300],
         shape: NeumorphicShape.flat,
 
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(4),
+      child: const Padding(
+        padding: EdgeInsets.all(4),
         child: Text("cancel"),
       ),
       onPressed:  ()async {
@@ -378,10 +328,10 @@ class _ProfileState extends State<Profile> {
       style: NeumorphicStyle(depth: 2,
         boxShape: NeumorphicBoxShape.roundRect(
             BorderRadius.circular(8)),
-        shape: NeumorphicShape.flat,
+        shape: NeumorphicShape.convex,
 
       ),
-      child: Padding(
+      child: const Padding(
         padding:EdgeInsets.fromLTRB(4, 4, 4, 4),
         child: Text("Donate"),
       ),
@@ -395,20 +345,29 @@ class _ProfileState extends State<Profile> {
     );
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
-      content: Text(" A huge amount of time and resources goes into building these projects, supporting us will help us to develop further versions of the application with even more features along with suporrt for IOS."),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      content: const Text(" A huge amount of time and resources goes into building these projects, supporting us will help us to develop further versions of the application with even more features along with suporrt for IOS."),
       actions: [
-        SizedBox(width: 10,),
+        const SizedBox(width: 10,),
         cancelButton,
         SizedBox(width:  MediaQuery.of(context).size.width / 7,),
         continueButton,
-        SizedBox(width: 10,),
+        const SizedBox(width: 10,),
       ],
     );
     // show the dialog
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return alert;
+        return Neumorphic(child: alert,
+          style: NeumorphicStyle(
+              depth: 0,
+              shape: NeumorphicShape.flat,
+              boxShape: NeumorphicBoxShape.roundRect(
+                  BorderRadius.circular(0))
+          ),
+        );
       },
     );
   }
