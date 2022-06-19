@@ -11,7 +11,6 @@ import 'package:seventy5/Profile.dart';
 import 'package:seventy5/subject.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:seventy5/username.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class Home extends StatefulWidget {
   Home({required this.name,required this.token});
