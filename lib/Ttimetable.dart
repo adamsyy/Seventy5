@@ -955,7 +955,7 @@ class _TimetableState extends State<Timetable> {
     else{
       Navigator.pop(context);
       // Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft, child: Home()));
-      Navigator.pop(context);
+      // Navigator.pop(context);
     }
 
   }
