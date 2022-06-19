@@ -158,7 +158,7 @@ class _ProfileState extends State<Profile> {
                         ),
                         padding:  const EdgeInsets.all(12),
                         child: Icon(FontAwesomeIcons.mugSaucer,size: 24,color : Theme.of(context).primaryColor,),),
-                      SizedBox(width: MediaQuery.of(context).size.width / 20,),
+                      SizedBox(width: MediaQuery.of(context).size.width / 25,),
                       NeumorphicButton(
                         onPressed: () {
     Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft, child: Timetable(section: widget.idlink,token: widget.token)));
@@ -200,9 +200,10 @@ class _ProfileState extends State<Profile> {
     );
     // Yes Button
     Widget continueButton = NeumorphicButton(
-      style: NeumorphicStyle(depth: 4,
+
+      style: NeumorphicStyle(depth: 2,color: Colors.grey[300],
         boxShape: NeumorphicBoxShape.roundRect(
-            BorderRadius.circular(34)),
+            BorderRadius.circular(20)),
         shape: NeumorphicShape.flat,
       ),
       child: Container(
