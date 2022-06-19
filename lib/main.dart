@@ -31,7 +31,8 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return NeumorphicApp(
-        themeMode: ThemeMode.system,
+        themeMode: ThemeMode.light,
+        debugShowCheckedModeBanner: false,
         title: 'Neumorphic App',
         theme: const NeumorphicThemeData(
           variantColor: Color(0xFF303030),
