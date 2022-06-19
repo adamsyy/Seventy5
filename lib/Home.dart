@@ -48,6 +48,7 @@ class _HomeState extends State<Home> {
   late String class_name;
   bool darkMode = false;
 late String image;
+  late String image_name;
   var tempData;
   int check = 0;
 
@@ -102,7 +103,7 @@ late String image;
                          SizedBox(width: MediaQuery.of(context).size.width / 22,),
                          NeumorphicButton(
                            onPressed: () {
-                             Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft, child: Profile(badge:image,idlink: widget.idLink,token: widget.token,username: widget.name,class_name: class_name)));
+                             Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft, child: Profile(badeg_name: image_name, badge:image,idlink: widget.idLink,token: widget.token,username: widget.name,class_name: class_name)));
                              //Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft, child: Timetable(section: widget.idlink,token: widget.token)));
                            },
                            style: const NeumorphicStyle(
@@ -261,27 +262,33 @@ late String image;
     }
   subject_percentage.sort();
 if(subject_percentage[0]==100){
-  image=">100";
+  image="animation/full100.png";
+  image_name="legendary";
 }
 else if(subject_percentage[0]>=90){
-  image=">90";
+  image="animation/90.png";
+  image_name="nissarm";
 }
 else if(subject_percentage[0]>=75&&subject_percentage[subject_percentage.length-1]<=85)
 {
-  image=">75-85";
+  image="animation/7580.png";
+  image_name="Regular";
 }
 
 else if(subject_percentage[0]>=75)
 {
-  image=">75";
+  image="animation/75.png";
+  image_name="Veteran";
 }
 else if(subject_percentage[0]>=50){
-  image=">50";
+  image="animation/50.png";
+  image_name="a little more";
 }
 else if(subject_percentage[0]<50){
-  image="<50";
+  image="animation/50below.png";
+  image_name="Maaveli";
 }else{
-  image="else condition";
+  image="animation/else.png";
 }
 print(image);
 
@@ -335,7 +342,7 @@ print(image);
 
     if (details.primaryVelocity?.compareTo(0) == -1)
       { print('dragged from left');
-      Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft, child: Profile(badge:image,idlink: widget.idLink,token: widget.token,username: widget.name,class_name: class_name)));
+      Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft, child: Profile(badeg_name: image_name,badge:image,idlink: widget.idLink,token: widget.token,username: widget.name,class_name: class_name)));
 
       }
     else

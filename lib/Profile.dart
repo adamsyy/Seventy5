@@ -8,12 +8,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:http/http.dart' as http;
 
+import 'Allbadge.dart';
+
 class Profile extends StatefulWidget {
-  Profile({required this.username,required this.token,required this.class_name,required this.idlink,required this.badge});
+  Profile({required this.username,required this.token,required this.class_name,required this.idlink,required this.badge,required this.badeg_name});
   late String username;
   late String token;
   late String class_name;
   late String idlink;
+  String badeg_name;
   String badge;
   @override
   State<Profile> createState() => _ProfileState();
@@ -65,16 +68,22 @@ class _ProfileState extends State<Profile> {
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height / 9,),
                   NeumorphicButton(
-                        onPressed: () {
-                          print("onClick");
-                        },
+onPressed: (){
+
+  Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) =>  Allmaveli()),
+  );
+},
                         style: NeumorphicStyle(//color: Colors.transparent,
                             shape: NeumorphicShape.flat,
                             boxShape: NeumorphicBoxShape.roundRect(
                                 BorderRadius.circular(8))),
                         padding:
-                            EdgeInsets.all(MediaQuery.of(context).size.width / 4.5),
-                        child: const Icon(Icons.favorite_border,)),
+                            EdgeInsets.all(MediaQuery.of(context).size.width / 12),
+                        child:  Image.asset(widget.badge.toString(),height: 180,width: 180)),
+                  SizedBox(height: MediaQuery.of(context).size.height / 45,),
+                  Text(widget.badeg_name+ " Badge",style: TextStyle(fontWeight: FontWeight.w200),),
 
                   SizedBox(height: MediaQuery.of(context).size.height / 20,),
                   Text(widget.username.toUpperCase(),style: TextStyle(fontWeight: FontWeight.bold),),

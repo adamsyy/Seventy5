@@ -69,6 +69,13 @@ flutter:
     - animation/Asset1.png
     - animation/pic.png
     - animation/pic2.png
+    - animation/50.png
+    - animation/50below.png
+    - animation/75.png
+    - animation/90.png
+    - animation/7580.png
+    - animation/else.png
+    - animation/full100.png
 
 
 
