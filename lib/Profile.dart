@@ -46,7 +46,7 @@ class _ProfileState extends State<Profile> {
                               Navigator.pop(context);
                             },
                             style: const NeumorphicStyle(
-                              shape: NeumorphicShape.concave,
+                              shape: NeumorphicShape.flat,
                               boxShape: NeumorphicBoxShape.circle(),
                             ),
                             padding:  const EdgeInsets.all(12),
@@ -57,7 +57,7 @@ class _ProfileState extends State<Profile> {
                               showAlertDialog(context);
                             },
                             style: const NeumorphicStyle(
-                              shape: NeumorphicShape.concave,
+                              shape: NeumorphicShape.flat,
                               boxShape:
                               NeumorphicBoxShape.circle(),
                             ),
@@ -70,10 +70,11 @@ class _ProfileState extends State<Profile> {
                   NeumorphicButton(
 onPressed: (){
 
-  Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) =>  Allmaveli()),
-  );
+
+
+  Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft, child: Allmaveli(main_badge: widget.badge,main_badge_name: widget.badeg_name,)));
+
+
 },
                         style: NeumorphicStyle(//color: Colors.transparent,
                             shape: NeumorphicShape.flat,
@@ -83,7 +84,7 @@ onPressed: (){
                             EdgeInsets.all(MediaQuery.of(context).size.width / 12),
                         child:  Image.asset(widget.badge.toString(),height: 180,width: 180)),
                   SizedBox(height: MediaQuery.of(context).size.height / 45,),
-                  Text(widget.badeg_name+ " Badge",style: TextStyle(fontWeight: FontWeight.w200),),
+                  Text(widget.badeg_name,style: TextStyle(fontWeight: FontWeight.w200),),
 
                   SizedBox(height: MediaQuery.of(context).size.height / 20,),
                   Text(widget.username.toUpperCase(),style: TextStyle(fontWeight: FontWeight.bold),),
@@ -121,7 +122,7 @@ onPressed: (){
                       SizedBox(width: MediaQuery.of(context).size.width / 25,),
                       NeumorphicButton(
                         onPressed: () {
-                          NeumorphicTheme.of(context)?.themeMode = ThemeMode.dark;
+                          showAlertDialogx(context);
                           },
                         style: const NeumorphicStyle(
                           depth: -3,
@@ -336,7 +337,7 @@ onPressed: (){
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       title: const Center(child: Text("Buy us coffee :)",style: TextStyle(fontWeight: FontWeight.bold),)),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      content: const Text(" A huge amount of time and resources goes into building these projects, supporting us will help us to develop further versions of the application with even more features along with suporrt for IOS."),
+      content: const Text(" A huge amount of time and resources goes into building these projects, supporting us will help us to develop further versions of the application with even more features along with support for IOS."),
       actions: [
         closeButton,
         SizedBox(width:  MediaQuery.of(context).size.width / 18,),
@@ -372,6 +373,74 @@ onPressed: (){
 
     );
     print(response.body);
+  }
+
+
+
+
+
+
+  showAlertDialogx(BuildContext context) {
+    // No Button
+    Widget cancelButton = NeumorphicButton(
+      style: NeumorphicStyle(
+        boxShape: NeumorphicBoxShape.roundRect(
+            BorderRadius.circular(34)),
+        shape: NeumorphicShape.flat,
+      ),
+      child: Container(
+        child: Text("close", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
+        padding: EdgeInsets.fromLTRB(25, 4, 25, 4),
+      ),
+      onPressed:  ()async {
+        Navigator.pop(context);
+      },
+    );
+    // Yes Button
+    Widget continueButton = NeumorphicButton(
+      style: NeumorphicStyle(depth: 4,
+        boxShape: NeumorphicBoxShape.roundRect(
+            BorderRadius.circular(34)),
+        shape: NeumorphicShape.flat,
+      ),
+      child: Container(
+        child: Text("Yes", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
+        padding: const EdgeInsets.fromLTRB(25, 4, 25, 4),
+      ),
+      onPressed:  ()async {
+
+      },
+    );
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      actionsAlignment: MainAxisAlignment.center,
+      //contentPadding: EdgeInsets.fromLTRB(100, 10, 100, 10),
+      content: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: const [
+          Text("more features coming soon ;)", style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
+        ],
+      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      actions: [
+        cancelButton,
+      ],
+    );
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Neumorphic(child: alert,
+          style: NeumorphicStyle(
+              depth: 0,
+              shape: NeumorphicShape.flat,
+              boxShape: NeumorphicBoxShape.roundRect(
+                  BorderRadius.circular(0))
+          ),
+        );
+      },
+    );
   }
 
 }

@@ -166,8 +166,8 @@ late String image;
                                             Row(
                                               mainAxisAlignment: MainAxisAlignment.center,
                                               children: [
-                                                Text(double.parse(subjectDetails[index].percentage).toStringAsFixed(0)+"", style: const TextStyle(fontSize: 16)),
-                                                Icon(FontAwesomeIcons.fire, size: 15,),
+                                                Text("100% ", style: const TextStyle(fontSize: 16)),
+                                                Icon(FontAwesomeIcons.gripfire, size: 15,),
                                               ],
                                             ),
                                           progressColor: Theme.of(context).primaryColor,
@@ -267,7 +267,7 @@ if(subject_percentage[0]==100){
 }
 else if(subject_percentage[0]>=90){
   image="animation/90.png";
-  image_name="nissarm";
+  image_name="champion";
 }
 else if(subject_percentage[0]>=75&&subject_percentage[subject_percentage.length-1]<=85)
 {
@@ -282,13 +282,11 @@ else if(subject_percentage[0]>=75)
 }
 else if(subject_percentage[0]>=50){
   image="animation/50.png";
-  image_name="a little more";
+  image_name="just miss";
 }
-else if(subject_percentage[0]<50){
+else{
   image="animation/50below.png";
   image_name="Maaveli";
-}else{
-  image="animation/else.png";
 }
 print(image);
 
