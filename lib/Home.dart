@@ -68,7 +68,7 @@ late String image;
       },
         child: GestureDetector( onHorizontalDragEnd: (DragEndDetails details) => _onHorizontalDrag(details),
           child: AnnotatedRegion<SystemUiOverlayStyle>( value: SystemUiOverlayStyle(
-            statusBarColor: Colors.grey[300],
+            statusBarColor: Theme.of(context).scaffoldBackgroundColor,
           ),
             child: Scaffold(
               body: SafeArea(child :SingleChildScrollView(
@@ -143,8 +143,6 @@ late String image;
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
                                               Expanded(child: Text(subjectDetails[index].name.toUpperCase().length>30?subjectDetails[index].name.toUpperCase().substring(0,30):subjectDetails[index].name.toUpperCase()
-
-
                                                   ,style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w500))),
                                               const SizedBox(height: 10),
                                               Text(subjectDetails[index].present+"/"+subjectDetails[index].total),
@@ -162,10 +160,15 @@ late String image;
                                           backgroundColor: Colors.grey[500]!,
                                           lineWidth: 3.0,
                                           percent: double.parse(subjectDetails[index].percentage)/100,
-                                          center: Text(
-                                            double.parse(subjectDetails[index].percentage).toStringAsFixed(1) + "%",
-                                            style: const TextStyle(fontSize: 16),
-                                          ),
+                                          center: double.parse(subjectDetails[index].percentage)<100 ?
+                                            Text(double.parse(subjectDetails[index].percentage).toStringAsFixed(1) + "%", style: const TextStyle(fontSize: 16)) :
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              children: [
+                                                Text(double.parse(subjectDetails[index].percentage).toStringAsFixed(0)+"", style: const TextStyle(fontSize: 16)),
+                                                Icon(FontAwesomeIcons.fire, size: 15,),
+                                              ],
+                                            ),
                                           progressColor: Theme.of(context).primaryColor,
                                         )
                                       ],
