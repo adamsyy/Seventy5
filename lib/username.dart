@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:seventy5/Home.dart';
@@ -33,17 +32,45 @@ class _UsernameState extends State<Username> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Container(
-            margin: EdgeInsets.fromLTRB(20, 20, 20, 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(height: MediaQuery.of(context).size.height /15),
-                Image.asset("animation/pic2.png",height: 275,width: 275,),
-                SizedBox(height: MediaQuery.of(context).size.height /10),
-                Neumorphic(
+        body: SafeArea(
+          child: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: Container(
+              margin: EdgeInsets.fromLTRB(20, 20, 20, 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(height: MediaQuery.of(context).size.height /15),
+                  Image.asset("animation/pic2.png",height: 275,width: 275,),
+                  SizedBox(height: MediaQuery.of(context).size.height /10),
+                  Neumorphic(
+                      padding: EdgeInsets.all(5),
+                      style: NeumorphicStyle(
+                          shape: NeumorphicShape.concave,
+                          boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(30)),
+                          depth: -5,
+                          lightSource: LightSource.topLeft,
+                      ),
+                      child: TextFormField(
+                        cursorColor: Theme.of(context).primaryColor,
+                        controller: fieldText_username,
+                        keyboardType: TextInputType.name,
+                        style: const TextStyle(fontSize: 16.0),
+                        textAlign: TextAlign.center,
+                        onSaved: (String? value) {},
+                        textInputAction: TextInputAction.next,
+                        decoration: const InputDecoration(
+                            hintText: 'username or email',
+                            hintStyle: TextStyle(fontWeight: FontWeight.w300),
+                            border: InputBorder.none,),
+                        onChanged: (value) {
+                          username = value;
+                          // print(username);
+                        },
+                      ),
+                  ),
+                  SizedBox(height: 25),
+                  Neumorphic(
                     padding: EdgeInsets.all(5),
                     style: NeumorphicStyle(
                         shape: NeumorphicShape.concave,
@@ -53,118 +80,92 @@ class _UsernameState extends State<Username> {
                     ),
                     child: TextFormField(
                       cursorColor: Theme.of(context).primaryColor,
-                      controller: fieldText_username,
+                      controller: fieldText_password,
+                      onSaved: (value) {
+                        password = value;
+                      },
                       keyboardType: TextInputType.name,
+                      obscureText: true,
                       style: const TextStyle(fontSize: 16.0),
                       textAlign: TextAlign.center,
-                      onSaved: (String? value) {},
-                      textInputAction: TextInputAction.next,
                       decoration: const InputDecoration(
-                          hintText: 'username or email',
-                          hintStyle: TextStyle(fontWeight: FontWeight.w300),
-                          border: InputBorder.none,),
+                        hintText: 'password',
+                        hintStyle: TextStyle(fontWeight: FontWeight.w300),
+                        border: InputBorder.none,),
                       onChanged: (value) {
-                        username = value;
-                        // print(username);
+                        //    print(value);
+                        password=value;
                       },
                     ),
-                ),
-                SizedBox(height: 25),
-                Neumorphic(
-                  padding: EdgeInsets.all(5),
-                  style: NeumorphicStyle(
-                      shape: NeumorphicShape.concave,
-                      boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(30)),
-                      depth: -5,
-                      lightSource: LightSource.topLeft,
                   ),
-                  child: TextFormField(
-                    cursorColor: Theme.of(context).primaryColor,
-                    controller: fieldText_password,
-                    onSaved: (value) {
-                      password = value;
-                    },
-                    keyboardType: TextInputType.name,
-                    obscureText: true,
-                    style: const TextStyle(fontSize: 16.0),
-                    textAlign: TextAlign.center,
-                    decoration: const InputDecoration(
-                      hintText: 'password',
-                      hintStyle: TextStyle(fontWeight: FontWeight.w300),
-                      border: InputBorder.none,),
-                    onChanged: (value) {
-                      //    print(value);
-                      password=value;
-                    },
+                  const SizedBox(
+                    height: 20,
                   ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                GestureDetector(
-                  onTap: () async {
-                    final Uri _url = Uri.parse("https://edu.ezygo.app/#/");
-                    await launchUrl(_url);
-                  },
-                  child: Row(
+                  GestureDetector(
+                    onTap: () async {
+                      final Uri _url = Uri.parse("https://edu.ezygo.app/#/");
+                      await launchUrl(_url);
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Text(
+                          "Forgot",
+                          style: TextStyle(fontWeight: FontWeight.w300),
+                        ),
+                        Text(
+                          " credentials?",
+                          style: TextStyle(fontWeight: FontWeight.w500),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 32,
+                  ),
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Text(
-                        "Forgot",
-                        style: TextStyle(fontWeight: FontWeight.w300),
-                      ),
-                      Text(
-                        " credentials?",
-                        style: TextStyle(fontWeight: FontWeight.w500),
+                    children: [
+                      NeumorphicButton(
+                        onPressed: () async {
+                          if(username?.length==0||password?.length==0)
+                          {
+                            showAlertDialog(context);
+                          }
+                          setState(() {
+                           arrow=false;
+                          });
+                          print("onClick");
+                          FocusManager.instance.primaryFocus?.unfocus();
+                          username=username?.trim();
+                          for (int? i = (username?.length)! - 3;
+                              i! < (username?.length)!-2;
+                              i++) {
+                            if (username![i] == 'c' &&
+                                username![i+1] == 'o' &&
+                                username![i + 2] == 'm') {
+                              print("email");
+                              lookup_login();
+                            } else {
+                              print("username");
+                              username_login();
+                            }
+                          }
+                        },
+                        style: NeumorphicStyle(
+                          color: darkMode ? Colors.grey[850] : Colors.grey[300],
+                          shape: NeumorphicShape.flat,
+                          boxShape: NeumorphicBoxShape.circle(),
+                        ),
+                        child:arrow? Icon(
+                          FontAwesomeIcons.arrowRight,
+                          color: Colors.black.withOpacity(0.6),
+                        ):CupertinoActivityIndicator()
                       ),
                     ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 32,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    NeumorphicButton(
-                      onPressed: () async {
-                        if(username?.length==0||password?.length==0)
-                        {
-                          showAlertDialog(context);
-                        }
-                        setState(() {
-                         arrow=false;
-                        });
-                        print("onClick");
-                        FocusManager.instance.primaryFocus?.unfocus();
-                        username=username?.trim();
-                        for (int? i = (username?.length)! - 3;
-                            i! < (username?.length)!-2;
-                            i++) {
-                          if (username![i] == 'c' &&
-                              username![i+1] == 'o' &&
-                              username![i + 2] == 'm') {
-                            print("email");
-                            lookup_login();
-                          } else {
-                            print("username");
-                            username_login();
-                          }
-                        }
-                      },
-                      style: NeumorphicStyle(
-                        color: darkMode ? Colors.grey[850] : Colors.grey[300],
-                        shape: NeumorphicShape.flat,
-                        boxShape: NeumorphicBoxShape.circle(),
-                      ),
-                      child:arrow? Icon(
-                        FontAwesomeIcons.arrowRight,
-                        color: Colors.black.withOpacity(0.6),
-                      ):CupertinoActivityIndicator()
-                    ),
-                  ],
-                )
-              ],
+                  )
+                ],
+              ),
             ),
           ),
         ));

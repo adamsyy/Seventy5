@@ -1,8 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:seventy5/Ttimetable.dart';
 import 'package:seventy5/username.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -68,21 +66,17 @@ class _ProfileState extends State<Profile> {
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height / 9,),
                   NeumorphicButton(
-onPressed: (){
-
-
-
-  Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft, child: Allmaveli(main_badge: widget.badge,main_badge_name: widget.badeg_name,)));
-
-
-},
-                        style: NeumorphicStyle(//color: Colors.transparent,
-                            shape: NeumorphicShape.flat,
-                            boxShape: NeumorphicBoxShape.roundRect(
-                                BorderRadius.circular(8))),
-                        padding:
-                            EdgeInsets.all(MediaQuery.of(context).size.width / 12),
-                        child:  Image.asset(widget.badge.toString(),height: 180,width: 180)),
+                      onPressed: (){
+                        Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft, child: Allmaveli(main_badge: widget.badge,main_badge_name: widget.badeg_name,)));
+                      },
+                      style: NeumorphicStyle(//color: Colors.transparent,
+                          shape: NeumorphicShape.flat,
+                          boxShape: NeumorphicBoxShape.roundRect(
+                              BorderRadius.circular(8))),
+                      padding:
+                          EdgeInsets.all(MediaQuery.of(context).size.width / 12),
+                      child:  Image.asset(widget.badge.toString(),height: 180,width: 180)
+                  ),
                   SizedBox(height: MediaQuery.of(context).size.height / 45,),
                   Text(widget.badeg_name,style: TextStyle(fontWeight: FontWeight.w200),),
 
@@ -327,7 +321,7 @@ onPressed: (){
         // Try reading data from the 'counter' key. If it doesn't exist, returns null.
         // Obtain shared preferences.
 
-        final url = Uri.parse("https://paytm.business/link/1655497265229/LL_511324784");
+        final url = Uri.parse("upi://pay?pa=adamrubiks@okaxis&pn=Adam Rubiks&aid=uGICAgIDz14K-JA");
         await launchUrl(url);
       },
     );

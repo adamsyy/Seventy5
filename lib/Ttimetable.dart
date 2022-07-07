@@ -1,9 +1,8 @@
 import 'dart:convert';
+import 'dart:ffi';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class Timetable extends StatefulWidget {
@@ -74,7 +73,7 @@ class _TimetableState extends State<Timetable> {
                                 Navigator.pop(context);
                               },
                               style: const NeumorphicStyle(
-                                shape: NeumorphicShape.concave,
+                                shape: NeumorphicShape.flat,
                                 boxShape: NeumorphicBoxShape.circle(),
                               ),
                               padding: const EdgeInsets.all(12),
@@ -108,7 +107,7 @@ class _TimetableState extends State<Timetable> {
                                 shape: NeumorphicShape.concave,
                                 boxShape: NeumorphicBoxShape.circle(),
                               ),
-                              padding: const EdgeInsets.all(12),
+                              padding: const EdgeInsets.all(15),
                               child: Icon(
                                 FontAwesomeIcons.angleLeft,
                                 size: 20,
@@ -119,28 +118,32 @@ class _TimetableState extends State<Timetable> {
                           SizedBox(
                             width: 15,
                           ),
-                          Padding(
-                            padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                            child: Neumorphic(
-                                style: NeumorphicStyle(
-                                  //color: Colors.transparent,
-                                    depth: -3,
-                                    shape: NeumorphicShape.flat,
-                                    boxShape: NeumorphicBoxShape.roundRect(
-                                        BorderRadius.circular(8))),
-                                padding: EdgeInsets.all(
-                                    MediaQuery.of(context).size.width / 32),
-                                child: Text(
-                                  "Monday",
-                                  style: TextStyle(
-                                      fontSize: 15, fontWeight: FontWeight.bold),
-                                )),
+                          Container(
+                            width: MediaQuery.of(context).size.width/ 3,
+                            child: Padding(
+                              padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                              child: Neumorphic(
+                                  style: NeumorphicStyle(
+                                    //color: Colors.transparent,
+                                      depth: -3,
+                                      shape: NeumorphicShape.flat,
+                                      boxShape: NeumorphicBoxShape.roundRect(
+                                          BorderRadius.circular(8))),
+                                  padding: EdgeInsets.all(
+                                      MediaQuery.of(context).size.width / 32),
+                                  child: Text(
+                                    "Monday",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        fontSize: 15, fontWeight: FontWeight.bold),
+                                  )),
+                            ),
                           ),
                           SizedBox(
                             width: 15,
                           ),
                           NeumorphicButton(
-                            margin: EdgeInsets.only(top: 12),
+                            margin: EdgeInsets.only(top: 15),
                             onPressed: () {
                               setState(() {
                                 DateTime now = DateTime.now();
@@ -168,13 +171,13 @@ class _TimetableState extends State<Timetable> {
                       // SizedBox(height: MediaQuery.of(context).size.height / 20,),
 
                       SizedBox(
-                        height: MediaQuery.of(context).size.height / 30,
+                        height: 60,
                       ),
 
                       ListView.builder(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
-                        itemCount: day1.length,
+                        itemCount: widget.index_today.length>6?7:widget.index_today.length,
                         itemBuilder: (context, index) {
                           if (length_of_day(widget.today) > 0) {
                             return Column(
@@ -193,33 +196,33 @@ class _TimetableState extends State<Timetable> {
                                     SizedBox(
                                       width: 20,
                                     ),
-                                    Neumorphic(
-                                        style: NeumorphicStyle(
-                                          //color: Colors.transparent,
-                                            depth: 3,
-                                            shape: NeumorphicShape.flat,
-                                            boxShape: NeumorphicBoxShape.roundRect(
-                                                BorderRadius.circular(8))),
-                                        padding: EdgeInsets.all(
-                                            MediaQuery.of(context).size.width / 32),
-                                        child: day1[index].length > 30
-                                            ? Text(
-                                          day1[index]
-                                              .substring(0, 30),
-                                          style: TextStyle(
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.bold),
-                                        )
-                                            : Text(
-                                          day1[index],
-                                          style: TextStyle(
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.bold),
-                                        )),
+                                    Expanded(
+                                      child: Neumorphic(
+                                          style: NeumorphicStyle(
+                                              depth: 3,
+                                              shape: NeumorphicShape.flat,
+                                              boxShape: NeumorphicBoxShape.roundRect(
+                                                  BorderRadius.circular(8))),
+                                          padding: EdgeInsets.all(20),
+                                          child: widget.index_today[index].length > 35
+                                              ? Text(
+                                            widget.index_today[index].substring(0, 35),
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold),
+                                          )
+                                              : Text(
+                                            widget.index_today[index],
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold),
+                                          )),
+                                    ),
+                                    SizedBox(width: 40,)
                                   ],
                                 ),
                                 SizedBox(
-                                  height: 20,
+                                  height: 25,
                                 )
                               ],
                             );
@@ -259,7 +262,7 @@ class _TimetableState extends State<Timetable> {
                                 Navigator.pop(context);
                               },
                               style: const NeumorphicStyle(
-                                shape: NeumorphicShape.concave,
+                                shape: NeumorphicShape.flat,
                                 boxShape: NeumorphicBoxShape.circle(),
                               ),
                               padding: const EdgeInsets.all(12),
@@ -304,22 +307,26 @@ class _TimetableState extends State<Timetable> {
                           SizedBox(
                             width: 15,
                           ),
-                          Padding(
-                            padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                            child: Neumorphic(
-                                style: NeumorphicStyle(
-                                  //color: Colors.transparent,
-                                    depth: -3,
-                                    shape: NeumorphicShape.flat,
-                                    boxShape: NeumorphicBoxShape.roundRect(
-                                        BorderRadius.circular(8))),
-                                padding: EdgeInsets.all(
-                                    MediaQuery.of(context).size.width / 32),
-                                child: Text(
-                                  "Monday",
-                                  style: TextStyle(
-                                      fontSize: 15, fontWeight: FontWeight.bold),
-                                )),
+                          Container(
+                            width: MediaQuery.of(context).size.width/ 3,
+                            child: Padding(
+                              padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                              child: Neumorphic(
+                                  style: NeumorphicStyle(
+                                    //color: Colors.transparent,
+                                      depth: -3,
+                                      shape: NeumorphicShape.flat,
+                                      boxShape: NeumorphicBoxShape.roundRect(
+                                          BorderRadius.circular(8))),
+                                  padding: EdgeInsets.all(
+                                      MediaQuery.of(context).size.width / 32),
+                                  child: Text(
+                                    "Monday",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        fontSize: 15, fontWeight: FontWeight.bold),
+                                  )),
+                            ),
                           ),
                           SizedBox(
                             width: 15,
@@ -354,13 +361,13 @@ class _TimetableState extends State<Timetable> {
                       // SizedBox(height: MediaQuery.of(context).size.height / 20,),
 
                       SizedBox(
-                        height: MediaQuery.of(context).size.height / 30,
+                        height: 60,
                       ),
 
                       ListView.builder(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
-                        itemCount: day1.length,
+                        itemCount: widget.index_today.length>6?7:widget.index_today.length,
                         itemBuilder: (context, index) {
                           if (length_of_day(widget.today) > 0) {
                             return Column(
@@ -379,33 +386,33 @@ class _TimetableState extends State<Timetable> {
                                     SizedBox(
                                       width: 20,
                                     ),
-                                    Neumorphic(
-                                        style: NeumorphicStyle(
-                                          //color: Colors.transparent,
-                                            depth: 3,
-                                            shape: NeumorphicShape.flat,
-                                            boxShape: NeumorphicBoxShape.roundRect(
-                                                BorderRadius.circular(8))),
-                                        padding: EdgeInsets.all(
-                                            MediaQuery.of(context).size.width / 32),
-                                        child: day1[index].length > 30
-                                            ? Text(
-                                          day1[index]
-                                              .substring(0, 30),
-                                          style: TextStyle(
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.bold),
-                                        )
-                                            : Text(
-                                          day1[index],
-                                          style: TextStyle(
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.bold),
-                                        )),
+                                    Expanded(
+                                      child: Neumorphic(
+                                          style: NeumorphicStyle(
+                                              depth: 3,
+                                              shape: NeumorphicShape.flat,
+                                              boxShape: NeumorphicBoxShape.roundRect(
+                                                  BorderRadius.circular(8))),
+                                          padding: EdgeInsets.all(20),
+                                          child: widget.index_today[index].length > 35
+                                              ? Text(
+                                            widget.index_today[index].substring(0, 35),
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold),
+                                          )
+                                              : Text(
+                                            widget.index_today[index],
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold),
+                                          )),
+                                    ),
+                                    SizedBox(width: 40,)
                                   ],
                                 ),
                                 SizedBox(
-                                  height: 20,
+                                  height: 25,
                                 )
                               ],
                             );
@@ -445,7 +452,7 @@ class _TimetableState extends State<Timetable> {
                                 Navigator.pop(context);
                               },
                               style: const NeumorphicStyle(
-                                shape: NeumorphicShape.concave,
+                                shape: NeumorphicShape.flat,
                                 boxShape: NeumorphicBoxShape.circle(),
                               ),
                               padding: const EdgeInsets.all(12),
@@ -489,22 +496,26 @@ class _TimetableState extends State<Timetable> {
                           SizedBox(
                             width: 15,
                           ),
-                          Padding(
-                            padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                            child: Neumorphic(
-                                style: NeumorphicStyle(
-                                  //color: Colors.transparent,
-                                    depth: -3,
-                                    shape: NeumorphicShape.flat,
-                                    boxShape: NeumorphicBoxShape.roundRect(
-                                        BorderRadius.circular(8))),
-                                padding: EdgeInsets.all(
-                                    MediaQuery.of(context).size.width / 32),
-                                child: Text(
-                                  widget.today,
-                                  style: TextStyle(
-                                      fontSize: 15, fontWeight: FontWeight.bold),
-                                )),
+                          Container(
+                            width: MediaQuery.of(context).size.width/ 3,
+                            child: Padding(
+                              padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                              child: Neumorphic(
+                                  style: NeumorphicStyle(
+                                    //color: Colors.transparent,
+                                      depth: -3,
+                                      shape: NeumorphicShape.flat,
+                                      boxShape: NeumorphicBoxShape.roundRect(
+                                          BorderRadius.circular(8))),
+                                  padding: EdgeInsets.all(
+                                      MediaQuery.of(context).size.width / 32),
+                                  child: Text(
+                                    widget.today,
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        fontSize: 15, fontWeight: FontWeight.bold),
+                                  )),
+                            ),
                           ),
                           SizedBox(
                             width: 15,
@@ -537,7 +548,7 @@ class _TimetableState extends State<Timetable> {
                       // SizedBox(height: MediaQuery.of(context).size.height / 20,),
 
                       SizedBox(
-                        height: MediaQuery.of(context).size.height / 30,
+                        height: 60,
                       ),
 
                       ListView.builder(
@@ -562,33 +573,33 @@ class _TimetableState extends State<Timetable> {
                                     SizedBox(
                                       width: 20,
                                     ),
-                                    Neumorphic(
-                                        style: NeumorphicStyle(
-                                          //color: Colors.transparent,
-                                            depth: 3,
-                                            shape: NeumorphicShape.flat,
-                                            boxShape: NeumorphicBoxShape.roundRect(
-                                                BorderRadius.circular(8))),
-                                        padding: EdgeInsets.all(
-                                            MediaQuery.of(context).size.width / 32),
-                                        child: widget.index_today[index].length > 38
-                                            ? Text(
-                                          widget.index_today[index]
-                                              .substring(0, 30),
-                                          style: TextStyle(
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.bold),
-                                        )
-                                            : Text(
-                                          widget.index_today[index],
-                                          style: TextStyle(
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.bold),
-                                        )),
+                                    Expanded(
+                                      child: Neumorphic(
+                                          style: NeumorphicStyle(
+                                              depth: 3,
+                                              shape: NeumorphicShape.flat,
+                                              boxShape: NeumorphicBoxShape.roundRect(
+                                                  BorderRadius.circular(8))),
+                                          padding: EdgeInsets.all(20),
+                                          child: widget.index_today[index].length > 35
+                                              ? Text(
+                                            widget.index_today[index].substring(0, 35),
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold),
+                                          )
+                                              : Text(
+                                            widget.index_today[index],
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold),
+                                          )),
+                                    ),
+                                   SizedBox(width: 40,)
                                   ],
                                 ),
                                 SizedBox(
-                                  height: 20,
+                                  height: 25,
                                 )
                               ],
                             );
