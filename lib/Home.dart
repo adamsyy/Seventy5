@@ -4,8 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:rive/rive.dart';
 import 'package:seventy5/Profile.dart';
@@ -130,13 +128,11 @@ late String image;
                                   style: NeumorphicStyle(
                                       shape: NeumorphicShape.flat,
                                       boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(34)),
-                                      depth: 8,
-                                      lightSource: LightSource.topLeft,
                                   ),
                                   child: Container(
                                     padding: const EdgeInsets.all(18),
                                     width: MediaQuery.of(context).size.width / 1,
-                                    height: MediaQuery.of(context).size.height / 5.9,
+                                    height: 145,
                                     child: Row(
                                       children: [
                                         Expanded(
@@ -157,7 +153,7 @@ late String image;
                                           ),
                                         ),
                                         CircularPercentIndicator(
-                                          radius: MediaQuery.of(context).size.width / 9,
+                                          radius: 50,
                                           backgroundColor: Colors.grey[500]!,
                                           lineWidth: 3.0,
                                           percent: double.parse(subjectDetails[index].percentage)/100,
@@ -167,7 +163,7 @@ late String image;
                                               mainAxisAlignment: MainAxisAlignment.center,
                                               children: [
                                                 Text("100% ", style: const TextStyle(fontSize: 16)),
-                                                Icon(FontAwesomeIcons.gripfire, size: 15,),
+                                                Icon(FontAwesomeIcons.gripfire, size: 15, color: Theme.of(context).primaryColor,),
                                               ],
                                             ),
                                           progressColor: Theme.of(context).primaryColor,
