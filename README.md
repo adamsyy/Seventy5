@@ -1,4 +1,4 @@
-# Seventy5
+# Seventy5 attendance app
 
 ## Description
 
