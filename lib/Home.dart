@@ -29,6 +29,8 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
 
+  String api = "https://production.api.ezygo.app/api/v1/Xcr45_salt";
+
   @override
   void initState() {
     // TODO: implement initState
@@ -144,16 +146,21 @@ late String image;
                                               const SizedBox(height: 10),
                                               Text(subjectDetails[index].present+"/"+subjectDetails[index].total),
                                               const SizedBox(height: 5),
+                                              int.parse(subjectDetails[index].total)>0 ?
                                               Text(
                                                   double.parse(subjectDetails[index].percentage)>=75 ?
                                                   "Can cut " + ((int.parse(subjectDetails[index].present)/0.75).floor()-int.parse(subjectDetails[index].total)).toString() + " classes" :
                                                   "Need to attend " + (3 * int.parse(subjectDetails[index].total) - 4 * int.parse(subjectDetails[index].present)).toString() + " classes"
+                                              )
+                                              :
+                                              Text(
+                                                  "Attendance not entered"
                                               ),
                                             ],
                                           ),
                                         ),
                                         CircularPercentIndicator(
-                                          radius: 50,
+                                          radius: 40,
                                           backgroundColor: Colors.grey[500]!,
                                           lineWidth: 3.0,
                                           percent: double.parse(subjectDetails[index].percentage)/100,
@@ -193,7 +200,7 @@ late String image;
 
   Future<List<dynamic>?> fetchClass() async {
     final url =
-        Uri.parse("https://production.api.ezygo.app/api/v1/Xcr45_salt/usersubgroups");
+        Uri.parse(api+"/usersubgroups");
 
     final response = await http.get(url, headers: {
       'Authorization': 'Bearer ${widget.token}',
@@ -220,7 +227,7 @@ late String image;
 
   Future<List<dynamic>?> fetchLists() async {
     final url = Uri.parse(
-        "https://production.api.ezygo.app/api/v1/Xcr45_salt/institutionuser/myroles");
+        api+"/institutionuser/courses/withusers");
 
     final response = await http.get(url, headers: {
       'Authorization': 'Bearer ${widget.token}',
@@ -229,16 +236,24 @@ late String image;
     // print(response.body);
 
     setState(() {
-      data = json.decode(response.body)["courseRoles"];
+      data = json.decode(response.body);
     });
 // print(data);
     for (int i = 0; i < data.length; i++) {
-      subjectId.add(data[i]["id"].toString());
-      subjectName.add(data[i]["name"]);
+      if(data[i]["usersubgroup"]["name"]==class_name) {
+        subjectId.add(data[i]["id"].toString());
+        subjectName.add(data[i]["name"]);
+      }
     }
     // print(subject_id);
     // print(subject_name);
     for (int i = 0; i < subjectId.length; i++) {
+      var l = subjectName[i].split(" ");
+      if(l.length>2) {
+        if(int.tryParse(l[1])!=null) {
+          subjectName[i] = l.sublist(2).join(" ");
+        }
+      }
       var tempdata = await fetchAttendance(subjectId[i].toString());
       Subject temp = Subject(
           present: tempdata["present"].toString(),
@@ -251,8 +266,8 @@ late String image;
     }
     var subject_percentage = <double>[];
     for (int i = 0; i < subjectDetails.length; i++) {
-
-      subject_percentage.add(double.parse(subjectDetails[i].percentage));
+      if(int.parse(subjectDetails[i].total)>0)
+        subject_percentage.add(double.parse(subjectDetails[i].percentage));
     }
   subject_percentage.sort();
 if(subject_percentage[0]==100){
@@ -282,7 +297,6 @@ else{
   image="animation/50below.png";
   image_name="Maaveli";
 }
-print(image);
 
 
 
@@ -296,7 +310,7 @@ print(image);
 
   Future<Map<String, dynamic>> fetchAttendance(String id) async {
     final url = Uri.parse(
-        "https://production.api.ezygo.app/api/v1/Xcr45_salt/attendancereports/institutionuser/courses/$id/summery");
+        api+"/attendancereports/institutionuser/courses/$id/summery");
 
     final response = await http.get(url, headers: {
       'Authorization': 'Bearer ${widget.token}',
@@ -331,14 +345,10 @@ print(image);
 
   void _onHorizontalDrag(DragEndDetails details) {
     if(details.primaryVelocity == 0) return; // user have just tapped on screen (no dragging)
-
-    if (details.primaryVelocity?.compareTo(0) == -1)
-      { print('dragged from left');
+    //
+    if (details.primaryVelocity?.compareTo(0) == -1) {
       Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft, child: Profile(badeg_name: image_name,badge:image,idlink: widget.idLink,token: widget.token,username: widget.name,class_name: class_name)));
-
-      }
-    else
-      print('dragged from right');
+    }
   }
 
 

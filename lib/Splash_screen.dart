@@ -16,6 +16,8 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+
+  String api = "https://production.api.ezygo.app/api/v1/Xcr45_salt";
   void checkLogin() async {
     // Here we check if user already logged in or not
     SharedPreferences pref = await SharedPreferences.getInstance();
@@ -71,7 +73,7 @@ class _SplashScreenState extends State<SplashScreen> {
       "password": password,
       "username": username,
     };
-    final url2 = Uri.parse("https://production.api.ezygo.app/api/v1/Xcr45_salt/login");
+    final url2 = Uri.parse(api+"/login");
 
     final response2 = await http.post(
       url2,

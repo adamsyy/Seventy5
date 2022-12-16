@@ -1,6 +1,5 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-
 import 'Splash_screen.dart';
 
 void main() {
@@ -19,10 +18,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  late String username;
-  late String password;
-  late String token;
-  int check = 0;
 
   // This widget is the root of your application.
   @override
