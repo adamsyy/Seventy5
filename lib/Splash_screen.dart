@@ -23,6 +23,7 @@ class _SplashScreenState extends State<SplashScreen> {
     String? username = await pref.getString("username");
 
 
+    //print("$val\n$username");
 
     if (val != null) {
       Navigator.pushAndRemoveUntil(
@@ -70,7 +71,7 @@ class _SplashScreenState extends State<SplashScreen> {
       "password": password,
       "username": username,
     };
-    final url2 = Uri.parse("https://production.api.ezygo.app/api/v1/login");
+    final url2 = Uri.parse("https://production.api.ezygo.app/api/v1/Xcr45_salt/login");
 
     final response2 = await http.post(
       url2,

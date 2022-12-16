@@ -193,7 +193,7 @@ late String image;
 
   Future<List<dynamic>?> fetchClass() async {
     final url =
-        Uri.parse("https://production.api.ezygo.app/api/v1/usersubgroups");
+        Uri.parse("https://production.api.ezygo.app/api/v1/Xcr45_salt/usersubgroups");
 
     final response = await http.get(url, headers: {
       'Authorization': 'Bearer ${widget.token}',
@@ -220,7 +220,7 @@ late String image;
 
   Future<List<dynamic>?> fetchLists() async {
     final url = Uri.parse(
-        "https://production.api.ezygo.app/api/v1/institutionuser/courses/withusers");
+        "https://production.api.ezygo.app/api/v1/Xcr45_salt/institutionuser/myroles");
 
     final response = await http.get(url, headers: {
       'Authorization': 'Bearer ${widget.token}',
@@ -229,14 +229,12 @@ late String image;
     // print(response.body);
 
     setState(() {
-      data = json.decode(response.body);
+      data = json.decode(response.body)["courseRoles"];
     });
 // print(data);
     for (int i = 0; i < data.length; i++) {
-      if (data[i]["usersubgroup"]["id"] == int.parse(widget.idLink)) {
-        subjectId.add(data[i]["id"].toString());
-        subjectName.add(data[i]["name"]);
-      }
+      subjectId.add(data[i]["id"].toString());
+      subjectName.add(data[i]["name"]);
     }
     // print(subject_id);
     // print(subject_name);
@@ -298,7 +296,7 @@ print(image);
 
   Future<Map<String, dynamic>> fetchAttendance(String id) async {
     final url = Uri.parse(
-        "https://production.api.ezygo.app/api/v1/attendancereports/institutionuser/courses/+$id+/summery");
+        "https://production.api.ezygo.app/api/v1/Xcr45_salt/attendancereports/institutionuser/courses/$id/summery");
 
     final response = await http.get(url, headers: {
       'Authorization': 'Bearer ${widget.token}',
@@ -318,12 +316,12 @@ print(image);
 
   void onPass() async {
     if (data.isNotEmpty) {
-      widget.idLink = (data[1]["id"].toString());
-      class_name= (data[1]["name"].toString());
+      widget.idLink = (data[0]["id"].toString());
+      class_name= (data[0]["name"].toString());
     } else {
       await fetchClass();
-      widget.idLink = (data[data.length - 1]["id"].toString());
-      class_name= (data[1]["name"].toString());
+      widget.idLink = (data[0]["id"].toString());
+      class_name= (data[0]["name"].toString());
     }
 
     await fetchLists();

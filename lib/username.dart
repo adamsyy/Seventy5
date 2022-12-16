@@ -178,7 +178,7 @@ class _UsernameState extends State<Username> {
       "username": username,
     };
     final url = Uri.parse(
-        "https://production.api.ezygo.app/api/v1/login/lookup?username=+${username}");
+        "https://production.api.ezygo.app/api/v1/Xcr45_salt/login/lookup?username=+${username}");
 
     final response = await http.post(
       url,
@@ -196,7 +196,7 @@ class _UsernameState extends State<Username> {
       "password": password,
       "username": name,
     };
-    final url2 = Uri.parse("https://production.api.ezygo.app/api/v1/login");
+    final url2 = Uri.parse("https://production.api.ezygo.app/api/v1/Xcr45_salt/login");
 
     final response2 = await http.post(
       url2,
@@ -249,7 +249,7 @@ class _UsernameState extends State<Username> {
       "password": password,
       "username": username,
     };
-    final url2 = Uri.parse("https://production.api.ezygo.app/api/v1/login");
+    final url2 = Uri.parse("https://production.api.ezygo.app/api/v1/Xcr45_salt/login");
 
     final response2 = await http.post(
       url2,
