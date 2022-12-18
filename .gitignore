@@ -31,6 +31,9 @@
 .pub/
 /build/
 
+key.properties
+seventy5.jks
+
 # Web related
 lib/generated_plugin_registrant.dart
 
