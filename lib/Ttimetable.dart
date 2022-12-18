@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'dart:ffi';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
@@ -45,9 +45,11 @@ class _TimetableState extends State<Timetable> {
 
   @override
   Widget build(BuildContext context) {
-    if (check == 0) {
-      return GestureDetector(onHorizontalDragEnd: (DragEndDetails details) => _onHorizontalDrag(details),
-        child: Scaffold(
+    
+    return GestureDetector(
+      onHorizontalDragEnd: (DragEndDetails details) => _onHorizontalDrag(details),
+      onVerticalDragEnd: (DragEndDetails details) => _onVerticalDrag(details),
+      child: Scaffold(
           body: SafeArea(
             child: SingleChildScrollView(
               scrollDirection: Axis.vertical,
@@ -78,191 +80,163 @@ class _TimetableState extends State<Timetable> {
                       ],
                     ),
                   ),
-              ]),
-            ),
-          ),
-        ),
-      );
-    } else {
-        return GestureDetector(onHorizontalDragEnd: (DragEndDetails details) => _onHorizontalDrag(details),
-          child: Scaffold(
-              body: SafeArea(
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.vertical,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  // SizedBox(height: MediaQuery.of(context).size.height / 9,),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
-                        margin: const EdgeInsets.fromLTRB(20, 15, 20, 25),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            NeumorphicButton(
-                              margin: EdgeInsets.only(top: 12),
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              style: const NeumorphicStyle(
-                                shape: NeumorphicShape.flat,
-                                boxShape: NeumorphicBoxShape.circle(),
-                              ),
-                              padding: const EdgeInsets.all(12),
-                              child: Icon(
-                                FontAwesomeIcons.arrowLeftLong,
-                                size: 27,
-                                color: Theme.of(context).primaryColor,
-                              ),
-                            ),
-                          ],
+                        child: NeumorphicButton(
+                          margin: EdgeInsets.only(top: 12),
+                          onPressed: () {
+                            setState(() {
+                              DateTime now = DateTime.now();
+                              if(widget.today=="Monday")
+                                widget.i-=2;
+                              widget.i--;
+                              widget.today = DateFormat('EEEE').format(DateTime(
+                                  now.year, now.month, now.day + widget.i));
+                            });
+                          },
+                          style: const NeumorphicStyle(
+                            shape: NeumorphicShape.concave,
+                            boxShape: NeumorphicBoxShape.circle(),
+                          ),
+                          padding: const EdgeInsets.all(12),
+                          child: Icon(
+                            FontAwesomeIcons.angleLeft,
+                            size: 20,
+                            color: Theme.of(context).primaryColor,
+                          ),
                         ),
                       ),
-                      // SizedBox(height: MediaQuery.of(context).size.height / 9,),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            child: NeumorphicButton(
-                              margin: EdgeInsets.only(top: 12),
-                              onPressed: () {
-                                setState(() {
-                                  DateTime now = DateTime.now();
-                                  if(widget.today=="Monday")
-                                    widget.i-=2;
-                                  widget.i--;
-                                  widget.today = DateFormat('EEEE').format(DateTime(
-                                      now.year, now.month, now.day + widget.i));
-                                });
-                              },
-                              style: const NeumorphicStyle(
-                                shape: NeumorphicShape.concave,
-                                boxShape: NeumorphicBoxShape.circle(),
-                              ),
-                              padding: const EdgeInsets.all(12),
-                              child: Icon(
-                                FontAwesomeIcons.angleLeft,
-                                size: 20,
-                                color: Theme.of(context).primaryColor,
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 15,
-                          ),
-                          Container(
-                            width: MediaQuery.of(context).size.width/ 3,
-                            child: Padding(
-                              padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                              child: Neumorphic(
-                                  style: NeumorphicStyle(
-                                    //color: Colors.transparent,
-                                      depth: -3,
-                                      shape: NeumorphicShape.flat,
-                                      boxShape: NeumorphicBoxShape.roundRect(
-                                          BorderRadius.circular(8))),
-                                  padding: EdgeInsets.all(
-                                      MediaQuery.of(context).size.width / 32),
-                                  child: Text(
-                                    widget.today,
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        fontSize: 15, fontWeight: FontWeight.bold),
-                                  )),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 15,
-                          ),
-                          NeumorphicButton(
-                            margin: EdgeInsets.only(top: 12),
-                            onPressed: () {
-                              setState(() {
-                                DateTime now = DateTime.now();
-                                if(widget.today=="Friday")
-                                  widget.i+=2;
-                                widget.i++;
-                                widget.today = DateFormat('EEEE').format(
-                                    DateTime(now.year, now.month, now.day + widget.i));
-                              });
-                            },
-                            style: const NeumorphicStyle(
-                              shape: NeumorphicShape.concave,
-                              boxShape: NeumorphicBoxShape.circle(),
-                            ),
-                            padding: const EdgeInsets.all(12),
-                            child: Icon(
-                              FontAwesomeIcons.angleRight,
-                              size: 20,
-                              color: Theme.of(context).primaryColor,
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      // SizedBox(height: MediaQuery.of(context).size.height / 20,),
-
                       SizedBox(
-                        height: 60,
+                        width: 15,
                       ),
-
-                      ListView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: sessions.length,
-                        itemBuilder: (context, index) {
-                          if (fetchTTCell(widget.today,(index+1).toString()).length>0 ) {
-                            return Column(
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Text(
-                                      (index + 1).toString(),
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold, fontSize: 20),
-                                    ),
-                                    SizedBox(
-                                      width: 20,
-                                    ),
-                                    Expanded(
-                                      child: Neumorphic(
-                                          style: NeumorphicStyle(
-                                              depth: 3,
-                                              shape: NeumorphicShape.flat,
-                                              boxShape: NeumorphicBoxShape.roundRect(
-                                                  BorderRadius.circular(8))),
-                                          padding: EdgeInsets.all(20),
-                                          child:  Text(
-                                            fetchTTCell(widget.today,(index+1).toString())[0] + (fetchTTCell(widget.today,(index+1).toString()).length>1 ?  " / " + fetchTTCell(widget.today,(index+1).toString())[1] : ""),
-                                            style: TextStyle(
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.bold),
-                                          )
-                                        ),
-                                    ),
-                                   SizedBox(width: 40,)
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 25,
-                                )
-                              ],
-                            );
-                          } else {
-                            return SizedBox(
-                              height: 10,
-                            );
-                          }
+                      Container(
+                        width: MediaQuery.of(context).size.width/ 3,
+                        child: Padding(
+                          padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                          child: Neumorphic(
+                              style: NeumorphicStyle(
+                                //color: Colors.transparent,
+                                  depth: -3,
+                                  shape: NeumorphicShape.flat,
+                                  boxShape: NeumorphicBoxShape.roundRect(
+                                      BorderRadius.circular(8))),
+                              padding: EdgeInsets.all(
+                                  MediaQuery.of(context).size.width / 32),
+                              child: Text(
+                                widget.today,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontSize: 15, fontWeight: FontWeight.bold),
+                              )),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 15,
+                      ),
+                      NeumorphicButton(
+                        margin: EdgeInsets.only(top: 12),
+                        onPressed: () {
+                          setState(() {
+                            DateTime now = DateTime.now();
+                            if(widget.today=="Friday")
+                              widget.i+=2;
+                            widget.i++;
+                            widget.today = DateFormat('EEEE').format(
+                                DateTime(now.year, now.month, now.day + widget.i));
+                          });
                         },
+                        style: const NeumorphicStyle(
+                          shape: NeumorphicShape.concave,
+                          boxShape: NeumorphicBoxShape.circle(),
+                        ),
+                        padding: const EdgeInsets.all(12),
+                        child: Icon(
+                          FontAwesomeIcons.angleRight,
+                          size: 20,
+                          color: Theme.of(context).primaryColor,
+                        ),
                       ),
                     ],
                   ),
-                ),
-              )),
-        );
-    }
+
+                  // SizedBox(height: MediaQuery.of(context).size.height / 20,),
+
+                  SizedBox(
+                    height: 60,
+                  ),
+                  if(check==1)  ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: sessions.length,
+                    itemBuilder: (context, index) {
+                      if (fetchTTCell(widget.today,(index+1).toString()).length>0 ) {
+                        return Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  (index + 1).toString(),
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold, fontSize: 20),
+                                ),
+                                SizedBox(
+                                  width: 20,
+                                ),
+                                Expanded(
+                                  child: Neumorphic(
+                                      style: NeumorphicStyle(
+                                          depth: 3,
+                                          shape: NeumorphicShape.flat,
+                                          boxShape: NeumorphicBoxShape.roundRect(
+                                              BorderRadius.circular(8))),
+                                      padding: EdgeInsets.all(20),
+                                      child:  Text(
+                                        fetchTTCell(widget.today,(index+1).toString())[0] + (fetchTTCell(widget.today,(index+1).toString()).length>1 ?  " / " + fetchTTCell(widget.today,(index+1).toString())[1] : ""),
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.bold),
+                                      )
+                                    ),
+                                ),
+                                SizedBox(width: 40,)
+                              ],
+                            ),
+                            SizedBox(
+                              height: 25,
+                            )
+                          ],
+                        );
+                      } else {
+                        return SizedBox(
+                          height: 10,
+                        );
+                      }
+                    },
+                  )
+                  else  Column(
+                    children : [
+                      SizedBox(height : 10),
+                      Center(
+                        child: SpinKitFadingCircle(
+                          color: Colors.black,
+                          size: 30.0,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          )),
+    );
+
   }
 
   void fetchTimeTable() async {
@@ -344,16 +318,37 @@ class _TimetableState extends State<Timetable> {
 
 
   void _onHorizontalDrag(DragEndDetails details) {
-    if(details.primaryVelocity == 0) return; // user have just tapped on screen (no dragging)
+    if(details.primaryVelocity == null) return; // user have just tapped on screen (no dragging)
 
-    if (details.primaryVelocity?.compareTo(0) == -1)
+    if (details.primaryVelocity! < 0)
     {
-
+      setState(() {
+          DateTime now = DateTime.now();
+          if(widget.today=="Friday")
+            widget.i+=2;
+          widget.i++;
+          widget.today = DateFormat('EEEE').format(
+            DateTime(now.year, now.month, now.day + widget.i));
+      });
     }
     else{
+      setState(() {
+          DateTime now = DateTime.now();
+          if(widget.today=="Monday")
+            widget.i-=2;
+          widget.i--;
+          widget.today = DateFormat('EEEE').format(DateTime(
+              now.year, now.month, now.day + widget.i));
+      });
+    }
+
+  }
+  void _onVerticalDrag(DragEndDetails details) {
+    if(details.primaryVelocity == null) return; // user have just tapped on screen (no dragging)
+
+    if (details.primaryVelocity! > 0)
+    {
       Navigator.pop(context);
-      // Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft, child: Home()));
-      // Navigator.pop(context);
     }
 
   }

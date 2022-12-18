@@ -42,7 +42,7 @@ class _UsernameState extends State<Username> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(height: MediaQuery.of(context).size.height /15),
-                  Image.asset("animation/pic2.png",height: 275,width: 275,),
+                  Image.asset("animation/pic.png",height: 275,width: 275,),
                   SizedBox(height: MediaQuery.of(context).size.height /10),
                   Neumorphic(
                       padding: EdgeInsets.all(5),
@@ -136,7 +136,7 @@ class _UsernameState extends State<Username> {
                           setState(() {
                            arrow=false;
                           });
-                          print("onClick");
+                          //print("onClick");
                           FocusManager.instance.primaryFocus?.unfocus();
                           username=username?.trim();
                           for (int? i = (username?.length)! - 3;
@@ -145,10 +145,9 @@ class _UsernameState extends State<Username> {
                             if (username![i] == 'c' &&
                                 username![i+1] == 'o' &&
                                 username![i + 2] == 'm') {
-                              print("email");
+                              //print("email");
                               lookup_login();
                             } else {
-                              print("username");
                               username_login();
                             }
                           }
@@ -189,7 +188,7 @@ class _UsernameState extends State<Username> {
       },
       body: jsonEncode(newUpdate),
     );
-    print(json.decode(response.body)["users"].toString());
+    //print(json.decode(response.body)["users"].toString());
 
     name = json.decode(response.body)["users"][0].toString();
 
@@ -222,7 +221,7 @@ class _UsernameState extends State<Username> {
       });
     }
     else{
-      print("logging in");
+      //print("logging in");
       token=json.decode(response2.body)["access_token"];
       String newusername="";
       for (int? i = 0;i! < (username?.length)!;i++) {
@@ -266,7 +265,7 @@ class _UsernameState extends State<Username> {
 
 
     if(json.decode(response2.body)["message"].toString().length==27){
-      print("wrong creds");
+      //print("wrong creds");
 
       showAlertDialog(context);
 
@@ -277,7 +276,7 @@ class _UsernameState extends State<Username> {
 
     } else{
       token=json.decode(response2.body)["access_token"];
-      print("logging in");
+      //print("logging in");
 
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString('username',username!);

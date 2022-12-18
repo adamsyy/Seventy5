@@ -5,7 +5,6 @@ import 'package:seventy5/username.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:http/http.dart' as http;
-
 import 'Allbadge.dart';
 
 class Profile extends StatefulWidget {
@@ -67,7 +66,7 @@ class _ProfileState extends State<Profile> {
                   SizedBox(height: MediaQuery.of(context).size.height / 9,),
                   NeumorphicButton(
                       onPressed: (){
-                        Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft, child: Allmaveli(main_badge: widget.badge,main_badge_name: widget.badeg_name,)));
+                        Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft,duration: Duration(milliseconds: 400), reverseDuration: Duration(milliseconds: 350), child: Allmaveli(main_badge: widget.badge,main_badge_name: widget.badeg_name,)));
                       },
                       style: NeumorphicStyle(//color: Colors.transparent,
                           shape: NeumorphicShape.flat,
@@ -168,9 +167,10 @@ class _ProfileState extends State<Profile> {
         final success1 = await prefs.remove('username');
         final success2 = await prefs.remove('password');
         final success3 = await prefs.remove('token');
-        Navigator.push(
+        Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (context) =>  Username()),
+          ModalRoute.withName('/')
         );
       },
     );
@@ -318,9 +318,6 @@ class _ProfileState extends State<Profile> {
         padding: EdgeInsets.fromLTRB(15, 4, 15, 4),
       ),
       onPressed:  ()async {
-        // Try reading data from the 'counter' key. If it doesn't exist, returns null.
-        // Obtain shared preferences.
-
         final url = Uri.parse("upi://pay?pa=adamrubiks@okaxis&pn=Adam Rubiks&aid=uGICAgIDz14K-JA");
         await launchUrl(url);
       },
@@ -353,26 +350,6 @@ class _ProfileState extends State<Profile> {
       },
     );
   }
-
-  Future Pay_using_upi() async {
-    final url = Uri.parse("https://upi-openkerala.herokuapp.com/adamrubiks@okaxis/"+(50).toString());
-    print(url);
-    final response = await http.post(
-      url,
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': 'Bearer ' + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOTRmMjE3N2Y2ODkxMjkzMWVhNzRjOSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjU1MTI3MDg0LCJleHAiOjE2NTU5OTEwODR9.o-hznIYVpeoVd7qbg5U__e8ys-qOSqbj-mBJv4-wUUs",
-      },
-
-    );
-    print(response.body);
-  }
-
-
-
-
-
 
   showAlertDialogx(BuildContext context) {
     // No Button
