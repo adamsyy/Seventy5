@@ -37,7 +37,13 @@ class _SplashScreenState extends State<SplashScreen> {
     String? username = await pref.getString("username");
     String? password = await pref.getString("password");
 
-    if(username!=null){
+    if(token!=null) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) =>  Home(name: username.toString(),token: token,)),
+      );
+    }
+    else if(username!=null){
       username_login(username,password.toString());
     }else{
       Navigator.pushAndRemoveUntil(
@@ -54,7 +60,6 @@ class _SplashScreenState extends State<SplashScreen> {
       "username": username,
     };
     final url2 = Uri.parse(api+"/login");
-
     final response2 = await http.post(
       url2,
       headers: {
