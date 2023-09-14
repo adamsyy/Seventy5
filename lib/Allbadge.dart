@@ -14,40 +14,32 @@ class Allmaveli extends StatefulWidget {
 class _AllmaveliState extends State<Allmaveli> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: GestureDetector( onHorizontalDragEnd: (DragEndDetails details) => _onHorizontalDrag(details),
-        child: Scaffold(
-          body: SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 10,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(13.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      NeumorphicButton(
-                        margin: EdgeInsets.only(top: 12),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        style: const NeumorphicStyle(
-                          shape: NeumorphicShape.flat,
-                          boxShape: NeumorphicBoxShape.circle(),
-                        ),
-                        padding: const EdgeInsets.all(12),
-                        child: Icon(
-                          FontAwesomeIcons.arrowLeftLong,
-                          size: 27,
-                          color: Theme.of(context).primaryColor,
-                        ),
+    return GestureDetector(onHorizontalDragEnd: (DragEndDetails details) => _onHorizontalDrag(details),
+      child: Scaffold(
+          body: SafeArea(
+            child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.fromLTRB(20, 15, 20, 50),
+                    child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          NeumorphicButton(
+                            margin: EdgeInsets.only(top: 12),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            style: const NeumorphicStyle(
+                              shape: NeumorphicShape.flat,
+                              boxShape: NeumorphicBoxShape.circle(),
+                            ),
+                            padding:  const EdgeInsets.all(12),
+                            child: Icon(FontAwesomeIcons.arrowLeftLong,size: 27,color: Theme.of(context).primaryColor,),),
+                        ],
                       ),
-                    ],
                   ),
-                ),
                 SizedBox(
                   height: 65,
                 ),

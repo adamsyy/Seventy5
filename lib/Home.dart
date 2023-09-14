@@ -1,11 +1,10 @@
 import 'dart:convert';
-import 'dart:ffi';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:page_transition/page_transition.dart';
-import 'package:rive/rive.dart';
 import 'package:seventy5/Profile.dart';
 import 'package:seventy5/subject.dart';
 import 'package:percent_indicator/percent_indicator.dart';
@@ -29,9 +28,10 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
 
+  String api = "https://production.api.ezygo.app/api/v1/Xcr45_salt";
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     dataFuture = fetchClass();
     onPass();
@@ -45,7 +45,7 @@ class _HomeState extends State<Home> {
   late Future<Subject> dataFuture2;
   late String class_name;
   bool darkMode = false;
-late String image;
+  late String image;
   late String image_name;
   var tempData;
   int check = 0;
@@ -53,19 +53,17 @@ late String image;
   @override
   Widget build(BuildContext context) {
     if (check == 0) {
-      return  WillPopScope( onWillPop: () async => false,
-        child: const Scaffold(
-            body: Center(
-          child: RiveAnimation.asset(
-            "animation/4.riv",
+      return  const Scaffold(
+        body: Center(
+          child: SpinKitWave(
+            color: Colors.black,
+            size: 40.0,
           ),
-        )),
+        ),
       );
-    } else {
-      return WillPopScope( onWillPop: () async {SystemNavigator.pop();
-      return false;
-      },
-        child: GestureDetector( onHorizontalDragEnd: (DragEndDetails details) => _onHorizontalDrag(details),
+    } 
+    else {
+      return GestureDetector( onHorizontalDragEnd: (DragEndDetails details) => _onHorizontalDrag(details),
           child: AnnotatedRegion<SystemUiOverlayStyle>( value: SystemUiOverlayStyle(
             statusBarColor: Theme.of(context).scaffoldBackgroundColor,
           ),
@@ -90,7 +88,7 @@ late String image;
                          ),
                          NeumorphicButton(
                            onPressed: () {
-                             Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft, child: Timetable(section: widget.idLink,token: widget.token)));
+                             Navigator.push(context, PageTransition(type: PageTransitionType.bottomToTop, duration: Duration(milliseconds: 400), reverseDuration: Duration(milliseconds: 350), child: Timetable(section: widget.idLink,token: widget.token)));
                            },
                            style: const NeumorphicStyle(
                              shape: NeumorphicShape.flat,
@@ -101,7 +99,7 @@ late String image;
                          SizedBox(width: MediaQuery.of(context).size.width / 22,),
                          NeumorphicButton(
                            onPressed: () {
-                             Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft, child: Profile(badeg_name: image_name, badge:image,idlink: widget.idLink,token: widget.token,username: widget.name,class_name: class_name)));
+                             Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft,duration: Duration(milliseconds: 400), reverseDuration: Duration(milliseconds: 350), child: Profile(badeg_name: image_name, badge:image,idlink: widget.idLink,token: widget.token,username: widget.name,class_name: class_name)));
                              //Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft, child: Timetable(section: widget.idlink,token: widget.token)));
                            },
                            style: const NeumorphicStyle(
@@ -139,21 +137,26 @@ late String image;
                                           child: Column(
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
-                                              Expanded(child: Text(subjectDetails[index].name.toUpperCase().length>30?subjectDetails[index].name.toUpperCase().substring(0,30):subjectDetails[index].name.toUpperCase()
-                                                  ,style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w500))),
+                                              Expanded(child: Text(subjectDetails[index].name.length<50 ? subjectDetails[index].name : subjectDetails[index].name.substring(0,50),
+                                                  style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w500))),
                                               const SizedBox(height: 10),
                                               Text(subjectDetails[index].present+"/"+subjectDetails[index].total),
                                               const SizedBox(height: 5),
+                                              int.parse(subjectDetails[index].total)>0 ?
                                               Text(
                                                   double.parse(subjectDetails[index].percentage)>=75 ?
                                                   "Can cut " + ((int.parse(subjectDetails[index].present)/0.75).floor()-int.parse(subjectDetails[index].total)).toString() + " classes" :
                                                   "Need to attend " + (3 * int.parse(subjectDetails[index].total) - 4 * int.parse(subjectDetails[index].present)).toString() + " classes"
+                                              )
+                                              :
+                                              Text(
+                                                  "Attendance not entered"
                                               ),
                                             ],
                                           ),
                                         ),
                                         CircularPercentIndicator(
-                                          radius: 50,
+                                          radius: 40,
                                           backgroundColor: Colors.grey[500]!,
                                           lineWidth: 3.0,
                                           percent: double.parse(subjectDetails[index].percentage)/100,
@@ -186,14 +189,13 @@ late String image;
               )
             ),
           ),
-        ),
-      );
+        );
     }
   }
 
   Future<List<dynamic>?> fetchClass() async {
     final url =
-        Uri.parse("https://production.api.ezygo.app/api/v1/usersubgroups");
+        Uri.parse(api+"/usersubgroups");
 
     final response = await http.get(url, headers: {
       'Authorization': 'Bearer ${widget.token}',
@@ -212,7 +214,6 @@ late String image;
 
     setState(() {
       data = json.decode(response.body);
-
     });
 
     return data;
@@ -220,7 +221,7 @@ late String image;
 
   Future<List<dynamic>?> fetchLists() async {
     final url = Uri.parse(
-        "https://production.api.ezygo.app/api/v1/institutionuser/courses/withusers");
+        api+"/institutionuser/courses/withusers");
 
     final response = await http.get(url, headers: {
       'Authorization': 'Bearer ${widget.token}',
@@ -231,16 +232,23 @@ late String image;
     setState(() {
       data = json.decode(response.body);
     });
-// print(data);
+    // print(data);
     for (int i = 0; i < data.length; i++) {
-      if (data[i]["usersubgroup"]["id"] == int.parse(widget.idLink)) {
+      if(data[i]["usersubgroup"]["name"]==class_name) {
         subjectId.add(data[i]["id"].toString());
-        subjectName.add(data[i]["name"]);
+        subjectName.add(data[i]["name"].toString().toUpperCase());
       }
     }
+
     // print(subject_id);
     // print(subject_name);
     for (int i = 0; i < subjectId.length; i++) {
+      var l = subjectName[i].split(" ");
+      if(l.length>2) {
+        if(int.tryParse(l[1])!=null) {
+          subjectName[i] = l.sublist(2).join(" ");
+        }
+      }
       var tempdata = await fetchAttendance(subjectId[i].toString());
       Subject temp = Subject(
           present: tempdata["present"].toString(),
@@ -251,54 +259,56 @@ late String image;
         subjectDetails.add(temp);
       });
     }
-    var subject_percentage = <double>[];
+    var subjectPercentage = <double>[];
     for (int i = 0; i < subjectDetails.length; i++) {
-
-      subject_percentage.add(double.parse(subjectDetails[i].percentage));
+      if(int.parse(subjectDetails[i].total)==0) {
+        Subject sub = subjectDetails[i];
+        subjectDetails.remove(sub);
+        subjectDetails.add(sub);
+      }
     }
-  subject_percentage.sort();
-if(subject_percentage[0]==100){
-  image="animation/full100.png";
-  image_name="legendary";
-}
-else if(subject_percentage[0]>=90){
-  image="animation/90.png";
-  image_name="champion";
-}
-else if(subject_percentage[0]>=75&&subject_percentage[subject_percentage.length-1]<=85)
-{
-  image="animation/7580.png";
-  image_name="Regular";
-}
+    for (int i = 0; i < subjectDetails.length; i++) {
+      if(int.parse(subjectDetails[i].total)>0)
+        subjectPercentage.add(double.parse(subjectDetails[i].percentage));
+    }
+    subjectPercentage.sort();
+    if(subjectPercentage[0]==100){
+      image="animation/full100.png";
+      image_name="legendary";
+    }
+    else if(subjectPercentage[0]>=90){
+      image="animation/90.png";
+      image_name="champion";
+    }
+    else if(subjectPercentage[0]>=75&&subjectPercentage[subjectPercentage.length-1]<=85)
+    {
+      image="animation/7580.png";
+      image_name="Regular";
+    }
 
-else if(subject_percentage[0]>=75)
-{
-  image="animation/75.png";
-  image_name="Veteran";
-}
-else if(subject_percentage[0]>=50){
-  image="animation/50.png";
-  image_name="just miss";
-}
-else{
-  image="animation/50below.png";
-  image_name="Maaveli";
-}
-print(image);
-
-
-
+    else if(subjectPercentage[0]>=75)
+    {
+      image="animation/75.png";
+      image_name="Veteran";
+    }
+    else if(subjectPercentage[0]>=50){
+      image="animation/50.png";
+      image_name="just miss";
+    }
+    else{
+      image="animation/50below.png";
+      image_name="Maaveli";
+    }
     setState(() {
       check = 1;
     });
-   // print(subjectDetails[0].total);
-
+    // print(subjectDetails[0].total);
     return data;
   }
 
   Future<Map<String, dynamic>> fetchAttendance(String id) async {
     final url = Uri.parse(
-        "https://production.api.ezygo.app/api/v1/attendancereports/institutionuser/courses/+$id+/summery");
+        api+"/attendancereports/institutionuser/courses/$id/summery");
 
     final response = await http.get(url, headers: {
       'Authorization': 'Bearer ${widget.token}',
@@ -309,45 +319,27 @@ print(image);
     setState(() {
       tempData = json.decode(response.body);
     });
-// // print(data);
-
-//print(response.body);
-
+    //print(response.body);
     return tempData;
   }
 
   void onPass() async {
     if (data.isNotEmpty) {
-      widget.idLink = (data[1]["id"].toString());
-      class_name= (data[1]["name"].toString());
+      widget.idLink = (data[0]["id"].toString());
+      class_name= (data[0]["name"].toString());
     } else {
       await fetchClass();
-      widget.idLink = (data[data.length - 1]["id"].toString());
-      class_name= (data[1]["name"].toString());
+      widget.idLink = (data[0]["id"].toString());
+      class_name= (data[0]["name"].toString());
     }
-
     await fetchLists();
   }
 
-
-
   void _onHorizontalDrag(DragEndDetails details) {
     if(details.primaryVelocity == 0) return; // user have just tapped on screen (no dragging)
-
-    if (details.primaryVelocity?.compareTo(0) == -1)
-      { print('dragged from left');
-      Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft, child: Profile(badeg_name: image_name,badge:image,idlink: widget.idLink,token: widget.token,username: widget.name,class_name: class_name)));
-
-      }
-    else
-      print('dragged from right');
+    //
+    if (details.primaryVelocity?.compareTo(0) == -1) {
+      Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft,duration: Duration(milliseconds: 400), reverseDuration: Duration(milliseconds: 350), child: Profile(badeg_name: image_name,badge:image,idlink: widget.idLink,token: widget.token,username: widget.name,class_name: class_name)));
+    }
   }
-
-
-
-
-
-
-
-
 }
