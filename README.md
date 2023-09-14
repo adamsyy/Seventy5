@@ -13,6 +13,10 @@
 * The app shows the number of classes a student can cut or have to attend in order to maintain the required minimum attendance.
 <br>
 
+![image](https://github.com/adamsyy/Seventy5/assets/75473780/5de38010-e162-4b84-a5ca-e6b55f21d4cc)
+![image](https://github.com/adamsyy/Seventy5/assets/75473780/443fbf18-28c9-4734-9e27-b1c768d078cc)
+![image](https://github.com/adamsyy/Seventy5/assets/75473780/eb9b23ab-3f90-4eac-8a57-fb9aab2285e4)
+
 
 ## Demo
 
